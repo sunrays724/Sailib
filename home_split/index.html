@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>SaiLib – Drench in Sri Babuji's Uchhishta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<script src="assets/sailib-search-index.js"></script>
+<script src="assets/sailib-digest-items.js"></script>
+<script src="assets/today-history-data.js"></script>
+<link rel="stylesheet" href="assets/home-styles.css">
+</head>
+<body>
+<main class="wrap">
+
+  <nav class="topbar" aria-label="More from SaiLib">
+    <a class="toplink" href="https://muse.ai/s/sri-babuji-digests-ox06xhhxrxkdxji6" target="_blank" rel="noopener">Sai Digests</a>
+    <a class="toplink" href="https://muse.ai/s/saibooks-fh6xj6x0xwxsonv" target="_blank" rel="noopener">SaiBooks</a>
+    <a class="toplink" href="https://muse.ai/s/sri-babuji-photos-xbw6xn7xzxvxrn6xl" target="_blank" rel="noopener">Photos</a>
+    <a class="toplink" href="https://muse.ai/s/sri-babuji-music-axe6xn7puxj5bxs" target="_blank" rel="noopener">Music</a>
+  </nav>
+
+  <header class="masthead">
+    <a class="medallion-home" href="https://muse.ai/s/sri-babuji-in-his-own-words-xbp6xkxycxmdxemxh" target="_blank" rel="noopener" title="Sri Babuji — In His Own Words" aria-label="Sri Babuji — In His Own Words">
+      <img class="oval" src="assets/guruji-baba-oval.jpg" alt="Sri Babuji seated with a white murti of Sai Baba, a framed portrait of Baba behind him">
+    </a>
+    <div class="headtext">
+      <h1><a class="home-title" id="homeTitle" href="#" title="Back to search">SaiLib</a> – Drench in Sri Babuji's Uchhishta</h1>
+      <p class="sub">Search below to find the exact context of what Guruji mentioned in various satsangs. Give it a try.</p>
+      <div class="rule" aria-hidden="true"><span></span><i></i><span></span></div>
+    </div>
+  </header>
+
+  <form id="searchForm" class="searchrow" role="search" autocomplete="off">
+    <div class="boxwrap">
+      <svg class="glass" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="10.5" cy="10.5" r="7"/>
+        <line x1="16" y1="16" x2="21.2" y2="21.2"/>
+      </svg>
+      <input id="q" name="q" type="search"
+             placeholder='Try "window" or "ఊది"…'
+             title="Press / to search"
+             aria-label="Search selected sources">
+      <button type="button" class="clear-search hidden" id="clearSearch" aria-label="Clear search">×</button>
+      <button type="button" class="tipsbtn" id="tipsBtn" aria-label="Search tips" aria-expanded="false" aria-controls="tipsPanel">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="7.4" x2="12" y2="7.5"/></svg>
+      </button>
+    </div>
+    <fieldset class="source-filters" id="sourceFilters" aria-label="Search sources">
+      <label class="source-option"><input id="sourceVideos" type="checkbox" aria-label="Videos" checked> Videos</label>
+      <label class="source-option"><input id="sourceDigests" type="checkbox" aria-label="Digests" checked> <a class="source-link" href="https://muse.ai/s/sri-babuji-digests-ox06xhhxrxkdxji6" target="_blank" rel="noopener">Digests</a></label>
+      <label class="source-option"><input id="sourceBooks" type="checkbox" aria-label="Books"> <a class="source-link" href="https://muse.ai/s/saibooks-fh6xj6x0xwxsonv" target="_blank" rel="noopener">Books</a></label>
+      <label class="source-option"><input id="sourcePhotos" type="checkbox" aria-label="Photos"> <a class="source-link" href="https://muse.ai/s/sri-babuji-photos-xbw6xn7xzxvxrn6xl" target="_blank" rel="noopener">Photos</a></label>
+      <label class="source-option"><input id="sourceMusic" type="checkbox" aria-label="Music"> <a class="source-link" href="https://muse.ai/s/sri-babuji-music-axe6xn7puxj5bxs" target="_blank" rel="noopener">Music</a></label>
+    </fieldset>
+    <p class="source-load-status hidden" id="sourceLoadStatus" role="status" aria-live="polite"></p>
+    <div class="search-actions">
+      <button type="submit" class="btn-primary">Search</button>
+      <button type="button" class="quiz-trigger" id="quizBtn" aria-expanded="false" aria-controls="quizPanel">🎯 Quiz me</button>
+      <button type="button" class="quiz-trigger surprise-btn" id="surpriseBtn" data-surprise>🎲 Surprise</button>
+    </div>
+  </form>
+
+  <div class="suggest quick-try" id="suggest">
+    <span>Try:</span>
+    <button type="button">ఊది</button><span class="sep" aria-hidden="true">·</span>
+    <button type="button">grace</button><span class="sep" aria-hidden="true">·</span>
+    <button type="button">guru purnima</button>
+  </div>
+
+  <div class="suggest" id="topicChips">
+    <span>Topics:</span>
+    <button type="button" data-digest-topic>Sai Baba</button>
+    <button type="button" data-digest-topic>Babuji</button>
+    <button type="button" data-digest-topic>Saipatham</button>
+  </div>
+
+  <section class="history-today" aria-labelledby="historyTodayTitle">
+    <div class="history-strip">
+      <div class="history-today-head">
+        <h2 id="historyTodayTitle">Today in history</h2>
+        <time id="historyTodayDate"></time>
+      </div>
+      <article class="history-bubble baba" id="historyBabaCard">
+        <button class="history-card-main" type="button" data-history-kind="baba" aria-expanded="false" aria-controls="historyDetail">
+          <img class="history-icon" src="assets/baba-face-card.jpg" alt="Sai Baba">
+          <span class="history-copy"><span class="history-name">Baba</span><span class="history-teaser" id="historyBabaTeaser"></span></span>
+          <span class="history-more" aria-hidden="true">›</span>
+        </button>
+      </article>
+      <article class="history-bubble guruji" id="historyGurujiCard">
+        <button class="history-card-main" type="button" data-history-kind="guruji" aria-expanded="false" aria-controls="historyDetail">
+          <img class="history-icon" src="assets/guruji-portrait.jpg" alt="Sri Babuji">
+          <span class="history-copy"><span class="history-name">Sri Babuji</span><span class="history-teaser" id="historyGurujiTeaser"></span></span>
+          <span class="history-more" aria-hidden="true">›</span>
+        </button>
+      </article>
+      <div class="history-timelines" aria-label="Full history timelines">
+        <a href="https://muse.ai/s/today-in-sai-baba-s-history-x0xe6xmvxqxsqxg6v" target="_blank" rel="noopener">Baba full timeline →</a>
+        <a href="https://muse.ai/s/today-in-sri-babuji-s-history-xvxa6xmvxexi4pcf" target="_blank" rel="noopener">Sri Babuji full timeline →</a>
+      </div>
+    </div>
+    <div class="history-detail hidden" id="historyDetail" aria-live="polite"></div>
+  </section>
+  <div class="tipspanel hidden" id="tipsPanel">
+    <p>Put an exact phrase in &quot;quotes&quot; to match it exactly. Type <strong>event:</strong> before your search to look only through event recordings — e.g. <button type="button" class="tipex" id="tipsExample">event: guru purnima 2025</button></p>
+  </div>
+
+  <section class="quiz-panel hidden" id="quizPanel" aria-label="Five-question quiz">
+    <div class="quiz-head">
+      <div>
+        <h2 id="quizTitle" tabindex="-1">Five questions to explore</h2>
+        <p>A fresh mix of six question styles — every answer includes its source.</p>
+        <div class="language-mode compact">
+          <span>Quiz language</span>
+          <div class="language-toggle" id="quizLangToggle" data-language-toggle role="group" aria-label="Quiz language">
+            <button type="button" data-lang="all" aria-pressed="true">Mixed</button>
+            <button type="button" data-lang="telugu" aria-pressed="false">Telugu</button>
+            <button type="button" data-lang="english" aria-pressed="false">English</button>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="quiz-close" id="quizClose" aria-label="Close quiz">×</button>
+    </div>
+    <div class="quiz-list" id="quizList"></div>
+    <div class="quiz-end-actions" aria-label="Quiz actions">
+      <button type="button" class="quiz-end-close" id="quizEndClose">Close quiz</button>
+      <button type="button" class="quiz-new" id="quizNew">New quiz</button>
+    </div>
+  </section>
+
+  <p class="eventnote hidden" id="eventNote"><span>Searching event recordings only</span><button type="button" id="eventClear">× Show all videos</button></p>
+  <div class="results-heading">
+    <div class="results-summary">
+      <p class="count" id="count" aria-live="polite"></p>
+      <div class="language-mode hidden" id="langChips">
+        <div class="language-toggle" data-language-toggle role="group" aria-label="Search language">
+          <button type="button" data-lang="all" aria-pressed="true">Mixed <span class="result-n" data-lang-count="all">0</span></button>
+          <button type="button" data-lang="telugu" aria-pressed="false">Telugu <span class="result-n" data-lang-count="telugu">0</span></button>
+          <button type="button" data-lang="english" aria-pressed="false">English <span class="result-n" data-lang-count="english">0</span></button>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="copy-link hidden" id="copySearch" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></svg>
+      <span>Copy search link</span>
+    </button>
+  </div>
+  <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+  <p class="fnote hidden" id="fnote" aria-live="polite"></p>
+  <div class="reference-stack hidden" id="referenceCard" aria-live="polite"></div>
+  <div class="suggest related-searches hidden" id="relatedSearches" aria-label="Related searches"></div>
+  <section class="results" id="results" aria-label="Search results"></section>
+  <div class="empty hidden" id="empty">
+    <p id="emptyText"></p>
+    <div class="try" id="emptyTry">
+      <button type="button">ఊది</button>
+      <button type="button">grace</button>
+      <button type="button">guru purnima</button>
+    </div>
+  </div>
+
+  <div class="feedback-float">
+    <div class="feedback-panel hidden" id="feedbackPanel">
+      <a href="https://forms.gle/uCoxQvhRrBDGJJmBA" target="_blank" rel="noopener">Feedback &amp; feature requests</a>
+    </div>
+    <button type="button" class="feedback-bubble" id="feedbackBubble" aria-label="Feedback and feature requests" aria-controls="feedbackPanel" aria-expanded="false" title="Feedback and feature requests">?</button>
+  </div>
+
+  <footer class="site" id="metaLine"></footer>
+  <p class="disclaimer">Content is user generated and unverified</p>
+  <p class="dedication">This is built by SaiEEker for Saiseekers as a humble offering to SaiBabuji's holy feet. Video search uses AI-generated captions — pardon any mistakes 🙏</p>
+  <p class="dedication authority">For authentic information on Sai Baba and Sri Babuji, please refer to the authoritative websites: <a href="https://saibaba.com" target="_blank" rel="noopener">saibaba.com</a> and <a href="https://saiseekers.com" target="_blank" rel="noopener">saiseekers.com</a>.</p>
+  <p class="theme-indicator">This week's theme: <span id="weekly-theme-name">Temple Stone</span></p>
+</main>
+
+<!-- ============================================================
+     SEARCH DATA — embedded snapshot of
+     ~/workspace/sri-babuji-transcripts/tools/search-index.json
+
+     To refresh the index: regenerate search-index.json from the
+     archive tools, then replace ONLY the object literal in
+     assets/sailib-search-index.js with the new JSON assigned to
+     window.SAILIB_SEARCH_INDEX. No other code changes are needed,
+     even when it grows beyond ~700 videos.
+
+     Optional per-video field: "status": "unavailable" marks a
+     video that has been taken down / unpublished from YouTube.
+     The entry stays fully searchable; its card shows a "no
+     longer available" callout and presents the summary, topics
+     and timestamps as plain text instead of watch links.
+     ============================================================ -->
+<script src="assets/related-map.js"></script>
+<script src="assets/known-words.js"></script>
+<script src="assets/home-js-1.js"></script>
+<script src="assets/home-js-2.js"></script>
+<script src="assets/home-js-3.js"></script>
+

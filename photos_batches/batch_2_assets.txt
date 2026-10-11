@@ -1,0 +1,2 @@
+/home/hatch/workspace/upload_pages/photos/assets/rose-petals-data.js|/photos/assets/rose-petals-data.js
+/home/hatch/workspace/upload_pages/photos/assets/timeline-atlas.webp|/photos/assets/timeline-atlas.webp
