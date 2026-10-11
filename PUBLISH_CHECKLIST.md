@@ -12,3 +12,5 @@ Run these before every push that changes what visitors see:
 6. **Only then** publish redirects or deprecate old URLs.
 
 If anything looks wrong on the live site: revert in git, rebuild, repeat from step 2.
+
+Note: this file (and home_split/, a stale undeployed variant) are internal staging only — do NOT push them to the GitHub repo.
