@@ -41,6 +41,17 @@ body{
 button,input{font:inherit}
 a{color:inherit}
 .shell{width:min(1180px,100%);margin:0 auto;padding:28px 24px 54px}
+.sitenav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;padding:12px 0}
+.sitenav a{
+  color:var(--accent);font-size:.92rem;font-weight:600;text-decoration:none;
+  display:inline-flex;align-items:center;
+  border:1.5px solid var(--accent);background:transparent;
+  border-radius:999px;padding:8px 20px;
+  transition:background .15s,color .15s;
+}
+.sitenav a:hover{background:var(--accent-soft)}
+.sitenav a.active{background:var(--accent);color:#211a14;border-color:var(--accent)}
+.sitenav a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:999px}
 .topbar{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin:-2px 0 10px}
 .toplink{
   display:inline-flex;align-items:center;border:1.5px solid var(--accent);border-radius:999px;padding:6px 14px;
@@ -181,14 +192,15 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
 </head>
 <body>
 <main class="shell">
-  <nav class="topbar" aria-label="Related pages">
-    <a class="toplink" href="/" target="_blank" rel="noopener">Videos</a>
-    <a class="toplink" href="/digests/" target="_blank" rel="noopener">Digests</a>
-    <a class="toplink" href="/books/" target="_blank" rel="noopener">Books</a>
-    <a class="toplink" href="/music/" target="_blank" rel="noopener">Music</a>
+  <nav class="sitenav" aria-label="Site navigation">
+    <a href="/">Home</a>
+    <a href="/digests/">Digests</a>
+    <a href="/books/">Books</a>
+    <a href="/music/">Music</a>
+    <a href="/photos/" class="active" aria-current="page">Photos</a>
   </nav>
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/" target="_blank" rel="noopener">Home</a><span class="breadcrumb-separator" aria-hidden="true">›</span><span class="breadcrumb-current" aria-current="page">Photos</span>
+    <a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true">›</span><span class="breadcrumb-current" aria-current="page">Photos</span>
   </nav>
 
   <header class="masthead">

@@ -82,6 +82,17 @@
       body[data-theme="twilight-indigo"] { --accent: #a8b6d7; --accent-strong: #c5cee4; --accent-soft: #292f40; }
     }
     a { color: inherit; }
+    .sitenav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;padding:12px 0}
+    .sitenav a{
+      color:var(--accent);font-size:.92rem;font-weight:600;text-decoration:none;
+      display:inline-flex;align-items:center;
+      border:1.5px solid var(--accent);background:transparent;
+      border-radius:999px;padding:8px 20px;
+      transition:background .15s,color .15s;
+    }
+    .sitenav a:hover{background:var(--accent-soft)}
+    .sitenav a.active{background:var(--accent);color:#211a14;border-color:var(--accent)}
+    .sitenav a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:999px}
     .topbar {
       width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
@@ -373,17 +384,14 @@
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <nav class="toplinks" aria-label="Related pages">
-      <a class="toplink" href="/">Videos</a>
-      <a class="toplink" href="/digests/">Digests</a>
-      <a class="toplink" href="/books/">Books</a>
-      <a class="toplink" href="/photos/">Photos</a>
-    </nav>
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true">›</span><span aria-current="page">Music</span>
-    </nav>
-  </header>
+  <nav class="sitenav" aria-label="Site navigation">
+    <a href="/">Home</a>
+    <a href="/digests/">Digests</a>
+    <a href="/books/">Books</a>
+    <a href="/music/" class="active" aria-current="page">Music</a>
+    <a href="/photos/">Photos</a>
+  </nav>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><span class="breadcrumb-current" aria-current="page">Music</span></nav>
 
   <section class="hero" aria-labelledby="page-title">
     <img class="hero-icon" src="assets/tunesclrimgoff.gif" width="89" height="71" alt="Sai Tunes">

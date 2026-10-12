@@ -197,8 +197,19 @@ body::after{
 .breadcrumb a{color:var(--accent);text-decoration:none}
 .breadcrumb a:hover{text-decoration:underline;color:var(--accent-deep)}
 .breadcrumb a:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:3px}
-.breadcrumb .separator{color:var(--muted);margin:0 7px}
-.breadcrumb .current{color:var(--ink);font-weight:600}
+.breadcrumb .breadcrumb-separator{color:var(--muted);margin:0 7px}
+.breadcrumb .breadcrumb-current{color:var(--ink);font-weight:600}
+.sitenav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;padding:12px 0}
+.sitenav a{
+  color:var(--accent);font-size:.92rem;font-weight:600;text-decoration:none;
+  display:inline-flex;align-items:center;
+  border:1.5px solid var(--accent);background:transparent;
+  border-radius:999px;padding:8px 20px;
+  transition:background .15s,color .15s;
+}
+.sitenav a:hover{background:var(--accent-soft)}
+.sitenav a.active{background:var(--accent);color:#211a14;border-color:var(--accent)}
+.sitenav a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:999px}
 .topbar{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin:-14px 0 10px}
 .toplink{
   color:var(--accent);font-size:.86rem;font-weight:600;text-decoration:none;
@@ -350,16 +361,14 @@ footer.site a:hover{text-decoration:underline}
 <body>
 <main class="wrap">
 
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/">Home</a><span class="separator" aria-hidden="true">›</span><span class="current" aria-current="page">SaiBooks</span>
+  <nav class="sitenav" aria-label="Site navigation">
+    <a href="/">Home</a>
+    <a href="/digests/">Digests</a>
+    <a href="/books/" class="active" aria-current="page">Books</a>
+    <a href="/music/">Music</a>
+    <a href="/photos/">Photos</a>
   </nav>
-
-  <div class="topbar">
-    <a class="toplink" href="/">SaiLib</a>
-    <a class="toplink" href="/digests/">Sai Digests</a>
-    <a class="toplink" href="/music/">Music</a>
-    <a class="toplink" href="/photos/">Photos</a>
-  </div>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><span class="breadcrumb-current" aria-current="page">Books</span></nav>
 
   <header class="masthead">
     <img class="mast-art" src="assets/mast-oval.jpg?v202610110620" width="620" height="720" alt="Sri Babuji seated beside a white Sai Baba murti">
