@@ -401,6 +401,14 @@ mark{background:var(--mark);border-radius:3px;padding:0 1px;color:inherit}
 }
 .empty .try button:hover{border-color:var(--accent)}
 .more{color:var(--muted);font-size:.92rem;text-align:center;margin:6px 0 0}
+.more-wrap{text-align:center;margin:14px 0 4px}
+.show-more-btn{
+  color:var(--accent);font-size:.9rem;font-weight:600;
+  border:1.5px solid var(--accent);background:transparent;border-radius:999px;
+  padding:8px 22px;cursor:pointer;transition:background .15s,color .15s;
+}
+.show-more-btn:hover{background:var(--accent-soft)}
+.show-more-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:999px}
 .feedback-float{position:fixed;right:18px;bottom:18px;z-index:12;display:flex;flex-direction:column;align-items:flex-end;gap:9px}
 .feedback-bubble{
   width:44px;height:44px;border:1.5px solid var(--accent);border-radius:50%;
@@ -1369,7 +1377,7 @@ var q = document.getElementById("q"),
     copyStatus = document.getElementById("copyStatus"),
     relatedSearches = document.getElementById("relatedSearches");
 
-var langFilter = "all", RESULT_LIMIT = 60;
+var langFilter = "all", RESULT_LIMIT = 5;
 
 /* ---------- header / footer from the loaded search index ---------- */
 function renderIndexMeta(){
@@ -2211,6 +2219,18 @@ function digestItemCardHTML(item){
     '" target="_blank" rel="noopener">' + esc(item.t) + '</a></h3>' +
     '<p class="digest-parent">' + esc(item.d) + '</p></article>';
 }
+/* ---------- collapsible "show more" sections ----------
+   Renders the first PREVIEW items visibly; the rest go into a hidden div
+   toggled by a "+ Show N more" / "- Show less" button. */
+var moreSectionSeq = 0;
+function moreSectionHTML(visibleHTML, restItemsHTML, restCount){
+  if(!restCount) return visibleHTML;
+  var id = "more-section-" + (++moreSectionSeq);
+  return visibleHTML +
+    '<div class="more-items" id="' + id + '" hidden>' + restItemsHTML + '</div>' +
+    '<div class="more-wrap"><button type="button" class="show-more-btn" data-target="' + id +
+    '" data-count="' + restCount + '" aria-expanded="false">+ Show ' + restCount + ' more</button></div>';
+}
 function referenceCardHTML(topic, index, hits, bookGroups, rawQuery){
   var digestUrl = DIGEST_BASE + (DIGEST_DEEP_LINKS[topic.title] || "#/" + topic.slug);
   var related = (topic.relatedVideos || []).slice();
@@ -2863,40 +2883,38 @@ function runSearch(){
   var rendered = [];
   if(digestItems.length){
     rendered.push('<h2 class="result-source">Digest articles</h2>');
-    rendered.push(digestItems.map(digestItemCardHTML).join(""));
+    var shownDigests = digestItems.slice(0, RESULT_LIMIT).map(digestItemCardHTML).join("");
+    var restDigests = digestItems.slice(RESULT_LIMIT).map(digestItemCardHTML).join("");
+    rendered.push(moreSectionHTML(shownDigests, restDigests, digestItems.length - RESULT_LIMIT));
   }
   if((sourceVideos.checked || sourceMusic.checked) && videoHits.length){
     rendered.push('<h2 class="result-source">Video results</h2>');
-    var shown = videoHits.slice(0, RESULT_LIMIT);
-    rendered.push(shown.map(function(hit){ return cardHTML(hit, tokens, phrases); }).join(""));
-    if(videoHits.length > RESULT_LIMIT){
-      rendered.push('<p class="more">Showing the top ' + RESULT_LIMIT + " of " + videoHits.length +
-        " video results — refine your search to narrow it down.</p>");
-    }
+    var shownVideos = videoHits.slice(0, RESULT_LIMIT).map(function(hit){ return cardHTML(hit, tokens, phrases); }).join("");
+    var restVideos = videoHits.slice(RESULT_LIMIT).map(function(hit){ return cardHTML(hit, tokens, phrases); }).join("");
+    rendered.push(moreSectionHTML(shownVideos, restVideos, videoHits.length - RESULT_LIMIT));
   }
   if(sourceBooks.checked && books.groups.length){
     if(!topicRefs.length && !((sourceVideos.checked || sourceMusic.checked) && videoHits.length)){
       rendered.push('<p class="books-only-note">No videos found, but here are some references to books</p>');
     }
     rendered.push('<h2 class="book-results-heading">Book results</h2>');
-    rendered.push(books.groups.slice(0, 8).map(function(group){
+    var shownBooks = books.groups.slice(0, RESULT_LIMIT).map(function(group){
       return bookCardHTML(group, tokens, phrases, raw);
-    }).join(""));
-    if(books.groups.length > 8){
-      var allBooksUrl = SAIBOOKS_URL + "#/q=" + encodeURIComponent(raw.trim());
-      rendered.push('<p class="more">Showing 8 of ' + books.groups.length +
-        ' matching books — <a class="book-open" href="' + esc(allBooksUrl) +
-        '" target="_blank" rel="noopener">see all in SaiBooks</a>.</p>');
-    }
+    }).join("");
+    var restBooks = books.groups.slice(RESULT_LIMIT).map(function(group){
+      return bookCardHTML(group, tokens, phrases, raw);
+    }).join("");
+    rendered.push(moreSectionHTML(shownBooks, restBooks, books.groups.length - RESULT_LIMIT));
   }
   if(sourcePhotos.checked && photos.length){
     rendered.push('<h2 class="photo-results-heading">Photos</h2>');
-    rendered.push(photos.slice(0, 12).map(function(hit){
+    var shownPhotos = photos.slice(0, RESULT_LIMIT).map(function(hit){
       return photoCardHTML(hit, tokens, phrases);
-    }).join(""));
-    if(photos.length > 12){
-      rendered.push('<p class="more">Showing 12 of ' + photos.length + ' matching photos.</p>');
-    }
+    }).join("");
+    var restPhotos = photos.slice(RESULT_LIMIT).map(function(hit){
+      return photoCardHTML(hit, tokens, phrases);
+    }).join("");
+    rendered.push(moreSectionHTML(shownPhotos, restPhotos, photos.length - RESULT_LIMIT));
   }
   resultsEl.innerHTML = rendered.join("");
 
@@ -3135,6 +3153,24 @@ resultsEl.addEventListener("click", function(e){
   copyText(button.getAttribute("data-copy-link")).then(function(){
     showCopyResult(button, true, "video");
   }, function(){ showCopyResult(button, false, "video"); });
+});
+
+/* ---------- collapsible "show more" toggle ---------- */
+resultsEl.addEventListener("click", function(e){
+  var btn = e.target.closest(".show-more-btn");
+  if(!btn) return;
+  var target = document.getElementById(btn.getAttribute("data-target"));
+  if(!target) return;
+  var expanded = btn.getAttribute("aria-expanded") === "true";
+  if(expanded){
+    target.hidden = true;
+    btn.setAttribute("aria-expanded", "false");
+    btn.textContent = "+ Show " + btn.getAttribute("data-count") + " more";
+  } else {
+    target.hidden = false;
+    btn.setAttribute("aria-expanded", "true");
+    btn.textContent = "- Show less";
+  }
 });
 
 /* ---------- five-question quiz ----------
