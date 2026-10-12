@@ -802,7 +802,7 @@ body::after { content:''; position:fixed; inset:0; background-image:var(--theme-
     <span>Try:</span>
     <button type="button">ఊది</button><span class="sep" aria-hidden="true">·</span>
     <button type="button">grace</button><span class="sep" aria-hidden="true">·</span>
-    <button type="button">guru purnima</button>
+    <button type="button" data-query="&quot;guru purnima&quot;">guru purnima</button>
   </div>
 
   <div class="suggest" id="topicChips">
@@ -3026,7 +3026,7 @@ function wireTry(container){
     var btn = e.target.closest("button");
     if(!btn || btn.hasAttribute("data-surprise")) return;
     if(btn.hasAttribute("data-digest-topic")) sourceDigests.checked = true;
-    q.value = btn.textContent;
+    q.value = btn.getAttribute("data-query") || btn.textContent;
     clearTimeout(deb);
     runSearch();
     finishSearch();
