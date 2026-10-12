@@ -434,7 +434,12 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     var refs=photo.refs||[];
     if(!refs.length){return '';}
     var videoNumber=0;
+    var timelineShown=false;
     var links=refs.map(function(ref){
+      if(ref.type==='timeline'){
+        if(timelineShown){return '';}
+        timelineShown=true;
+      }
       var type=ref.type==='timeline'?'Timeline':(ref.type==='video'?'Video':'Book');
       var href=ref.type==='timeline'?'#timelineHeading':ref.url;
       var target=ref.type==='timeline'?'':' target="_blank" rel="noopener"';
@@ -467,7 +472,7 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     var sourceLine;
     if(isDevotee&&photo.story){
       sourceLine='<p class="devotee-story">'+escapeHTML(photo.story.summary_en)+'</p>'+ 
-        '<p class="devotee-source">From Sri Saibhaktha Anubhava Samhita, Chapter '+escapeHTML(photo.story.chapter)+', pages '+escapeHTML(photo.story.pages)+'</p>'+ 
+        '<p class="devotee-source">From <a href="/books/" class="book-ref-link">Sri Saibhaktha Anubhava Samhita</a>, Chapter '+escapeHTML(photo.story.chapter)+', pages '+escapeHTML(photo.story.pages)+'</p>'+ 
         '<p class="devotee-name-te" lang="te">'+escapeHTML(photo.story.name_te)+'</p>';
     }else{
       sourceLine=isDevotee?'<p class="source-line">Devotee photo</p>':'<a class="photo-link" href="'+escapeHTML(photo.url)+'" target="_blank" rel="noopener">View photo on Flickr ›</a>';
