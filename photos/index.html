@@ -676,5 +676,5 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
   render();
 })();
 </script>
-<script data-fresh-param-preserver>(function(){var m=window.location.search.match(/[?&]fresh=([^&]+)/);if(!m)return;var f=m[1];document.querySelectorAll('a[href^="/"],a[href^="https://pathofsai.com/"]').forEach(function(a){var h=a.getAttribute("href");if(h&&h.indexOf("fresh=")===-1){var s=h.indexOf("?")===-1?"?":"&";a.setAttribute("href",h+s+"fresh="+f);}});})();</script></body>
+<script data-fresh-param-preserver>(function(){var m=window.location.search.match(/[?&]fresh=([^&]+)/);var f=m?m[1]:null;var ts=Date.now();document.querySelectorAll('a[href="/"],a[href="https://pathofsai.com/"],a[href="https://pathofsai.com"]').forEach(function(a){var h=a.getAttribute("href");if(h&&h.indexOf("fresh=")===-1){var s=h.indexOf("?")===-1?"?":"&";a.setAttribute("href",h+s+"fresh="+ts);}});if(f){document.querySelectorAll('a[href^="/"],a[href^="https://pathofsai.com/"]').forEach(function(a){var h=a.getAttribute("href");if(h==="/"||h==="https://pathofsai.com/"||h==="https://pathofsai.com")return;if(h&&h.indexOf("fresh=")===-1){var s=h.indexOf("?")===-1?"?":"&";a.setAttribute("href",h+s+"fresh="+f);}});}})();</script></body>
 </html>
