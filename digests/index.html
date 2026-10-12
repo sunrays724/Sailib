@@ -209,6 +209,18 @@
   .authority{margin:-22px auto 34px; color:var(--muted); font-size:.76rem; line-height:1.5; text-align:center; max-width:680px}
   .authority a{color:inherit; text-underline-offset:2px}
   .empty{padding:6px 0 0; color:var(--muted); font-style:italic; display:none}
+  /* ---- site navigation (consistent across all pages) ---- */
+  .sitenav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;padding:12px 0}
+  .sitenav a{
+    color:var(--accent);font-size:.92rem;font-weight:600;text-decoration:none;
+    display:inline-flex;align-items:center;
+    border:1.5px solid var(--accent);background:transparent;
+    border-radius:999px;padding:8px 20px;
+    transition:background .15s,color .15s;
+  }
+  .sitenav a:hover{background:var(--accent-soft)}
+  .sitenav a.active{background:var(--accent);color:#211a14;border-color:var(--accent)}
+  .sitenav a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:999px}
   /* ---- breadcrumb navigation ---- */
   .breadcrumb{padding:10px 0 2px; font-size:.84rem; line-height:1.4}
   .breadcrumb a{color:var(--muted); text-decoration:none; text-underline-offset:3px}
@@ -353,13 +365,14 @@
 <body>
 <div class="wrap">
   <section id="view-index" class="view on">
-    <div class="topbar" aria-label="Related pages">
-      <a class="toplink" href="/" target="_blank" rel="noopener">SaiLib</a>
-      <a class="toplink" href="/books/" target="_blank" rel="noopener">SaiBooks</a>
-      <a class="toplink" href="/music/" target="_blank" rel="noopener">Music</a>
-      <a class="toplink" href="/photos/" target="_blank" rel="noopener">Photos</a>
-    </div>
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a></nav>
+    <nav class="sitenav" aria-label="Site navigation">
+      <a href="/">Home</a>
+      <a href="/digests/" class="active" aria-current="page">Digests</a>
+      <a href="/books/">Books</a>
+      <a href="/music/">Music</a>
+      <a href="/photos/">Photos</a>
+    </nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><span class="breadcrumb-current" aria-current="page">Digests</span></nav>
     <header class="hero">
       <div class="hero-head">
         <img class="hero-art" src="assets/oval-portrait.jpg?v202610110620" alt="Sri Babuji in white seated beside a white murti of Sai Baba" width="620" height="720">
