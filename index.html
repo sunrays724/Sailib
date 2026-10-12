@@ -1121,9 +1121,12 @@ var PHOTOS = [];
 var photoIndexPrepared = false;
 function preparePhotoIndex(){
   if(photoIndexPrepared) return;
-  PHOTO_INDEX = window.SAILIB_PHOTO_INDEX || null;
-  if(!PHOTO_INDEX || !Array.isArray(PHOTO_INDEX.photos)) throw new Error("photo index is incomplete");
-  PHOTOS = PHOTO_INDEX.photos.map(function(photo, index){
+  var raw = window.SAILIB_PHOTO_INDEX || null;
+  // Support both formats: {photos: [...]} and bare [...]
+  var photosArray = Array.isArray(raw) ? raw : (raw && Array.isArray(raw.photos) ? raw.photos : null);
+  if(!photosArray) throw new Error("photo index is incomplete");
+  PHOTO_INDEX = { photos: photosArray, source: (raw && raw.source) || "" };
+  PHOTOS = photosArray.map(function(photo, index){
     return {
       id: String(photo.id || index),
       title: String(photo.title || "Untitled photo"),
