@@ -257,6 +257,34 @@
   .readalong-note{background:var(--accent-soft); border:1px solid var(--accent); border-radius:12px; padding:14px 17px; margin:14px 0}
   .readalong-note p{margin:0 0 8px}
   .readalong-note p:last-child{margin-bottom:0}
+  /* ---- quick-jump pill nav + interactive quiz (weekly satsang template) ---- */
+  .jump-nav{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px}
+  .jump-nav a{display:inline-block; padding:7px 16px; border-radius:999px; background:var(--card);
+    border:1px solid var(--accent); color:var(--accent-ink); font-weight:700; font-size:.9rem;
+    text-decoration:none; cursor:pointer; box-shadow:var(--shadow)}
+  .jump-nav a:hover{background:var(--accent-soft)}
+  .quiz{scroll-margin-top:14px}
+  .quiz-list{list-style:none; margin:12px 0 0; padding:0; counter-reset:qq}
+  .quiz-q{background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:13px 16px; margin:0 0 12px; box-shadow:var(--shadow); counter-increment:qq; scroll-margin-top:14px}
+  .quiz-q .qq{display:flex; gap:10px; align-items:flex-start; font-weight:700}
+  .quiz-q .qq::before{content:counter(qq); flex:none; width:26px; height:26px; border-radius:50%;
+    background:var(--accent); color:#fff; font-size:.82rem; display:inline-flex; align-items:center;
+    justify-content:center; font-weight:700; margin-top:1px}
+  .quiz-tag{flex:none; font-size:.7rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--accent-ink); background:var(--accent-soft); border:1px solid var(--line);
+    border-radius:999px; padding:2px 9px; margin-top:2px}
+  .quiz-opts{list-style:none; margin:10px 0 4px; padding:0}
+  .quiz-opts li{margin:5px 0; padding:7px 12px; border:1px solid var(--line); border-radius:8px; font-size:.93rem}
+  .quiz-opts .k{font-weight:700; color:var(--accent-ink); margin-right:6px}
+  .quiz-blank{font-family:inherit; font-size:.95rem; border:0; border-bottom:2px dashed var(--accent);
+    background:transparent; color:var(--text); min-width:120px; padding:2px 4px}
+  .quiz-q details{margin-top:9px; border-top:1px dashed var(--line); padding-top:8px}
+  .quiz-q summary{cursor:pointer; color:var(--accent-ink); font-weight:700; font-size:.9rem}
+  .quiz-q summary:hover{text-decoration:underline}
+  .quiz-ans{margin:8px 0 0; font-size:.93rem}
+  .quiz-ans .ok{color:var(--accent-ink); font-weight:700}
+  .quiz-why{color:var(--muted); font-size:.88rem; margin:6px 0 0}
   .key-points{margin:10px 0 0; padding-left:23px}
   .key-points li{margin:0 0 9px}
   .key-point-group + .key-point-group{margin-top:18px}
@@ -328,6 +356,8 @@
     <div class="topbar" aria-label="Related pages">
       <a class="toplink" href="/" target="_blank" rel="noopener">SaiLib</a>
       <a class="toplink" href="/books/" target="_blank" rel="noopener">SaiBooks</a>
+      <a class="toplink" href="/music/" target="_blank" rel="noopener">Music</a>
+      <a class="toplink" href="/photos/" target="_blank" rel="noopener">Photos</a>
     </div>
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a></nav>
     <header class="hero">
@@ -347,7 +377,7 @@
     <div id="tindex"></div>
     <p class="empty" id="no-match">No digest matches that search. More topics are being added &mdash; try a different word.</p>
     <footer class="footer">Curated from the Sri Babuji and SaiSEEkers YouTube channel transcripts &middot; timestamps point into the original videos</footer>
-    <p class="dedication">This is built by SaiEEker for Saiseekers as a humble offering to SaiBabuji's holy feet. Event discourses are human-transcribed; results marked CC use AI-generated captions &mdash; pardon any mistakes &#x1F64F;</p>
+    <p class="dedication">This is built by SaiSEEker for Saiseekers as a humble offering to SaiBabuji's holy feet. Event discourses are human-transcribed; results marked CC use AI-generated captions &mdash; pardon any mistakes &#x1F64F;</p>
     <p class="theme-indicator">This week's theme: <span id="weekly-theme-name">Dawn Gold</span></p>
     <p class="authority">For authentic information on Sai Baba and Sri Babuji, please refer to the authoritative websites: <a href="https://saibaba.com" target="_blank" rel="noopener">saibaba.com</a> and <a href="https://saiseekers.com" target="_blank" rel="noopener">saiseekers.com</a>.</p>
   </section>
@@ -356,7 +386,7 @@
     <a class="back" href="#/" target="_self">&larr; All digests</a>
     <div id="digest"></div>
     <footer class="footer">Curated from the Sri Babuji and SaiSEEkers YouTube channel transcripts &middot; timestamps point into the original videos</footer>
-    <p class="dedication">This is built by SaiEEker for Saiseekers as a humble offering to SaiBabuji's holy feet. Event discourses are human-transcribed; results marked CC use AI-generated captions &mdash; pardon any mistakes &#x1F64F;</p>
+    <p class="dedication">This is built by SaiSEEker for Saiseekers as a humble offering to SaiBabuji's holy feet. Event discourses are human-transcribed; results marked CC use AI-generated captions &mdash; pardon any mistakes &#x1F64F;</p>
     <p class="theme-indicator">This week's theme: <span id="weekly-theme-name">Dawn Gold</span></p>
     <p class="authority">For authentic information on Sai Baba and Sri Babuji, please refer to the authoritative websites: <a href="https://saibaba.com" target="_blank" rel="noopener">saibaba.com</a> and <a href="https://saiseekers.com" target="_blank" rel="noopener">saiseekers.com</a>.</p>
   </section>
@@ -2644,6 +2674,94 @@ var DIGESTS = {
 /* Owner-commissioned primers. Their source text and links are preserved verbatim. */
 DIGESTS.primers = [
   {
+    name: "What is Satsang?",
+    summary: "What is satsang? Sri Babuji's teachings on satsang — its meaning, purpose, and how to do it. Satsang is the fencing protecting the harvest, the chimney sheltering the small lamp of devotion, and simply sitting together in Baba's love.",
+    lead: `<p><strong>Satsang — literally "the company of Truth" (sat = truth, sang = company).</strong> But what does it actually mean to sit in satsang? Sri Babuji returns to this question again and again across decades of satsangs, and his answers cut through every misconception: satsang is not a lecture, not a ritual, not propaganda, not a social club. It is the fencing that protects the tender harvest of devotion, the chimney that shelters the small lamp of a good feeling from the winds of the world — and, most simply, just sitting together, because Baba works not through verbal teaching but through love.</p>
+      <p>This digest gathers Guruji's clearest explanations: what satsang is, the three kinds of satsangam, how satsang should (and should not) be done, and why regularity matters more than feeling.</p>`,
+    quiz: [
+      {type:"mcq", q:"Guruji says: “Satsang is the fencing protecting the harvest.” What is the harvest?",
+       options:["The number of devotees", "The tender devotion/emotion lit in the heart", "The donations collected", "The temple building"], answer:1,
+       why:"“Some kind of emotion is lit, a small lamp is lit — we need a fencing for that, a protection for that.” The mind is easily influenced by the environment; satsang protects the fragile new devotion until it grows strong."},
+      {type:"mcq", q:"In the lamp-and-chimney analogy, what does the chimney (satsangam) protect?",
+       options:["The temple from rain", "The small lamp of a good bhava from the wind of the world", "The oil from spilling", "The wick from burning out"], answer:1,
+       why:"A good feeling — from a good word, a good book, or Sai's grace — is like a small lamp; the world's attractions are the wind that would blow it out. Satsangam is the chimney. When the flame grows big, the very wind becomes its friend."},
+      {type:"mcq", q:"According to Guruji, what is the FIRST kind of satsangam (the truest)?",
+       options:["Reading books about saints", "The company and service of satpurushas who have seen and experienced the Truth", "Singing bhajans alone", "Visiting temples"], answer:1,
+       why:"“The first kind of satsangam: the company and service of those who have seen and experienced the Truth — the satpurushas.” The second is reading their charitras and teachings when their company is not available."},
+      {type:"tf", q:"Guruji says satsang will make you enlightened through his lectures and verbal teaching.", answer:false,
+       why:"“Don't believe this satsang will make you enlightened… I don't believe in lectures, in verbal teaching.” Satsang is “just an opportunity to sit together” — Baba works not through verbal teaching."},
+      {type:"tf", q:"Guruji says it is fine if satsang feels mechanical at first — keep the routine anyway.", answer:true,
+       why:"Like eating lunch at 12 whether hungry or not: regularity builds the state. “If it feels mechanical, that is fine — start the routine anyway.” Breaking the routine is what to avoid."},
+      {type:"fill", q:"“Satsang is just a ____ for all of us to sit together.”", answer:"pretext",
+       why:"“This is all just a pretext for all of us to sit together.” The content of the talk is not the point — sitting together in love is."},
+      {type:"reflect", q:"Guruji says satsang is not for boosting our ego, growing the sangha, or Baba's propaganda.",
+       prompt:"Think about your own reason for attending satsang. Is there any trace of ego (“I am a regular”), recruitment (“I must bring ten people”), or identity in it? What would it feel like to sit there wanting nothing but to share the good you received — like recommending a movie you loved?"},
+    ],
+    sections: [
+      {
+        title: "Satsang is the fencing protecting the harvest",
+        html: `<p>In Shirdi, 15 March 1997, Guruji gives the central image: our mind is weak and easily influenced by the environment — in one place we think one way, in another place we fall into that environment. When a tender new devotion is lit, it needs protection:</p>
+          <blockquote><p>"If you don't have the fencing, if you want to really enjoy the harvest, you have to take care of the fencing also, otherwise you don't get the harvest."</p></blockquote>
+          <p>And the lamp:</p>
+          <blockquote><p>"Some kind of emotion is lit, a small lamp is lit — we need a fencing for that, a protection for that, a glass, a chimney is needed. If it is a big fire, you don't need a fence — it consumes everything in the environment."</p></blockquote>
+          <p>The promise: when the emotion grows powerful, "then you influence the environment wherever you go — satsang will be automatically created there."</p>
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=bodYFKP2qXc&t=1327s" target="_blank" rel="noopener">Satsang is the fencing protecting the harvest — 22:07</a></li>
+            <li><a href="https://www.youtube.com/watch?v=bodYFKP2qXc&t=1374s" target="_blank" rel="noopener">The small lamp needs a chimney; the big fire consumes the environment — 22:54</a></li>
+          </ul>`
+      },
+      {
+        title: "Satsang is just sitting together",
+        html: `<p>At Tiruvannamalai (16 November 2004), Guruji disarms every expectation about what satsang is supposed to achieve:</p>
+          <blockquote><p>"Don't believe this satsang will make you enlightened, and you will get knowledge with my lectures — this and nothing. It just is an opportunity to sit with you for some time."</p></blockquote>
+          <blockquote><p>"What we speak now, the content — I don't think it is very important, because I don't believe in lectures, in verbal teaching. If it were so good, Baba would have gone giving lectures, moving around the whole world. What He didn't do — why should I do that?"</p></blockquote>
+          <blockquote><p>"This is all just a pretext for all of us to sit together."</p></blockquote>
+          <p>Because Baba works differently: <em>"What Baba does, He does it not by any verbal teaching."</em> Expression of love — namaskar, worship, whatever you feel like — deepens experience. That expression <em>is</em> the sadhana.</p>
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=MRKz86OSU5U&t=2884s" target="_blank" rel="noopener">Satsang is just sitting together; Baba works not through verbal teaching — 48:04</a></li>
+          </ul>`
+      },
+      {
+        title: "The three kinds of satsangam",
+        html: `<p>In a Telugu extract on bhajana, Guruji describes satsangam as the chimney that protects the small lamp of a good bhava (a good feeling — from a good word, a good book, or Sai's grace) from the wind of the world's attractions. And when the flame grows big, the very wind that was its enemy becomes its friend — the sadhaka then draws the world toward himself.</p>
+          <p>He names three kinds of satsangam:</p>
+          <ol>
+            <li><strong>The company and service of satpurushas</strong> — those who have seen and experienced the Truth. This is the truest satsangam.</li>
+            <li><strong>Reading the charitras, teachings and mahimas of mahatmas</strong> — when their company is not available, their words and lives keep us in their company.</li>
+          </ol>
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=Hb7IgIl96XE&t=60s" target="_blank" rel="noopener">The small lamp vs the wind — satsangam as the chimney — 1:00</a> <small>(Telugu)</small></li>
+            <li><a href="https://www.youtube.com/watch?v=Hb7IgIl96XE&t=125s" target="_blank" rel="noopener">Three kinds of satsangam — 2:05</a> <small>(Telugu)</small></li>
+          </ul>`
+      },
+      {
+        title: "How satsang should be done — and how not",
+        html: `<p>Asked "how should satsang be done?" (Telugu), Guruji answers with disarming practicality:</p>
+          <p><strong>Don't break the routine.</strong> Like eating lunch at 12 whether hungry or not — regularity builds the state. If it feels mechanical after years, that is fine: start the routine anyway. We never try to break our other routines (sleep, office, TV) — only satsang gets the "it's become mechanical" excuse.</p>
+          <p><strong>Not for ego, not for growth, not for propaganda.</strong> Satsang is not for boosting our ego, not for making ten more Baba devotees and growing the sangha, not Baba's propaganda. It is sharing the good Baba did to you — like recommending a good movie you enjoyed. When a movie moves you, you tell your friend, even buy them a ticket — is that propaganda? No: it is the natural human trait of sharing joy.</p>
+          <p><strong>Avoid prominence.</strong> As far as possible, don't sit in front of the mic.</p>
+          <p>And from the 2024 Guru Purnima satsang: <em>"Sitting with ten Sai devotees is puja to me."</em></p>
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=DLIZV1wOCjw&t=13s" target="_blank" rel="noopener">Don't break the routine — the meals analogy — 0:13</a> <small>(Telugu)</small></li>
+            <li><a href="https://www.youtube.com/watch?v=DLIZV1wOCjw&t=140s" target="_blank" rel="noopener">Not for ego, sangha-growth, or propaganda — the good-movie analogy — 2:20</a> <small>(Telugu)</small></li>
+            <li><a href="https://www.youtube.com/watch?v=c26SrVjEpHM&t=1412s" target="_blank" rel="noopener">Sitting with ten Sai devotees is puja — 23:32</a> <small>(Telugu)</small></li>
+          </ul>`
+      },
+    ],
+    summary: `Satsang — the company of Truth — is the fencing that protects the tender harvest of devotion and the chimney that shelters the small lamp of a good feeling from the winds of the world. It is not a lecture and not a path to enlightenment through words: Baba works not through verbal teaching, so satsang is simply a pretext to sit together and share love. The truest satsangam is the company of those who have experienced the Truth; next, their lives and teachings in books. Done rightly, it is regular like meals, free of ego and propaganda — just sharing the good received, the way you'd recommend a film you loved.`,
+    keyPoints: [
+      `<strong>Satsang is protection, not the harvest itself.</strong> The harvest is the devotion lit in the heart; satsang is the fencing around it until it grows strong enough to influence the environment instead of being influenced by it.`,
+      `<strong>Satsang is just sitting together.</strong> Guruji disavows lectures and verbal teaching as the mechanism — "this is all just a pretext for all of us to sit together." Baba works through love, not words.`,
+      `<strong>Three kinds of satsangam:</strong> (1) company and service of satpurushas who have seen the Truth; (2) reading the charitras, teachings and mahimas of mahatmas when their company is unavailable.`,
+      `<strong>Keep the routine; don't chase feeling.</strong> Like meals at a fixed hour — regularity builds the state. Mechanical is fine; breaking the routine is the real danger.`,
+      `<strong>Not for ego, growth, or propaganda.</strong> Satsang is sharing the good Baba did for you, naturally — like telling a friend about a movie you loved. Avoid prominence; don't sit in front of the mic.`,
+      `<strong>"Sitting with ten Sai devotees is puja to me."</strong> — Guruji's own measure of what satsang is worth.`,
+    ],
+    readMore: "",
+    inBrief: `Satsang — "the company of Truth" — is the fencing protecting the tender harvest of devotion and the chimney sheltering the small lamp of love from the world's winds. It is not a lecture: Baba works not through verbal teaching, so satsang is simply sitting together in love. Keep it regular like meals, keep it free of ego and propaganda, and let the company of the truthful — in person or in their words — do its quiet work.`
+  }
+,
+  {
     name: "Who is Sai Baba?",
     summary: "A sourced primer on Sai Baba's life in Shirdi, Dwarkamai and Chavadi, his devotees, teachings and Mahasamadhi.",
     lead: `<p>Sai Baba lived at the turn of the twentieth century in the small village of Shirdi, in Maharashtra, for around sixty years — although, as the books note, "this was not his birthplace. He never revealed what that was, nor the time of his birth, his religion, caste, original name, nor the names of his parents." "Sai" means "Saint" and "Baba" means "Father" — "the name expresses the love and reverence devotees feel for him and was coined by one of his first devotees." (<em>Bound to Love</em>, pp. vii–viii)</p>
@@ -3213,12 +3331,49 @@ DIGESTS.readalongs = [
         time: "2:07:10", seconds: 7630, title: "Meaning of the aarti (in English)",
         html: `<p><em>Guruji explains the meaning of the aarti in English:</em></p><p>"Lord Sainath, take care of us, thy children, by always keeping thy gracious eye on us. Once we know the truth, we find that though thou pervadest the whole universe, anything seen apart from thee is but false. I am blind and a bondsman of thee. Pray grant me the divine vision of the Lord..."</p>`
       },
-      {
-        time: "Quick trivia", seconds: 2871, title: "Quick trivia — test yourself",
-        html: `<p><strong>1.</strong> Guruji corrects the devotee: saburi is not "patiently waiting" but... <em>Answer: "happily waiting" — "patiently is not the word that I use."</em></p><p><strong>2.</strong> In the schoolboy example, what gives the boy the trust that he will go home? <em>Answer: The long bell — "the long bell gives him that trust, that is saburi."</em></p><p><strong>3.</strong> What are Baba's two pice? <em>Answer: Shraddha — total loving attention on the Guru — and saburi.</em></p><p><strong>4.</strong> How does Guruji translate "nishta"? <em>Answer: Unflinching perseverance — unflinchingness of likes and dislikes, held by a stronger pull: the object of love.</em></p><p><strong>5.</strong> How long did Siddiq Falke wait at a distance before Baba let him dine with Him? <em>Answer: Nine months — "What was the basis for his saburi? His love."</em></p><p><strong>6.</strong> In the sadhu-Narada story, how many births did Vishnu say were needed for darshan? <em>Answer: As many births as the leaves of the tree under which the sadhu sat — millions.</em></p><p><strong>7.</strong> What burned the sadhu's karma so that Vishnu gave darshan at once? <em>Answer: His ecstatic happiness at the promise of darshan — "happiness and ecstatic happiness is the key to darshan."</em></p><p><strong>8.</strong> How do the saints describe the experience of union, according to Guruji? <em>Answer: In words of separation and longing — the gopis, Ramana's Arunachala Padikam — because union itself cannot be described.</em></p>`
-      }
     ],
-    inBrief: "Baba's two pice are shraddha — total loving attention on the Guru — and saburi, which is not patient waiting but happy waiting: the schoolboy's joy at the long bell, waiting upon the beloved rather than the boss. Nishta is unflinching perseverance, held by the stronger pull of love. The sadhu who danced at Narada's news shows that ecstatic happiness burns karma and is the key to darshan — 'it could be this minute, or it may take forever.' And longing does not end at the goal: the saints sing union in the language of separation."
+    inBrief: "Baba's two pice are shraddha — total loving attention on the Guru — and saburi, which is not patient waiting but happy waiting: the schoolboy's joy at the long bell, waiting upon the beloved rather than the boss. Nishta is unflinching perseverance, held by the stronger pull of love. The sadhu who danced at Narada's news shows that ecstatic happiness burns karma and is the key to darshan — 'it could be this minute, or it may take forever.' And longing does not end at the goal: the saints sing union in the language of separation.",
+    quiz: [
+      {type:"mcq", q:"Guruji corrects the devotee: saburi is not “patiently waiting” but…",
+       options:["Silently waiting", "Happily waiting", "Hopefully waiting", "Endlessly waiting"], answer:1,
+       why:"“Sorry — happily waiting. Patiently is not the word that I use.” A patient is one who suffers from a disease; we wait like one who waits for the beloved — with the thrill of something about to happen."},
+      {type:"mcq", q:"In the schoolboy example, what gives the bored boy the trust that he will go home?",
+       options:["The teacher's promise", "The long bell", "His friends calling out", "Finishing his homework"], answer:1,
+       why:"“The long bell gives him that trust — that is saburi.” He is still in the classroom, in front of the same teacher — but the very thought that he can go home makes him happy."},
+      {type:"mcq", q:"What are Baba's two pice?",
+       options:["Faith and charity", "Shraddha and saburi", "Prayer and fasting", "Love and service"], answer:1,
+       why:"Shraddha — total loving attention on the Guru — and saburi. Baba first got the devotee's head shaved, clearing all thoughts, and then asked for these two."},
+      {type:"mcq", q:"How does Guruji translate “nishta”?",
+       options:["Blind faith", "Unflinching perseverance", "Deep meditation", "Total surrender"], answer:1,
+       why:"“Nishta doesn't mean faith — it is unflinching perseverance.” What flinches is our likes and dislikes; a stronger pull — the object of love — keeps the mind from straying."},
+      {type:"mcq", q:"Siddiq Falke, kept from entering the masjid, waited at a distance for how long before Baba let him dine with Him?",
+       options:["Nine days", "Nine weeks", "Nine months", "Nine years"], answer:2,
+       why:"“What made him that? His patience, saburi. What was the basis for his saburi? His love.”"},
+      {type:"mcq", q:"In the sadhu–Narada story, how many births did Vishnu say were needed before darshan?",
+       options:["A hundred", "A thousand", "As many as the leaves of the tree", "Seven"], answer:2,
+       why:"Millions of births — yet hearing the promise, the sadhu danced with joy, his karma burned, and Vishnu gave darshan at once."},
+      {type:"mcq", q:"According to Guruji, how do the saints describe the experience of union?",
+       options:["In precise philosophical terms", "In words of separation and longing", "They never speak of it at all", "Only through silence"], answer:1,
+       why:"The gopis' longing for Krishna, Ramana's Arunachala Padikam — union itself cannot be described, so they sing it in the language of separation."},
+      {type:"tf", q:"Guruji says “patiently” is the right word for saburi.", answer:false,
+       why:"“Patiently is not the word that I use.” A patient suffers from a disease — we wait with the thrill of something about to happen, like waiting for the beloved."},
+      {type:"tf", q:"The sadhu's ecstatic happiness at the promise of darshan burned his karma, and Vishnu gave him darshan at once.", answer:true,
+       why:"“Happiness and ecstatic happiness is the key to darshan.” The very news of the promise gave such ecstasy that all the karma of those years was burned."},
+      {type:"tf", q:"Waiting for the beloved and waiting for the boss feel the same — only the duration of the wait differs.", answer:false,
+       why:"Same two hours at the airport, wholly different waiting: “it refuses to be waiting; the waiting becomes waiting upon.”"},
+      {type:"tf", q:"Longing ends completely once we reach our goal.", answer:false,
+       why:"The gopis, Ramana, Baba's own songs of longing — the experience of union is sung in the language of separation; longing does not end at the goal."},
+      {type:"fill", q:"“The long bell gives him that ____ — that is saburi.”", answer:"trust"},
+      {type:"fill", q:"“Happiness and ____ happiness is the key to darshan.”", answer:"ecstatic"},
+      {type:"fill", q:"“‘How long will it take?’ There is no answer to it. It could be ____, or it may take forever.”", answer:"this minute",
+       why:"“How long is a meaningless question — how much longing you have?”"},
+      {type:"fill", q:"“____, ____, ____ — minimum eight, ten hours… and it will be given.”", answer:"Call, call, call",
+       why:"“Baba is giving — we ask for something, and when it is given, we don't recognize.”"},
+      {type:"reflect", q:"Guruji says waiting for the beloved turns waiting into “waiting upon.”",
+       prompt:"Recall a moment from your own week of waiting — for a person, a result, or an answer to come. What changed, or what would change, if you waited “upon” instead of merely waiting? What is your “long bell” — the trust that lets you wait happily right now?"},
+      {type:"reflect", q:"The sadhu danced with joy at news that meant millions more births — because the promise itself was enough.",
+       prompt:"What does this say about where happiness lives: in the arrival, or in the trust? Can you remember a time when the certainty of a good outcome made the wait itself joyful?"}
+    ]
   }
 ];
 
@@ -3229,6 +3384,7 @@ var CANONICAL_HASH_BY_NAME = {
   "Who is Sai Baba?": "who-is-sai-baba",
   "Who is Sri Babuji?": "who-is-sri-babuji",
   "What is Saipatham (Sai Padham)?": "what-is-saipatham",
+  "What is Satsang?": "what-is-satsang",
   "Guruji's Wordplay": "gurujis-wordplay",
   "Guruji's Laughter & Humor": "gurujis-laughter-humor",
   "Sai Satcharitra Leelas": "sai-satcharitra-leelas",
@@ -3491,6 +3647,71 @@ function tocHtml(entries){
   return h + "</ol></nav>";
 }
 
+/* ---- interactive quiz (weekly satsang template): MCQ, true/false, fill-in-blank, reflection ---- */
+function renderQuiz(quiz){
+  var typeLabel = {mcq:"Multiple choice", tf:"True or false", fill:"Fill in the blank", reflect:"Reflection"};
+  var html = '<nav class="jump-nav" aria-label="In this digest">' +
+    '<a data-go="dquiz" tabindex="0">Quiz</a>' +
+    '<a data-go="dtranscript" tabindex="0">Transcript</a>' +
+    '<a data-go="dsummary" tabindex="0">Summary</a>' +
+    '<a data-go="dkeypoints" tabindex="0">Key Points</a></nav>';
+  html += '<section class="quiz" id="dquiz"><div class="deep-head"><h2>Quiz — think before you read</h2>' +
+    '<p>Try these from memory first, then tap <em>Reveal answer</em> to check yourself.</p></div><ol class="quiz-list">';
+  quiz.forEach(function(item){
+    var q = esc(item.q);
+    if (item.type === "fill") q = q.split("____").join('<input class="quiz-blank" aria-label="Your answer">');
+    html += '<li class="quiz-q"><div class="qq"><span class="quiz-tag">' + typeLabel[item.type] + '</span><span>' + q + '</span></div>';
+    if (item.type === "mcq") {
+      html += '<ul class="quiz-opts">';
+      item.options.forEach(function(opt, i){
+        html += '<li><span class="k">' + String.fromCharCode(65 + i) + '.</span>' + esc(opt) + '</li>';
+      });
+      html += '</ul>';
+    }
+    var ans;
+    if (item.type === "mcq") ans = '<span class="ok">' + String.fromCharCode(65 + item.answer) + '.</span> ' + esc(item.options[item.answer]);
+    else if (item.type === "tf") ans = '<span class="ok">' + (item.answer ? "True" : "False") + '.</span>';
+    else if (item.type === "fill") ans = '<span class="ok">' + esc(item.answer) + '</span>';
+    else ans = '<span class="ok">There is no single right answer — sit with it.</span>';
+    html += '<details><summary>Reveal answer</summary><p class="quiz-ans">' + ans + '</p>';
+    if (item.type === "reflect" && item.prompt) html += '<p class="quiz-why">' + esc(item.prompt) + '</p>';
+    else if (item.why) html += '<p class="quiz-why">' + esc(item.why) + '</p>';
+    html += '</details></li>';
+  });
+  html += '</ol></section>';
+  return html;
+}
+
+/* Quiz body without nav (for primers that provide their own nav) */
+function renderQuizBody(quiz){
+  var typeLabel = {mcq:"Multiple choice", tf:"True or false", fill:"Fill in the blank", reflect:"Reflection"};
+  var html = '<section class="quiz" id="dquiz"><div class="deep-head"><h2>Quiz — think before you read</h2>' +
+    '<p>Try these from memory first, then tap <em>Reveal answer</em> to check yourself.</p></div><ol class="quiz-list">';
+  quiz.forEach(function(item){
+    var q = esc(item.q);
+    if (item.type === "fill") q = q.split("____").join('<input class="quiz-blank" aria-label="Your answer">');
+    html += '<li class="quiz-q"><div class="qq"><span class="quiz-tag">' + typeLabel[item.type] + '</span><span>' + q + '</span></div>';
+    if (item.type === "mcq") {
+      html += '<ul class="quiz-opts">';
+      item.options.forEach(function(opt, i){
+        html += '<li><span class="k">' + String.fromCharCode(65 + i) + '.</span>' + esc(opt) + '</li>';
+      });
+      html += '</ul>';
+    }
+    var ans;
+    if (item.type === "mcq") ans = '<span class="ok">' + String.fromCharCode(65 + item.answer) + '.</span> ' + esc(item.options[item.answer]);
+    else if (item.type === "tf") ans = '<span class="ok">' + (item.answer ? "True" : "False") + '.</span>';
+    else if (item.type === "fill") ans = '<span class="ok">' + esc(item.answer) + '</span>';
+    else ans = '<span class="ok">There is no single right answer — sit with it.</span>';
+    html += '<details><summary>Reveal answer</summary><p class="quiz-ans">' + ans + '</p>';
+    if (item.type === "reflect" && item.prompt) html += '<p class="quiz-why">' + esc(item.prompt) + '</p>';
+    else if (item.why) html += '<p class="quiz-why">' + esc(item.why) + '</p>';
+    html += '</details></li>';
+  });
+  html += '</ol></section>';
+  return html;
+}
+
 function renderReadalong(d){
   var html = '<h1 class="dig-title">' + esc(d.name) + "</h1>";
   html += '<div class="readalong-meta">' +
@@ -3500,6 +3721,32 @@ function renderReadalong(d){
     '<div><span class="meta-label">Date</span><strong>' + esc(d.date) + '</strong></div>' +
     '</div>';
   html += '<aside class="readalong-note"><p><strong>About this transcript:</strong> ' + esc(d.note) + '</p><p>' + esc(d.streamNote) + '</p></aside>';
+  if (d.quiz) {
+    /* weekly satsang template order: quiz, transcript, summary, key points */
+    html += renderQuiz(d.quiz);
+    html += '<nav class="toc" aria-label="Contents"><span class="toc-h">Contents</span><ol class="readalong-toc">';
+    d.sections.forEach(function(section, i){
+      html += '<li data-go="pt-' + (i + 1) + '"><time>' + esc(section.time) + '</time><a data-go="pt-' + (i + 1) + '" tabindex="0">' + esc(section.tocTitle || section.title) + '</a></li>';
+    });
+    html += '</ol></nav>';
+    html += '<div class="deep-head" id="dtranscript"><h2>Read-along transcript</h2><p>Open a timestamp to hear the passage in the original satsang.</p></div>';
+    d.sections.forEach(function(section, i){
+      var href = d.video + '&t=' + section.seconds + 's';
+      html += '<article class="point transcript-entry" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3>' +
+        '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a></div>' +
+        '<div class="body">' + section.html + '</div></article>';
+    });
+    html += '<p class="section-note"><em>End of satsang discourse. The stream continues silently after about 1:35:00.</em></p>';
+    html += '<article class="point in-brief" id="dsummary"><h3>Summary</h3><p>' + esc(d.inBrief) + '</p></article>';
+    html += '<article class="point in-brief" id="dkeypoints"><h3>Key points</h3>';
+    d.keyPointGroups.forEach(function(group){
+      html += '<section class="key-point-group"><h4>' + esc(group.title) + '</h4><ul class="key-points">';
+      group.points.forEach(function(point){ html += '<li>' + esc(point) + '</li>'; });
+      html += '</ul></section>';
+    });
+    html += '</article>';
+    return html;
+  }
   html += '<article class="point in-brief"><h3>Key points</h3>';
   if (d.keyPointGroups) {
     d.keyPointGroups.forEach(function(group){
@@ -3532,15 +3779,34 @@ function renderReadalong(d){
 function renderPrimer(d){
   var html = '<h1 class="dig-title">' + esc(d.name) + "</h1>";
   if (d.lead) html += '<div class="primer-lead">' + d.lead + "</div>";
+  if (d.quiz) {
+    /* primer with quiz: quick-jump nav (Quiz, Teachings, Summary, Key Points) then quiz first */
+    var qnav = '<nav class="jump-nav" aria-label="In this digest">' +
+      '<a data-go="dquiz" tabindex="0">Quiz</a>' +
+      '<a data-go="dteachings" tabindex="0">Teachings</a>' +
+      '<a data-go="dsummary" tabindex="0">Summary</a>' +
+      '<a data-go="dkeypoints" tabindex="0">Key Points</a></nav>';
+    html += qnav;
+    html += renderQuizBody(d.quiz);
+  }
   var entries = [];
   d.sections.forEach(function(section, i){ entries.push({id: "pt-" + (i + 1), label: section.title}); });
+  if (d.quiz) html += '<div id="dteachings">';
   html += tocHtml(entries);
   html += '<div class="primer-body">';
   d.sections.forEach(function(section, i){
     html += '<article class="point" id="pt-' + (i + 1) + '"><h3>' + esc(section.title) + '</h3><div class="body">' + section.html + "</div></article>";
   });
   if (d.readMore) html += '<div class="deep-head"><h2>Read more</h2></div>' + d.readMore;
-  html += '<article class="point in-brief"><p><strong>In brief:</strong> ' + d.inBrief + "</p></article></div>";
+  if (d.quiz) html += '</div>';  /* close dteachings */
+  if (d.quiz && d.summary) html += '<article class="point" id="dsummary"><h3>Summary</h3><div class="body"><p>' + d.summary + "</p></div></article>";
+  else html += '<article class="point in-brief"><p><strong>In brief:</strong> ' + d.inBrief + "</p></article>";
+  if (d.quiz && d.keyPoints) {
+    html += '<article class="point" id="dkeypoints"><h3>Key Points</h3><div class="body"><ul>';
+    d.keyPoints.forEach(function(kp){ html += '<li>' + kp + '</li>'; });
+    html += '</ul></div></article>';
+  }
+  html += "</div>";
   return html;
 }
 
