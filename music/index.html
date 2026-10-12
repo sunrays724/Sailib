@@ -711,7 +711,7 @@
     function themeGroupMarkup(group, contents, searching, index, prefix, singular, plural) {
       var count = group.items.length;
       var noun = count === 1 ? singular : plural;
-      return '<details class="theme-group"' + (searching ? ' open' : '') + '>' +
+      return '<details class="theme-group" open>' +
         '<summary class="theme-summary" aria-label="' + escapeHtml(group.category) + ', ' + count + ' ' + noun + '">' +
           '<span class="theme-title">' + escapeHtml(group.category) + '</span>' +
           '<span class="theme-count">' + count + ' ' + noun + '</span>' +
