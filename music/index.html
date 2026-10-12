@@ -905,6 +905,7 @@
       chip.addEventListener('click', function () {
         searchInput.value = chip.getAttribute('data-query') || chip.textContent.trim();
         render();
+        if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
         searchInput.blur();
       });
     });
