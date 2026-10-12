@@ -3041,6 +3041,9 @@ function wireTry(container){
     q.value = btn.getAttribute("data-query") || btn.textContent;
     clearTimeout(deb);
     runSearch();
+    // Dismiss mobile keyboard: blur the tapped button AND the search input
+    if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    q.blur();
     finishSearch();
   });
 }

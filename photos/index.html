@@ -629,7 +629,8 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
       search.value=query;
       if(query==='devotees'||query==='ecards'){activeYear='all';}
       render();
-      search.focus();
+      if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      search.blur();
     });
   });
   yearPills.addEventListener('click',function(event){
