@@ -2223,7 +2223,11 @@ function digestItemCardHTML(item){
    Renders the first PREVIEW items visibly; the rest go into a hidden div
    toggled by a "+ Show N more" / "- Show less" button. */
 var moreSectionSeq = 0;
-function moreSectionHTML(visibleHTML, restItemsHTML, restCount){
+function moreSectionHTML(visibleHTML, restItemsHTML, restCount, totalCount){
+  /* Show-all threshold: only render the "+ Show N more" button when the
+     section has more than 10 results. For 6-10 results, display everything
+     inline with no button. */
+  if(totalCount <= 10) return visibleHTML + restItemsHTML;
   if(!restCount) return visibleHTML;
   var id = "more-section-" + (++moreSectionSeq);
   return visibleHTML +
@@ -2793,7 +2797,33 @@ function runSearch(){
     }
   }
   setSourceLoadStatus([], false);
-  var videoHits = (sourceVideos.checked || sourceMusic.checked) ? search(raw) : (hasQuery ? [] : null);
+
+  /* Exact-phrase default: for multi-word queries (not event:, not already
+     quoted), try the quoted phrase first. If no section returns results,
+     fall back to split-word search and show a note. */
+  var searchRaw = raw;
+  var exactPhraseFallback = false;
+  (function(){
+    if(!hasQuery) return;
+    if(/^\s*event\s*:/i.test(raw)) return;
+    if(/["\u201C\u201D]/.test(raw)) return;
+    if(wordSplit(raw).length < 2) return;
+    var exactQ = '"' + raw.trim() + '"';
+    var evh = (sourceVideos.checked || sourceMusic.checked) ? search(exactQ) : [];
+    var eb = searchBooks(exactQ);
+    var ep = searchPhotos(exactQ);
+    var ed = sourceDigests.checked ? digestItemsFor(exactQ) : [];
+    var et = (sourceVideos.checked || sourceDigests.checked) ? mappedDigestsFor(exactQ) : [];
+    var total = (evh || []).length + (eb.groups || []).length +
+      (ep || []).length + (ed || []).length + (et || []).length;
+    if(total > 0){
+      searchRaw = exactQ;
+    } else {
+      exactPhraseFallback = true;
+    }
+  })();
+
+  var videoHits = (sourceVideos.checked || sourceMusic.checked) ? search(searchRaw) : (hasQuery ? [] : null);
   if(!hasQuery){
     resultsEl.innerHTML = "";
     countEl.textContent = "";
@@ -2815,19 +2845,19 @@ function runSearch(){
     var activeLanguage = langFilter;
     langFilter = "all";
     try {
-      allLanguageVideoHits = search(raw) || [];
+      allLanguageVideoHits = search(searchRaw) || [];
     }
     finally { langFilter = activeLanguage; }
   }
   updateSearchLanguageCounts(allLanguageVideoHits || []);
-  var books = searchBooks(raw);
-  var photos = searchPhotos(raw);
-  var digestItems = sourceDigests.checked ? digestItemsFor(raw) : [];
+  var books = searchBooks(searchRaw);
+  var photos = searchPhotos(searchRaw);
+  var digestItems = sourceDigests.checked ? digestItemsFor(searchRaw) : [];
   writeQuery();
   document.title = "Results for '" + raw.trim() + "' \u00b7 SaiLib";
   var isEventQ = /^\s*event\s*:/i.test(raw);
   eventNoteEl.classList.toggle("hidden", !(isEventQ && (sourceVideos.checked || sourceMusic.checked)));
-  var pq = parseQuery(isEventQ ? raw.replace(/^\s*event\s*:\s*/i, "") : raw);
+  var pq = parseQuery(isEventQ ? searchRaw.replace(/^\s*event\s*:\s*/i, "") : searchRaw);
   var tokens = sigTokensOf(pq.rest);
   var phrases = pq.phrases;
 
@@ -2841,7 +2871,11 @@ function runSearch(){
       noteParts.push("the phrase &quot;" + esc(ph.words.join(" ")) + "&quot;");
     });
   }
-  if(noteParts.length && videoHits.length){
+  if(exactPhraseFallback){
+    fnoteEl.innerHTML = "No exact matches for &quot;" + esc(raw.trim()) +
+      "&quot; \u2014 showing results for individual words.";
+    fnoteEl.classList.remove("hidden");
+  } else if(noteParts.length && videoHits.length){
     fnoteEl.innerHTML = "No exact video matches for " + noteParts.join(", ") +
       " — showing closest video matches";
     fnoteEl.classList.remove("hidden");
@@ -2854,7 +2888,7 @@ function runSearch(){
      the Digests checkbox controls digest-only, first-party searching. */
   var topicRefs = (langFilter === "telugu")
     ? []
-    : ((sourceVideos.checked || sourceDigests.checked) ? mappedDigestsFor(raw) : []);
+    : ((sourceVideos.checked || sourceDigests.checked) ? mappedDigestsFor(searchRaw) : []);
   if(topicRefs.length){
     referenceEl.innerHTML = '<h2 class="result-source exact">Exact matches</h2>' +
       topicRefs.map(function(topic, index){
@@ -2885,13 +2919,13 @@ function runSearch(){
     rendered.push('<h2 class="result-source">Digest articles</h2>');
     var shownDigests = digestItems.slice(0, RESULT_LIMIT).map(digestItemCardHTML).join("");
     var restDigests = digestItems.slice(RESULT_LIMIT).map(digestItemCardHTML).join("");
-    rendered.push(moreSectionHTML(shownDigests, restDigests, digestItems.length - RESULT_LIMIT));
+    rendered.push(moreSectionHTML(shownDigests, restDigests, digestItems.length - RESULT_LIMIT, digestItems.length));
   }
   if((sourceVideos.checked || sourceMusic.checked) && videoHits.length){
     rendered.push('<h2 class="result-source">Video results</h2>');
     var shownVideos = videoHits.slice(0, RESULT_LIMIT).map(function(hit){ return cardHTML(hit, tokens, phrases); }).join("");
     var restVideos = videoHits.slice(RESULT_LIMIT).map(function(hit){ return cardHTML(hit, tokens, phrases); }).join("");
-    rendered.push(moreSectionHTML(shownVideos, restVideos, videoHits.length - RESULT_LIMIT));
+    rendered.push(moreSectionHTML(shownVideos, restVideos, videoHits.length - RESULT_LIMIT, videoHits.length));
   }
   if(sourceBooks.checked && books.groups.length){
     if(!topicRefs.length && !((sourceVideos.checked || sourceMusic.checked) && videoHits.length)){
@@ -2904,7 +2938,7 @@ function runSearch(){
     var restBooks = books.groups.slice(RESULT_LIMIT).map(function(group){
       return bookCardHTML(group, tokens, phrases, raw);
     }).join("");
-    rendered.push(moreSectionHTML(shownBooks, restBooks, books.groups.length - RESULT_LIMIT));
+    rendered.push(moreSectionHTML(shownBooks, restBooks, books.groups.length - RESULT_LIMIT, books.groups.length));
   }
   if(sourcePhotos.checked && photos.length){
     rendered.push('<h2 class="photo-results-heading">Photos</h2>');
@@ -2914,7 +2948,7 @@ function runSearch(){
     var restPhotos = photos.slice(RESULT_LIMIT).map(function(hit){
       return photoCardHTML(hit, tokens, phrases);
     }).join("");
-    rendered.push(moreSectionHTML(shownPhotos, restPhotos, photos.length - RESULT_LIMIT));
+    rendered.push(moreSectionHTML(shownPhotos, restPhotos, photos.length - RESULT_LIMIT, photos.length));
   }
   resultsEl.innerHTML = rendered.join("");
 
