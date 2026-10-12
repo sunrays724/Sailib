@@ -395,7 +395,14 @@
     <p class="authority">For authentic information on Sai Baba and Sri Babuji, please refer to the authoritative websites: <a href="https://saibaba.com" target="_blank" rel="noopener">saibaba.com</a> and <a href="https://saiseekers.com" target="_blank" rel="noopener">saiseekers.com</a>.</p>
   </section>
   <section id="view-digest" class="view">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a></nav>
+    <nav class="sitenav" aria-label="Site navigation">
+      <a href="/">Home</a>
+      <a href="/digests/" class="active" aria-current="page">Digests</a>
+      <a href="/books/">Books</a>
+      <a href="/music/">Music</a>
+      <a href="/photos/">Photos</a>
+    </nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><a href="/digests/">Digests</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><span class="breadcrumb-current" id="digest-crumb" aria-current="page"></span></nav>
     <a class="back" href="#/" target="_self">&larr; All digests</a>
     <div id="digest"></div>
     <footer class="footer">Curated from the Sri Babuji and SaiSEEkers YouTube channel transcripts &middot; timestamps point into the original videos</footer>
@@ -3917,6 +3924,8 @@ function route(e, routeKey){
     document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data) : r.type === "primer" ? renderPrimer(r.data) : r.type === "saint" ? renderSaint(r.data) : renderCluster(r.data)) + prevNextHtml(r.canonical);
     vi.classList.remove("on"); vd.classList.add("on");
     document.title = r.data.name + " · Sri Babuji Digests";
+    var crumb = document.getElementById("digest-crumb");
+    if(crumb) crumb.textContent = r.data.name;
     if (e && e.type === "hashchange") glideTo(vd);
     else window.scrollTo(0, 0);
   }
