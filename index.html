@@ -3287,7 +3287,14 @@ function openQuiz(shouldScroll){
   loadQuizBank().then(function(){
     renderQuizQuestions();
   }).catch(function(){
-    quizList.innerHTML = '<div class="quiz-load-state" role="alert"><p>Couldn\'t load questions — check your connection and try again</p><button type="button" class="quiz-check" data-quiz-retry>Retry</button></div>';
+    // Automatic retry once before showing the error — first load sometimes fails transiently
+    setTimeout(function(){
+      loadQuizBank().then(function(){
+        renderQuizQuestions();
+      }).catch(function(){
+        quizList.innerHTML = '<div class="quiz-load-state" role="alert"><p>Couldn\'t load questions — check your connection and try again</p><button type="button" class="quiz-check" data-quiz-retry>Retry</button></div>';
+      });
+    }, 500);
   });
 }
 function appendQuizAnswer(card, item, lead){
