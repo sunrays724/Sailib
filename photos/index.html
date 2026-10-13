@@ -641,9 +641,13 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     var tags = window.PHOTO_SCENE_TAGS || {};
     var freq = {};
     Object.keys(tags).forEach(function(id){
-      tags[id].split(/\s+/).forEach(function(w){
+      var tagStr = tags[id] || "";
+      /* Explore by scene is Guruji-only: skip photos not featuring Guruji
+         (e.g. devotee portraits). */
+      if((" " + tagStr + " ").indexOf(" guruji ") === -1) return;
+      tagStr.split(/\s+/).forEach(function(w){
         w = w.trim().toLowerCase();
-        if(w) freq[w] = (freq[w] || 0) + 1;
+        if(w && w !== "guruji") freq[w] = (freq[w] || 0) + 1;
       });
     });
     var entries = Object.keys(freq).map(function(w){ return [w, freq[w]]; })
@@ -666,7 +670,8 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     cloud.addEventListener('click', function(e){
       var btn = e.target.closest ? e.target.closest('.scene-tag') : null;
       if(!btn) return;
-      search.value = btn.getAttribute('data-tag');
+      /* Scope scene explorations to Guruji's pictures. */
+      search.value = 'guruji ' + btn.getAttribute('data-tag');
       render();
       search.focus();
     });
