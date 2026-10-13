@@ -1150,15 +1150,25 @@ function preparePhotoIndex(){
   /* Rose Petals captioned photos (e.g. "Guru Purnima 1996") live in the
      photos page data; include them so cross-search finds them. */
   var rose = window.ROSE_PETALS_DATA || [];
+  var sceneTags = window.PHOTO_SCENE_TAGS || {};
+  function withScene(id, title){
+    var st = sceneTags[id] || "";
+    return {
+      title: title,
+      words: wordSplit(title + (st ? " " + st : "")),
+      scene: st
+    };
+  }
   for(var ri = 0; ri < rose.length; ri++){
     var rp = rose[ri];
     var rpTitle = [rp.title, rp.caption, rp.location, rp.year, rp.edition].filter(Boolean).join(" ");
+    var rpW = withScene(rp.id || ("rose-" + ri), rpTitle || "Rose Petals photo");
     PHOTOS.push({
       id: String(rp.id || ("rose-" + ri)),
-      title: rpTitle || "Rose Petals photo",
+      title: rpW.title,
       url: String(rp.url || "/photos/"),
       thumb: "photos/assets/rose-petals/" + String(rp.asset || ""),
-      words: wordSplit(rpTitle),
+      words: rpW.words,
       source: "rose"
     });
   }
@@ -1166,14 +1176,21 @@ function preparePhotoIndex(){
   var devs = window.DEVOTEE_PHOTOS || [];
   for(var di = 0; di < devs.length; di++){
     var dv = devs[di];
+    var dvW = withScene(dv.id || ("devotee-" + di), String(dv.title || "Devotee"));
     PHOTOS.push({
       id: String(dv.id || ("devotee-" + di)),
-      title: String(dv.title || "Devotee"),
+      title: dvW.title,
       url: String(dv.url || ""),
       thumb: String(dv.thumb || ""),
-      words: wordSplit(dv.title || ""),
+      words: dvW.words,
       source: "devotee"
     });
+  }
+  /* Scene tags for the Flickr photos. */
+  for(var fi = 0; fi < PHOTOS.length; fi++){
+    if(PHOTOS[fi].source !== "flickr") continue;
+    var fst = sceneTags[PHOTOS[fi].id] || "";
+    if(fst) PHOTOS[fi].words = wordSplit(PHOTOS[fi].title + " " + fst);
   }
   photoIndexPrepared = true;
 }
@@ -1182,7 +1199,8 @@ function ensurePhotoIndex(){
   return Promise.all([
     loadAssetScript("assets/sailib-photo-index.js"),
     loadAssetScript("photos/assets/rose-petals-data.js"),
-    loadAssetScript("assets/sailib-devotee-photos.js")
+    loadAssetScript("assets/sailib-devotee-photos.js"),
+    loadAssetScript("photos/assets/photo-scene-tags.js")
   ]).then(function(){
     preparePhotoIndex();
     return PHOTO_INDEX;

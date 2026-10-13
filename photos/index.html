@@ -168,6 +168,12 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
 .empty{margin:30px 0 12px;padding:34px 22px;text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;color:var(--ink)}
 .cross-links{margin:26px 0 8px;text-align:center;color:var(--muted);font-size:.92rem}
 .cross-links a{color:var(--accent-deep,#b07a3f);text-decoration:underline;text-underline-offset:2px;margin:0 2px}
+.scene-cloud-wrap{margin:10px 0 0;text-align:center}
+.scene-cloud-toggle{background:none;border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:.88rem;color:var(--muted);cursor:pointer}
+.scene-cloud-toggle:hover{color:var(--ink);border-color:var(--accent-deep,#b07a3f)}
+.scene-cloud{margin-top:10px;line-height:2.1;max-width:720px;margin-left:auto;margin-right:auto}
+.scene-tag{display:inline-block;margin:2px 4px;padding:2px 10px;border-radius:999px;background:var(--chip);border:1px solid var(--line);color:var(--ink);cursor:pointer;vertical-align:middle}
+.scene-tag:hover{background:var(--accent-soft,#f5e6c8);border-color:var(--accent-deep,#b07a3f)}
 .more-wrap{text-align:center;margin:18px 0 6px}
 .show-more-btn{display:inline-block;padding:10px 22px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--accent-deep,#b07a3f);font-size:.95rem;cursor:pointer}
 .empty[hidden]{display:none}
@@ -241,6 +247,10 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
       <button class="suggestion" type="button" data-query="devotees">Devotees</button>
       <button class="suggestion" type="button" data-query="ecards">E-cards</button>
     </div>
+    <div class="scene-cloud-wrap" aria-label="Explore by scene">
+      <button class="scene-cloud-toggle" id="sceneCloudToggle" type="button" aria-expanded="false">Explore by scene &#9662;</button>
+      <div class="scene-cloud" id="sceneCloud" hidden></div>
+    </div>
     <div class="year-filter">
       <span class="year-label">Year</span>
       <div class="year-strip" id="yearPills" aria-label="Filter photos by year"></div>
@@ -296,6 +306,7 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
 <script src="assets/content-data.js?v202610110620"></script>
 <script src="assets/rose-petals-data.js?v202610110620"></script>
 <script src="../assets/sailib-devotee-photos.js?v202610121430"></script>
+<script src="assets/photo-scene-tags.js?v202610122030"></script>
 <script src="assets/photo-crossrefs.js?v202610110620"></script>
 <script>
 (function(){
@@ -356,7 +367,9 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
       photo.refs=PHOTO_CROSSREFS[photo.id]||[];
       photo.roseDuplicates=ROSE_DUPLICATES[photo.id]||[];
       if(kind==='devotee'){photo.story=DEVOTEE_STORIES[photo.id]||null;}
+      var sceneTags = (window.PHOTO_SCENE_TAGS || {})[photo.id] || "";
       var searchText=kind==='rose'?[photo.edition,photo.title,photo.caption,photo.location,photo.year].join(' '):[photo.title,(photo.tags||[]).join(' '),(photo.keywords||[]).join(' ')].join(' ');
+      if(sceneTags){ searchText += ' ' + sceneTags; }
       if(photo.story){searchText+=' '+photo.story.devotee+' '+photo.story.photo_match+' '+photo.story.summary_en+' '+photo.story.name_te+' Sri Saibhaktha Anubhava Samhita Chapter '+photo.story.chapter+' pages '+photo.story.pages;}
       if(kind==='devotee'){searchText+=' devotee devotees';}
       searchText+=' '+refsSearchText(photo.refs);
@@ -620,6 +633,45 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
   }
 
   function clearSearch(focus){search.value='';render();if(focus){search.focus();}}
+
+  /* Clickable scene-tag word cloud, built from the vision tags. */
+  (function buildSceneCloud(){
+    var cloud = document.getElementById('sceneCloud');
+    var toggle = document.getElementById('sceneCloudToggle');
+    if(!cloud || !toggle) return;
+    var tags = window.PHOTO_SCENE_TAGS || {};
+    var freq = {};
+    Object.keys(tags).forEach(function(id){
+      tags[id].split(/\s+/).forEach(function(w){
+        w = w.trim().toLowerCase();
+        if(w) freq[w] = (freq[w] || 0) + 1;
+      });
+    });
+    var entries = Object.keys(freq).map(function(w){ return [w, freq[w]]; })
+      .filter(function(e){ return e[1] >= 3; })
+      .sort(function(a,b){ return b[1] - a[1]; })
+      .slice(0, 48);
+    if(!entries.length){ toggle.style.display = 'none'; return; }
+    var max = entries[0][1], min = entries[entries.length-1][1];
+    cloud.innerHTML = entries.map(function(e){
+      var size = 0.82 + 0.62 * (max === min ? 0.5 : (e[1] - min) / (max - min));
+      return '<button type="button" class="scene-tag" data-tag="' + e[0].replace(/"/g,'&quot;') +
+        '" style="font-size:' + size.toFixed(2) + 'rem" title="' + e[1] + ' photos">' + e[0] + '</button>';
+    }).join('');
+    toggle.addEventListener('click', function(){
+      var open = cloud.hidden;
+      cloud.hidden = !open;
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.innerHTML = 'Explore by scene ' + (open ? '&#9652;' : '&#9662;');
+    });
+    cloud.addEventListener('click', function(e){
+      var btn = e.target.closest ? e.target.closest('.scene-tag') : null;
+      if(!btn) return;
+      search.value = btn.getAttribute('data-tag');
+      render();
+      search.focus();
+    });
+  })();
 
   /* Consistent 5+more pagination per collection section. */
   var PAGE_LIMIT = 5;
