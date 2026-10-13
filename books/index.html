@@ -304,6 +304,8 @@ mark{background:var(--mark);border-radius:3px;padding:0 1px;color:inherit}
 }
 .empty .try button:hover{border-color:var(--accent)}
 .more{color:var(--muted);font-size:.92rem;text-align:center;margin:6px 0 0}
+.cross-links{color:var(--muted);font-size:.92rem;text-align:center;margin:26px 0 8px}
+.cross-links a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;margin:0 2px}
 .feedback-wrap{margin:28px 0 0;text-align:center}
 .feedback-toggle{
   border:1.5px solid var(--accent);background:var(--accent-soft);color:var(--ink);
@@ -1347,7 +1349,7 @@ function runSearch(){
   }
   if(!hits.length){
     countEl.textContent = "";
-    resultsEl.innerHTML = "";
+    resultsEl.innerHTML = crossLinksHTML(raw);
     emptyText.textContent = "No passages found for \u201c" + displayQuery(raw) +
       "\u201d. Try a different word or phrase.";
     emptyEl.classList.remove("hidden");
@@ -1365,8 +1367,19 @@ function runSearch(){
     (groups.length > RESULT_LIMIT
       ? '<p class="more">Showing the top ' + RESULT_LIMIT + " of " + groups.length +
         " books — refine your search to narrow it down.</p>"
-      : "");
+      : "") + crossLinksHTML(raw);
   revealDeepTarget();
+}
+
+/* Cross-pollination: link the same query into the other SaiLib surfaces. */
+function crossLinksHTML(raw){
+  var q = String(raw || "").trim();
+  if(!q) return "";
+  var types = [["videos","Videos"],["digests","Digests"],["music","Music"],["photos","Photos"]];
+  var links = types.map(function(t){
+    return '<a href="/?q=' + encodeURIComponent(q) + "&src=" + t[0] + '">' + t[1] + "</a>";
+  }).join(" · ");
+  return '<p class="cross-links">Search \u201c' + esc(q) + "\u201d across SaiLib: " + links + "</p>";
 }
 
 /* ---------- events ---------- */

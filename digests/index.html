@@ -90,6 +90,8 @@
   .filter input:focus{outline:2px solid var(--accent); outline-offset:1px}
   .filter .ico{position:absolute; right:16px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none}
   mark{background:rgba(212,160,112,.35); border-radius:3px; padding:0 1px; color:inherit}
+  .cross-links{margin:26px auto 8px; max-width:720px; text-align:center; color:var(--muted); font-size:.92rem}
+  .cross-links a{color:var(--accent); text-decoration:underline; text-underline-offset:2px; margin:0 2px}
   /* ---- groups ---- */
   .group-title{font-size:1.5rem; font-weight:600; margin:34px 0 4px; padding-bottom:8px;
     border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px}
@@ -393,6 +395,7 @@
     </header>
     <div id="tindex"></div>
     <p class="empty" id="no-match">No digest matches that search. More topics are being added &mdash; try a different word.</p>
+    <p class="cross-links" id="crossLinks" hidden></p>
     <footer class="footer">Curated from the Sri Babuji and SaiSEEkers YouTube channel transcripts &middot; timestamps point into the original videos</footer>
     <p class="dedication">This is built by SaiSEEker for Saiseekers as a humble offering to SaiBabuji's holy feet. Event discourses are human-transcribed; results marked CC use AI-generated captions &mdash; pardon any mistakes &#x1F64F;</p>
     <p class="theme-indicator">This week's theme: <span id="weekly-theme-name">Dawn Gold</span></p>
@@ -3574,10 +3577,23 @@ function highlightDigestRow(el, terms){
     }
   });
 }
+/* Cross-pollination: link the same query into the other SaiLib surfaces. */
+function updateCrossLinks(raw){
+  var el = document.getElementById("crossLinks");
+  var q = String(raw || "").trim();
+  if(!q){ el.hidden = true; el.innerHTML = ""; return; }
+  var types = [["videos","Videos"],["books","Books"],["music","Music"],["photos","Photos"]];
+  var links = types.map(function(t){
+    return '<a href="/?q=' + encodeURIComponent(q) + '&src=' + t[0] + '">' + t[1] + "</a>";
+  }).join(" · ");
+  el.innerHTML = "Search &ldquo;" + esc(q) + "&rdquo; across SaiLib: " + links;
+  el.hidden = false;
+}
 function filterIndex(input){
   var parsed = parseSearchQuery(input.value), shown = 0, first = null;
   var hasQuery = parsed.phrases.length > 0 || parsed.terms.length > 0;
   var terms = parsed.phrases.concat(parsed.terms);
+  updateCrossLinks(input.value);
   document.querySelectorAll("#tindex .trow").forEach(function(el){
     var link = el.querySelector('a[href^="#"]');
     var key = link ? link.getAttribute("href").slice(1) : "";

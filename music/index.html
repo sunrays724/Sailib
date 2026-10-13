@@ -288,6 +288,8 @@
     .empty-state { padding: 48px 24px; text-align: center; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
     .empty-state h2 { margin: 0 0 6px; font-family: "Libre Baskerville", ui-serif, Georgia, serif; font-size: 1.3rem; }
     .empty-state p { margin: 0; color: var(--muted); }
+    .cross-links { margin: 26px 0 8px; text-align: center; color: var(--muted); font-size: .92rem; }
+    .cross-links a { color: var(--accent-deep, #b07a3f); text-decoration: underline; text-underline-offset: 2px; margin: 0 2px; }
     .audio-library { margin-top: 48px; }
     .audio-library[hidden] { display: none; }
     .library-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 0 0 14px; padding: 0 2px 10px; border-bottom: 1px solid var(--line); }
@@ -441,6 +443,7 @@
       <p id="order-note" class="order-note">Newest dated videos first</p>
     </div>
     <section id="results" aria-label="Music videos"></section>
+    <p class="cross-links" id="crossLinks" hidden></p>
 
     <section id="audio-library" class="audio-library" aria-labelledby="audio-library-heading">
       <div class="library-head">
@@ -843,7 +846,20 @@
     var albumListNode = document.getElementById('album-list');
     var audioLibraryCountNode = document.getElementById('audio-library-count');
     var orderNoteNode = document.getElementById('order-note');
+    var crossLinksNode = document.getElementById('crossLinks');
     var videos = sortedVideos();
+
+    /* Cross-pollination: link the same query into the other SaiLib surfaces. */
+    var CROSS_TYPES = [['videos', 'Videos'], ['digests', 'Digests'], ['books', 'Books'], ['photos', 'Photos']];
+    function updateCrossLinks(raw) {
+      var q = String(raw || '').trim();
+      if (!q) { crossLinksNode.hidden = true; crossLinksNode.innerHTML = ''; return; }
+      var links = CROSS_TYPES.map(function (t) {
+        return '<a href="/?q=' + encodeURIComponent(q) + '&src=' + t[0] + '">' + t[1] + '</a>';
+      }).join(' · ');
+      crossLinksNode.innerHTML = 'Search &ldquo;' + escapeHtml(q) + '&rdquo; across SaiLib: ' + links;
+      crossLinksNode.hidden = false;
+    }
 
     (function buildChannelOptions() {
       var seen = {};
@@ -889,6 +905,7 @@
       if (!visibleVideos.length && !visibleTrackCount) {
         resultsNode.innerHTML = '<div class="empty-state"><h2>No exact matches</h2><p>Try fewer words, a title, “namam,” “darshan,” or “audiobooks.”</p></div>';
         audioLibraryNode.hidden = true;
+        updateCrossLinks(raw);
         return;
       }
 
@@ -902,6 +919,7 @@
           renderAlbumSection('Audiobooks', audiobookResults, tokens, Boolean(raw), 'audiobooks-heading');
         audioLibraryCountNode.textContent = albumResults.length + (albumResults.length === 1 ? ' album' : ' albums') + ' · ' + visibleTrackCount + (visibleTrackCount === 1 ? ' track' : ' tracks');
       }
+      updateCrossLinks(raw);
     }
 
     searchInput.addEventListener('input', render);

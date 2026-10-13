@@ -166,6 +166,8 @@ body.lightbox-open{overflow:hidden}
 .section-source a{color:var(--accent-deep);font-weight:700;text-underline-offset:2px}
 mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
 .empty{margin:30px 0 12px;padding:34px 22px;text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;color:var(--ink)}
+.cross-links{margin:26px 0 8px;text-align:center;color:var(--muted);font-size:.92rem}
+.cross-links a{color:var(--accent-deep,#b07a3f);text-decoration:underline;text-underline-offset:2px;margin:0 2px}
 .empty[hidden]{display:none}
 .site-footer{max-width:760px;margin:58px auto 0;padding-top:28px;border-top:1px solid var(--line);text-align:center}
 .disclaimer{margin:0 0 10px;color:var(--ink);font-size:.78rem;font-weight:700}
@@ -274,6 +276,7 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     <div class="grid" id="roseResults" aria-label="Rose Petals photo results"></div>
   </section>
   <div class="empty" id="empty" hidden>No photos matched — try different words.</div>
+  <p class="cross-links" id="crossLinks" hidden></p>
 
   <footer class="site-footer">
     <p class="disclaimer">Content is user generated and unverified</p>
@@ -609,9 +612,23 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     timelineCount.textContent=collectionCountText(timelineMatches.length,'entry','entries',parsed);
     roseCount.textContent=collectionCountText(roseMatches.length,'photo','photos',parsed);
     renderYearPills();
+    updateCrossLinks();
   }
 
   function clearSearch(focus){search.value='';render();if(focus){search.focus();}}
+
+  /* Cross-pollination: link the same query into the other SaiLib surfaces. */
+  var CROSS_TYPES=[["videos","Videos"],["digests","Digests"],["books","Books"],["music","Music"]];
+  function updateCrossLinks(){
+    var el=document.getElementById('crossLinks');
+    var q=String(search.value||'').trim();
+    if(!q){el.hidden=true;el.innerHTML='';return;}
+    var links=CROSS_TYPES.map(function(t){
+      return '<a href="/?q='+encodeURIComponent(q)+'&src='+t[0]+'">'+t[1]+'</a>';
+    }).join(' · ');
+    el.innerHTML='Search &ldquo;'+escapeHTML(q)+'&rdquo; across SaiLib: '+links;
+    el.hidden=false;
+  }
   function openTimelineLightbox(trigger){
     lightboxTrigger=trigger;
     timelineLightboxImage.style.setProperty('--atlas-x',trigger.getAttribute('data-atlas-x')||'0%');
