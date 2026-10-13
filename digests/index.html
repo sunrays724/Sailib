@@ -89,6 +89,7 @@
     background:var(--card); color:var(--text); font-size:1rem; box-shadow:var(--shadow)}
   .filter input:focus{outline:2px solid var(--accent); outline-offset:1px}
   .filter .ico{position:absolute; right:16px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none}
+  mark{background:rgba(212,160,112,.35); border-radius:3px; padding:0 1px; color:inherit}
   /* ---- groups ---- */
   .group-title{font-size:1.5rem; font-weight:600; margin:34px 0 4px; padding-bottom:8px;
     border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px}
@@ -3544,9 +3545,39 @@ function parseSearchQuery(value){
   var remainder = normalizeSearchValue(unquoted);
   return {phrases: phrases, terms: remainder ? remainder.split(" ") : []};
 }
+function highlightDigestRow(el, terms){
+  /* Restore the row's original HTML first so repeated filters never nest marks. */
+  if(el.dataset.orig !== undefined){ el.innerHTML = el.dataset.orig; }
+  else { el.dataset.orig = el.innerHTML; }
+  var clean = terms.filter(function(t){ return t && t.length > 1; });
+  if(!clean.length) return;
+  var pat = clean.slice().sort(function(a,b){ return b.length - a.length; })
+    .map(function(t){ return t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }).join("|");
+  var re = new RegExp("(" + pat + ")", "gi");
+  var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [], m, last;
+  while(walker.nextNode()){ nodes.push(walker.currentNode); }
+  nodes.forEach(function(node){
+    var text = node.nodeValue;
+    re.lastIndex = 0; last = 0;
+    var frag = document.createDocumentFragment(), found = false;
+    while((m = re.exec(text))){
+      found = true;
+      frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+      var mark = document.createElement("mark");
+      mark.textContent = m[0];
+      frag.appendChild(mark);
+      last = m.index + m[0].length;
+    }
+    if(found){
+      frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    }
+  });
+}
 function filterIndex(input){
   var parsed = parseSearchQuery(input.value), shown = 0, first = null;
   var hasQuery = parsed.phrases.length > 0 || parsed.terms.length > 0;
+  var terms = parsed.phrases.concat(parsed.terms);
   document.querySelectorAll("#tindex .trow").forEach(function(el){
     var link = el.querySelector('a[href^="#"]');
     var key = link ? link.getAttribute("href").slice(1) : "";
@@ -3555,6 +3586,8 @@ function filterIndex(input){
     var hit = !hasQuery || (parsed.phrases.every(function(phrase){ return hay.indexOf(phrase) !== -1; }) &&
       parsed.terms.every(function(term){ return hay.indexOf(term) !== -1; }));
     el.style.display = hit ? "" : "none";
+    if(hit && hasQuery){ highlightDigestRow(el, terms); }
+    else if(el.dataset.orig !== undefined){ el.innerHTML = el.dataset.orig; }
     if (hit) { shown++; if (!first) first = el; }
   });
   document.querySelectorAll("#tindex .group-title, #tindex .group-sub, #tindex .tsec, #tindex thead").forEach(function(el){ el.style.display = hasQuery ? "none" : ""; });
