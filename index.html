@@ -1506,6 +1506,11 @@ function hasPresence(token){
 }
 function tokenMatch(word, token){
   var g = synGroup(token), i;
+  /* An exact word-for-word match always counts -- even when the token is a
+     real word absent from the video corpus (e.g. a book-only word). The
+     KNOWN_WORDS guard below exists to block fuzzy typo substitution, never
+     to suppress highlighting of the user's literal word in book/photo text. */
+  if(word === token) return true;
   if(g){
     if(hasPresence(token)) return g.indexOf(word) !== -1;
     if(KNOWN_WORDS[token]) return false;
