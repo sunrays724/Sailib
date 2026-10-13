@@ -1143,14 +1143,47 @@ function preparePhotoIndex(){
       title: String(photo.title || "Untitled photo"),
       url: String(photo.url || PHOTO_INDEX.source || ""),
       thumb: "assets/photos/" + String(photo.id || index) + ".jpg",
-      words: wordSplit(photo.title || "")
+      words: wordSplit(photo.title || ""),
+      source: "flickr"
     };
   });
+  /* Rose Petals captioned photos (e.g. "Guru Purnima 1996") live in the
+     photos page data; include them so cross-search finds them. */
+  var rose = window.ROSE_PETALS_DATA || [];
+  for(var ri = 0; ri < rose.length; ri++){
+    var rp = rose[ri];
+    var rpTitle = [rp.title, rp.caption, rp.location, rp.year, rp.edition].filter(Boolean).join(" ");
+    PHOTOS.push({
+      id: String(rp.id || ("rose-" + ri)),
+      title: rpTitle || "Rose Petals photo",
+      url: String(rp.url || "/photos/"),
+      thumb: "photos/assets/rose-petals/" + String(rp.asset || ""),
+      words: wordSplit(rpTitle),
+      source: "rose"
+    });
+  }
+  /* Devotee portraits. */
+  var devs = window.DEVOTEE_PHOTOS || [];
+  for(var di = 0; di < devs.length; di++){
+    var dv = devs[di];
+    PHOTOS.push({
+      id: String(dv.id || ("devotee-" + di)),
+      title: String(dv.title || "Devotee"),
+      url: String(dv.url || ""),
+      thumb: String(dv.thumb || ""),
+      words: wordSplit(dv.title || ""),
+      source: "devotee"
+    });
+  }
   photoIndexPrepared = true;
 }
 function ensurePhotoIndex(){
   if(photoIndexPrepared) return Promise.resolve(PHOTO_INDEX);
-  return loadAssetScript("assets/sailib-photo-index.js").then(function(){
+  return Promise.all([
+    loadAssetScript("assets/sailib-photo-index.js"),
+    loadAssetScript("photos/assets/rose-petals-data.js"),
+    loadAssetScript("assets/sailib-devotee-photos.js")
+  ]).then(function(){
     preparePhotoIndex();
     return PHOTO_INDEX;
   });
@@ -1185,13 +1218,19 @@ function searchPhotos(rawQuery){
 
 function photoCardHTML(hit, tokens, phrases){
   var photo = hit.photo;
+  var sourceLabel = photo.source === "rose" ? "Rose Petals photo"
+    : photo.source === "devotee" ? "Devotee photo"
+    : "Photo from Sri Babuji's Flickr photostream";
+  var openLabel = photo.source === "flickr" ? "View photo on Flickr &#8250;"
+    : photo.source === "rose" ? "Open the Rose Petals edition &#8250;"
+    : "Open photo &#8250;";
   return '<article class="card photo-card">' +
     '<a class="photo-thumb-link" href="' + esc(photo.url) + '" target="_blank" rel="noopener">' +
     '<img class="photo-thumb" src="' + esc(photo.thumb) + '" alt="' + esc(photo.title) + '" loading="lazy"></a>' +
     '<div class="photo-copy"><h3><a class="photo-title" href="' + esc(photo.url) +
     '" target="_blank" rel="noopener">' + highlight(photo.title, tokens, phrases) + '</a></h3>' +
-    '<p class="photo-source">Photo from Sri Babuji\'s Flickr photostream</p>' +
-    '<a class="photo-open" href="' + esc(photo.url) + '" target="_blank" rel="noopener">View photo on Flickr &#8250;</a></div></article>';
+    '<p class="photo-source">' + sourceLabel + '</p>' +
+    '<a class="photo-open" href="' + esc(photo.url) + '" target="_blank" rel="noopener">' + openLabel + '</a></div></article>';
 }
 
 
@@ -2203,23 +2242,35 @@ function mappedDigestsFor(rawQuery){
 }
 function digestItemsFor(rawQuery){
   if(/^\s*event\s*:/i.test(rawQuery)) return [];
-  var queryTokens = wordSplit(rawQuery);
-  if(!queryTokens.length) return [];
-  var items = window.SAILIB_DIGEST_ITEMS || [], scored = [];
+  var pq = parseQuery(rawQuery);
+  var tokens = sigTokensOf(pq.rest);
+  var phrases = pq.phrases;
+  if(!tokens.length && !phrases.length) return [];
+  var items = window.SAILIB_DIGEST_ITEMS || [], phraseHits = [], wordHits = [];
   for(var i = 0; i < items.length; i++){
     var item = items[i];
     if(!item || !item.t) continue;
-    var titleWords = {}, words = wordSplit(item.t), score = 0;
-    for(var wi = 0; wi < words.length; wi++) titleWords[words[wi]] = 1;
-    for(var qi = 0; qi < queryTokens.length; qi++){
-      if(titleWords[queryTokens[qi]]) score++;
+    var words = wordSplit(item.t), titleWords = {}, wi, pi, qi;
+    for(wi = 0; wi < words.length; wi++) titleWords[words[wi]] = 1;
+    var titlePadded = " " + words.join(" ") + " ";
+    /* The searched phrase is the primary index: phrase matches rank first,
+       word-breakdown matches follow. */
+    var hasPhrase = false, score = 0;
+    for(pi = 0; pi < phrases.length; pi++){
+      if(phrases[pi].str && titlePadded.indexOf(phrases[pi].str) !== -1){ hasPhrase = true; score += 100; }
     }
-    if(score > 0) scored.push({ t: item.t, d: item.d, h: item.h, score: score });
+    for(qi = 0; qi < tokens.length; qi++){
+      if(titleWords[tokens[qi]]) score++;
+    }
+    if(score > 0){
+      var entry = { t: item.t, d: item.d, h: item.h, score: score };
+      (hasPhrase ? phraseHits : wordHits).push(entry);
+    }
   }
-  scored.sort(function(a, b){
-    return b.score - a.score || String(a.t).localeCompare(String(b.t));
-  });
-  return scored.slice(0, 12);
+  var byScore = function(a, b){ return b.score - a.score || String(a.t).localeCompare(String(b.t)); };
+  phraseHits.sort(byScore);
+  wordHits.sort(byScore);
+  return phraseHits.concat(wordHits).slice(0, 12);
 }
 function digestItemCardHTML(item){
   var url = DIGEST_BASE + "#" + item.h;
