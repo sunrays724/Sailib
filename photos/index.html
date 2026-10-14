@@ -640,6 +640,7 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     if(!cloud || !toggle) return;
     var tags = window.PHOTO_SCENE_TAGS || {};
     var freq = {};
+    var HIDE = {ecards:1, ecard:1};
     Object.keys(tags).forEach(function(id){
       var tagStr = tags[id] || "";
       /* Explore by scene is Guruji-only: skip photos not featuring Guruji
@@ -647,7 +648,7 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
       if((" " + tagStr + " ").indexOf(" guruji ") === -1) return;
       tagStr.split(/\s+/).forEach(function(w){
         w = w.trim().toLowerCase();
-        if(w && w !== "guruji") freq[w] = (freq[w] || 0) + 1;
+        if(w && w !== "guruji" && !HIDE[w]) freq[w] = (freq[w] || 0) + 1;
       });
     });
     var entries = Object.keys(freq).map(function(w){ return [w, freq[w]]; })
