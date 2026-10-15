@@ -252,7 +252,11 @@
   .tindex-table td.name a:hover{text-decoration:underline}
   .tindex-table td.desc{color:var(--muted); font-size:.93rem; line-height:1.5}
   .tindex-table tr.tsec td{background:var(--accent-soft); color:var(--accent-ink); font-weight:700;
-    font-size:.8rem; letter-spacing:.07em; text-transform:uppercase; padding:7px 16px}
+    font-size:.8rem; letter-spacing:.07em; text-transform:uppercase; padding:7px 16px; cursor:pointer; user-select:none}
+  .tindex-table tr.tsec td::after{content:" ▾"; font-size:.7rem; opacity:.7}
+  .tindex-table tr.tsec.collapsed td::after{content:" ▸"}
+  .tindex-table tr.tsec.collapsed + tbody.collapsible{display:none}
+  .digest-filter{margin:0 0 12px; padding:10px 14px; border:1px solid var(--line); border-radius:8px; width:100%; max-width:400px; font:inherit}
   .view{display:none}
   .view.on{display:block}
   /* ---- in-digest table of contents ---- */
@@ -425,10 +429,11 @@
         <span class="ico" aria-hidden="true">&#x1F50D;</span>
       </div>
     </header>
+    <input type="search" class="digest-filter" id="digestFilter" placeholder="Filter digests…" aria-label="Filter digests">
     <div id="tindex"></div>
     <p class="empty" id="no-match">No digest matches that search. More topics are being added &mdash; try a different word.</p>
     <p class="cross-links" id="crossLinks" hidden></p>
-    <footer class="footer">Curated from the Sri Babuji and SaiSEEkers YouTube channel transcripts &middot; timestamps point into the original videos</footer>
+    <footer class="footer">Curated from the Sri Babuji and SaiSEEkers YouTube channel transcripts &middot; timestamps point into the original videos <a href="/whats-new/" style="margin-left:12px">What's New</a></footer>
     <p class="dedication">This is built by SaiSEEker for Saiseekers as a humble offering to SaiBabuji's holy feet. Event discourses are human-transcribed; results marked CC use AI-generated captions &mdash; pardon any mistakes &#x1F64F;</p>
     <p class="theme-indicator">This week's theme: <span id="weekly-theme-name">Dawn Gold</span></p>
     <p class="authority">For authentic information on Sai Baba and Sri Babuji, please refer to the authoritative websites: <a href="https://saibaba.com" target="_blank" rel="noopener">saibaba.com</a> and <a href="https://saiseekers.com" target="_blank" rel="noopener">saiseekers.com</a>.</p>

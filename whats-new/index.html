@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What's New — SaiLib</title>
+<meta name="description" content="Running list of new features and content on SaiLib.">
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--ink:#2b2118;--muted:#8a7a68;--line:#e8ddd0;--card:#fffdf9;--accent:#b3541e;--accent-soft:#fdf0e4}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,'Times New Roman',serif;color:var(--ink);background:#faf6f0;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding:24px 18px 60px}
+a{color:var(--accent)}
+.breadcrumb{font-size:.85rem;color:var(--muted);margin-bottom:16px}
+.breadcrumb a{color:var(--accent);text-decoration:none}
+h1{font-size:1.6rem;margin:0 0 6px}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 28px}
+.entry{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0 0 14px}
+.entry .date{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.entry h2{font-size:1.05rem;margin:4px 0 6px}
+.entry h2 a{color:var(--ink);text-decoration:none}
+.entry h2 a:hover{color:var(--accent);text-decoration:underline}
+.entry p{margin:0;font-size:.94rem;color:#4a3f33}
+.entry.this-week{border-left:3px solid var(--accent)}
+.badge{display:inline-block;font-size:.7rem;background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle;font-family:system-ui}
+footer.site{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+footer.site a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="breadcrumb"><a href="/">Home</a> › What's New</nav>
+  <h1>What's New</h1>
+  <p class="sub">Every major feature and content addition, newest first. Entries from the last 7 days are highlighted.</p>
+  <div id="entries"></div>
+  <footer class="site">
+    <a href="/">SaiLib Home</a> · <a href="/digests/">Digests</a> · <a href="/books/">SaiBooks</a> · <a href="/photos/">Photos</a>
+  </footer>
+</div>
+<script src="/assets/whats-new.js?v20261015"></script>
+<script>
+(function(){
+  var el = document.getElementById('entries');
+  var items = window.SAILIB_WHATS_NEW || [];
+  var now = new Date();
+  var weekAgo = new Date(now.getTime() - 7*24*60*60*1000);
+  var html = '';
+  items.forEach(function(it){
+    var d = new Date(it.date + 'T00:00:00');
+    var isNew = d >= weekAgo;
+    var dateStr = d.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+    html += '<article class="entry' + (isNew ? ' this-week' : '') + '">'
+      + '<div class="date">' + dateStr + (isNew ? '<span class="badge">New</span>' : '') + '</div>'
+      + '<h2><a href="' + it.link + '">' + it.title + '</a></h2>'
+      + '<p>' + it.desc + '</p>'
+      + '</article>';
+  });
+  el.innerHTML = html || '<p>No updates yet.</p>';
+})();
+</script>
+</body>
+</html>
