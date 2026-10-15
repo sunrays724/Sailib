@@ -689,6 +689,10 @@ a.ts:hover,
 .history-today-head h2{margin:0;font:700 .79rem/1.2 var(--heading-font);color:var(--ink)}
 .history-today-head time{display:block;margin-top:2px;color:var(--muted);font-size:.68rem;line-height:1.2}
 .history-bubble{min-width:0}
+.history-bubble.has-event .history-card-main{border-color:var(--accent);background:var(--accent-soft)}
+.history-bubble.has-event{position:relative}
+.history-bubble.has-event::before{content:"";position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--accent);animation:historyPulse 2s ease-in-out infinite}
+@keyframes historyPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
 .history-card-main{width:100%;min-width:0;height:44px;display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:7px;align-items:center;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--ink);padding:4px 5px;cursor:pointer;text-align:left;font:inherit}
 .history-card-main:hover{background:var(--accent-soft)}
 .history-card-main:focus-visible,.history-detail a:focus-visible,.history-timelines a:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
@@ -3616,6 +3620,12 @@ quizList.addEventListener('click', function(e){
   }
   document.getElementById("historyBabaTeaser").textContent = teaser("baba");
   document.getElementById("historyGurujiTeaser").textContent = teaser("guruji");
+  /* Highlight bubbles with events */
+  ["baba", "guruji"].forEach(function(kind){
+    var items = itemsFor(kind);
+    var card = document.getElementById(kind === "baba" ? "historyBabaCard" : "historyGurujiCard");
+    if(card && items.length) card.classList.add("has-event");
+  });
 
   function setOpenState(kind){
     document.querySelectorAll("[data-history-kind]").forEach(function(button){
