@@ -52,7 +52,7 @@
         <aside class="month-panel"><p class="panel-label">Choose a month</p><div class="month-list" id="monthList" aria-label="Months"></div></aside>
         <div class="calendar-card"><div class="calendar-head"><div><h2 id="monthHeading"></h2><p id="monthMeta"></p></div><div class="legend"><span class="legend-dot" aria-hidden="true"></span>Date with a recorded event</div></div><div class="weekday-row" aria-hidden="true"><span class="weekday">Sun</span><span class="weekday">Mon</span><span class="weekday">Tue</span><span class="weekday">Wed</span><span class="weekday">Thu</span><span class="weekday">Fri</span><span class="weekday">Sat</span></div><div class="calendar-grid" id="calendarGrid" role="grid" aria-labelledby="monthHeading"></div></div>
       </section>
-      <section class="events-shell date-anchor" id="dateDetails" aria-live="polite"><div class="events-heading"><h2 id="selectedDate"></h2><p id="eventCount"></p></div><div class="event-list" id="eventList"></div></section>
+      <section class="events-shell date-anchor" id="dateDetails" aria-live="polite"><div class="events-heading"><h2 id="selectedDate"></h2><p id="eventCount"></p><button type="button" id="copyDayLink" class="pdf-link" style="margin-top:8px;cursor:pointer;">🔗 Copy link to this day</button></div><div class="event-list" id="eventList"></div></section>
     </div>
     <noscript><p class="noscript">JavaScript is needed to browse the calendar and open dated entries.</p></noscript>
     <footer><p class="dedication">This is built by SaiSEEker for Saiseekers as a humble offering to Sri Babuji's holy feet. Source material is presented with care—pardon any mistakes.</p><p class="authority">For authentic information on Sai Baba and Sri Babuji, please refer to <a href="https://saibaba.com" target="_blank" rel="noopener">saibaba.com</a> and <a href="https://saiseekers.com" target="_blank" rel="noopener">saiseekers.com</a>.</p></footer>
@@ -69,10 +69,42 @@
     function renderMonths(){monthList.innerHTML="";MONTHS.forEach(function(name,i){var b=document.createElement("button");b.type="button";b.className="month-button";b.dataset.month=i;b.setAttribute("aria-current",i===viewMonth?"true":"false");b.innerHTML="<span>"+SHORT[i]+"</span><small>"+countDates(i)+" date"+(countDates(i)===1?"":"s")+"</small>";b.addEventListener("click",function(){viewMonth=i;var dates=Object.keys(EVENTS).filter(function(k){return Number(k.slice(0,2))===i+1}).map(function(k){return Number(k.slice(3,5))}).sort(function(a,b){return a-b});selectedDay=(i===todayMonth)?todayDay:(dates[0]||1);render();});monthList.appendChild(b)})}
     function renderCalendar(){monthHeading.textContent=MONTHS[viewMonth];var n=countDates(viewMonth);monthMeta.textContent=n+" recorded date"+(n===1?"":"s")+" in this collection";calendarGrid.innerHTML="";var first=new Date(2026,viewMonth,1).getDay(),days=new Date(2026,viewMonth+1,0).getDate();for(var i=0;i<first;i++){var blank=document.createElement("span");blank.className="calendar-blank";blank.setAttribute("aria-hidden","true");calendarGrid.appendChild(blank)}for(var d=1;d<=days;d++){(function(day){var key=keyFor(viewMonth,day),has=Boolean(EVENTS[key]),b=document.createElement("button");b.type="button";b.className="day-button"+(has?" has-events":"")+((viewMonth===todayMonth&&day===todayDay)?" today":"");b.textContent=day;b.setAttribute("role","gridcell");b.setAttribute("aria-label",MONTHS[viewMonth]+" "+day+(has?", recorded event":""));b.setAttribute("aria-pressed",day===selectedDay?"true":"false");b.addEventListener("click",function(){selectedDay=day;renderCalendar();renderEvents();if(window.matchMedia("(max-width: 900px)").matches){dateDetails.scrollIntoView({behavior:"smooth",block:"start"})}});calendarGrid.appendChild(b)})(d)}}
     function hasTelugu(text){return /[\u0C00-\u0C7F]/.test(String(text||""))}
-    function renderEvents(){var key=keyFor(viewMonth,selectedDay),entries=EVENTS[key]||[];selectedDate.textContent=MONTHS[viewMonth]+" "+selectedDay;eventCount.textContent=entries.length?(entries.length+" record"+(entries.length===1?"":"s")):"No record for this date";eventList.innerHTML="";if(!entries.length){eventList.innerHTML='<div class="empty-state"><strong>No dated entry in this collection</strong><span>Choose a highlighted day or another month to keep exploring.</span></div>';return}entries.forEach(function(item){var article=document.createElement("article");article.className="event-card";var mappedLinks=(item.links||[]).filter(function(link){return Boolean(link.drive_url||link.url)});var links=mappedLinks.length?mappedLinks.map(function(link){var isTelugu=link.language==="Telugu"||hasTelugu(link.language);return '<a class="pdf-link'+(isTelugu?' telugu':'')+'"'+(isTelugu?' lang="te"':'')+' href="'+(link.drive_url||link.url)+'" target="_blank" rel="noopener">View original PDF'+(mappedLinks.length>1?' · '+link.language:'')+' <span class="pdf-link-arrow" aria-hidden="true">↗</span></a>'}).join(""):'<p class="pdf-unavailable">Original PDF not available for this date</p>';var titleIsTelugu=hasTelugu(item.title);article.innerHTML='<div class="year">'+item.yearLabel+'</div><div class="event-body"><h3'+(titleIsTelugu?' class="telugu" lang="te"':'')+'>'+item.title+'</h3>'+(mappedLinks.length?'<p class="source-label">Open the original designed page'+(mappedLinks.length>1?' in your preferred language.':'.')+'</p>':'')+'<div class="pdf-actions">'+links+'</div></div>';eventList.appendChild(article)})}
+    function renderEvents(){var key=keyFor(viewMonth,selectedDay);try{var hv="#date="+key;if(location.hash!==hv)history.replaceState(null,"",hv)}catch(e){}var entries=EVENTS[key]||[];selectedDate.textContent=MONTHS[viewMonth]+" "+selectedDay;eventCount.textContent=entries.length?(entries.length+" record"+(entries.length===1?"":"s")):"No record for this date";eventList.innerHTML="";if(!entries.length){eventList.innerHTML='<div class="empty-state"><strong>No dated entry in this collection</strong><span>Choose a highlighted day or another month to keep exploring.</span></div>';return}entries.forEach(function(item){var article=document.createElement("article");article.className="event-card";var mappedLinks=(item.links||[]).filter(function(link){return Boolean(link.drive_url||link.url)});var links=mappedLinks.length?mappedLinks.map(function(link){var isTelugu=link.language==="Telugu"||hasTelugu(link.language);var isPdf=Boolean(link.drive_url)||(link.label||"").toLowerCase().indexOf("original pdf")!==-1;var label=isPdf?("View original PDF"+(mappedLinks.length>1&&link.language?' · '+link.language:'')):(link.label||"Related link");return '<a class="pdf-link'+(isTelugu?' telugu':'')+'"'+(isTelugu?' lang="te"':'')+' href="'+(link.drive_url||link.url)+'" target="_blank" rel="noopener">'+label+' <span class="pdf-link-arrow" aria-hidden="true">↗</span></a>'}).join(""):'<p class="pdf-unavailable">Original PDF not available for this date</p>';var titleIsTelugu=hasTelugu(item.title);article.innerHTML='<div class="year">'+item.yearLabel+'</div><div class="event-body"><h3'+(titleIsTelugu?' class="telugu" lang="te"':'')+'>'+item.title+'</h3>'+(mappedLinks.length?'<p class="source-label">Open the original designed page'+(mappedLinks.length>1?' in your preferred language.':'.')+'</p>':'')+'<div class="pdf-actions">'+links+'</div></div>';eventList.appendChild(article)})}
     function render(){renderMonths();renderCalendar();renderEvents()}
+    (function(){try{var mh=location.hash.match(/^#date=(\d{2})-(\d{2})$/);if(mh){var mo=parseInt(mh[1],10)-1,dy=parseInt(mh[2],10);if(mo>=0&&mo<12&&dy>=1&&dy<=31){viewMonth=mo;selectedDay=dy}}}catch(e){}})()
     document.getElementById("todayButton").addEventListener("click",function(){viewMonth=todayMonth;selectedDay=todayDay;render();if(window.matchMedia("(max-width: 900px)").matches){dateDetails.scrollIntoView({behavior:"smooth",block:"start"})}});
     render();
   </script>
-<script data-fresh-param-preserver>(function(){var m=window.location.search.match(/[?&]fresh=([^&]+)/);var f=m?m[1]:null;var ts=Date.now();document.querySelectorAll('a[href="/"],a[href="https://pathofsai.com/"],a[href="https://pathofsai.com"]').forEach(function(a){var h=a.getAttribute("href");if(h&&h.indexOf("fresh=")===-1){var s=h.indexOf("?")===-1?"?":"&";a.setAttribute("href",h+s+"fresh="+ts);}});if(f){document.querySelectorAll('a[href^="/"],a[href^="https://pathofsai.com/"]').forEach(function(a){var h=a.getAttribute("href");if(h==="/"||h==="https://pathofsai.com/"||h==="https://pathofsai.com")return;if(h&&h.indexOf("fresh=")===-1){var s=h.indexOf("?")===-1?"?":"&";a.setAttribute("href",h+s+"fresh="+f);}});}})();</script></body>
+<script data-fresh-param-preserver>(function(){var m=window.location.search.match(/[?&]fresh=([^&]+)/);var f=m?m[1]:null;var ts=Date.now();document.querySelectorAll('a[href="/"],a[href="https://pathofsai.com/"],a[href="https://pathofsai.com"]').forEach(function(a){var h=a.getAttribute("href");if(h&&h.indexOf("fresh=")===-1){var s=h.indexOf("?")===-1?"?":"&";a.setAttribute("href",h+s+"fresh="+ts);}});if(f){document.querySelectorAll('a[href^="/"],a[href^="https://pathofsai.com/"]').forEach(function(a){var h=a.getAttribute("href");if(h==="/"||h==="https://pathofsai.com/"||h==="https://pathofsai.com")return;if(h&&h.indexOf("fresh=")===-1){var s=h.indexOf("?")===-1?"?":"&";a.setAttribute("href",h+s+"fresh="+f);}});}})();
+<script>
+(function(){
+  var btn = document.getElementById("copyDayLink");
+  if(!btn) return;
+  btn.addEventListener("click", function(){
+    // Build the date hash from current selection
+    var dateEl = document.getElementById("selectedDate");
+    var url = location.href.split("#")[0];
+    // Try to get MM-DD from the rendered events
+    var m = document.querySelector(".events-heading h2");
+    // Use the keyFor format if available via the page's state
+    // Fallback: just copy the base URL
+    var done = function(ok){
+      btn.textContent = ok ? "✓ Link copied!" : "Copy failed";
+      setTimeout(function(){ btn.textContent = "🔗 Copy link to this day"; }, 2000);
+    };
+    // The page stores viewMonth/selectedDay in closure; use hash if present, else base URL
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = url;
+      document.body.appendChild(ta);
+      ta.select();
+      try { done(document.execCommand("copy")); } catch(e){ done(false); }
+      document.body.removeChild(ta);
+    }
+  });
+})();
+</script>
+</script></body>
 </html>

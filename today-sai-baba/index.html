@@ -383,6 +383,7 @@
       <div class="events-heading">
         <h2 id="selectedDate"></h2>
         <p id="eventCount"></p>
+        <button type="button" id="copyDayLink" class="pdf-link" style="margin-top:8px;cursor:pointer;border:1px solid var(--line);background:transparent;">🔗 Copy link to this day</button>
       </div>
       <div class="event-list" id="eventList"></div>
     </section>
@@ -619,6 +620,37 @@
           body.appendChild(details);
         }
         article.append(year, body);
+        /* Cross-reference links (videos, books, etc.) */
+        if (item.links && item.links.length) {
+          const xrefBlock = document.createElement("div");
+          xrefBlock.className = "pdf-source";
+          const xrefLabel = document.createElement("p");
+          xrefLabel.className = "pdf-source-label";
+          xrefLabel.textContent = "Related videos, books & more";
+          const xrefActions = document.createElement("div");
+          xrefActions.className = "pdf-actions";
+          item.links.forEach(link => {
+            // Skip the PDF link (already shown above)
+            if (link.label && link.label.toLowerCase().includes("original pdf")) return;
+            const a = document.createElement("a");
+            a.className = "pdf-link";
+            a.href = link.url;
+            a.target = "_blank";
+            a.rel = "noopener";
+            const text = document.createElement("span");
+            text.textContent = link.label;
+            const arrow = document.createElement("span");
+            arrow.className = "pdf-link-arrow";
+            arrow.setAttribute("aria-hidden", "true");
+            arrow.textContent = "↗";
+            a.append(text, arrow);
+            xrefActions.appendChild(a);
+          });
+          if (xrefActions.children.length) {
+            xrefBlock.append(xrefLabel, xrefActions);
+            body.appendChild(xrefBlock);
+          }
+        }
         eventList.appendChild(article);
       });
     }
@@ -627,6 +659,27 @@
       const value = "#date=" + keyFor(activeMonth, selectedDay);
       if (location.hash !== value) history.replaceState(null, "", value);
     }
+
+    /* Copy link to this day */
+    document.getElementById("copyDayLink").addEventListener("click", function(){
+      setHash();
+      const url = location.href;
+      const btn = this;
+      const done = function(ok){
+        btn.textContent = ok ? "✓ Link copied!" : "Copy failed";
+        setTimeout(function(){ btn.textContent = "🔗 Copy link to this day"; }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function(){ done(true); }, function(){ done(false); });
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = url;
+        document.body.appendChild(ta);
+        ta.select();
+        try { done(document.execCommand("copy")); } catch(e){ done(false); }
+        document.body.removeChild(ta);
+      }
+    });
 
     function readHash() {
       const match = location.hash.match(/^#date=(\d{2})-(\d{2})$/);
