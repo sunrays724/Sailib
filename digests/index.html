@@ -281,6 +281,18 @@
     border:1px solid var(--accent); color:var(--accent-ink); font-weight:700; font-size:.9rem;
     text-decoration:none; cursor:pointer; box-shadow:var(--shadow)}
   .jump-nav a:hover{background:var(--accent-soft)}
+  /* ---- top-level digest section index nav ---- */
+  .secnav{display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 14px}
+  .secnav a{display:inline-block; padding:7px 16px; border-radius:999px; background:var(--card);
+    border:1px solid var(--accent); color:var(--accent-ink); font-weight:700; font-size:.9rem;
+    text-decoration:none; cursor:pointer; box-shadow:var(--shadow)}
+  .secnav a:hover{background:var(--accent-soft)}
+  .tsec{scroll-margin-top:14px}
+  .archive-link td{padding:10px 16px; text-align:center}
+  .archive-link a{color:var(--accent-ink); font-weight:700; text-decoration:none; cursor:pointer}
+  .archive-link a:hover{text-decoration:underline}
+  .archive-card h3 a{color:var(--accent-ink); text-decoration:none}
+  .archive-card h3 a:hover{text-decoration:underline}
   .quiz{scroll-margin-top:14px}
   .quiz-list{list-style:none; margin:12px 0 0; padding:0; counter-reset:qq}
   .quiz-q{background:var(--card); border:1px solid var(--line); border-radius:12px;
@@ -6237,35 +6249,47 @@ function buildTable(){
   th += '<a class="featured-biography trow" data-name="Sri Babuji In His Own Words biography satsangs books Rose Petals" href="/biography/" target="_blank" rel="noopener"><span class="kind">Featured biography</span><span><h2>Sri Babuji &mdash; In His Own Words</h2><p>A biography woven only from what he himself said &mdash; in satsangs, in his books, and in Rose Petals</p></span><span class="arrow" aria-hidden="true">&nearr;</span></a>';
   th += '<h2 class="group-title"><span class="dot"></span>All digests at a glance</h2>';
   th += '<p class="group-sub">Every digest on this page &mdash; tap a name to open it.</p>';
+  th += '<nav class="secnav" aria-label="Digest sections">' +
+    '<a data-go="sec-readalongs" tabindex="0">Weekly Satsang Reviews</a>' +
+    '<a data-go="sec-stories" tabindex="0">Stories &amp; Parables</a>' +
+    '<a data-go="sec-primers" tabindex="0">Primers</a>' +
+    '<a data-go="sec-wordplay" tabindex="0">Sri Babuji</a>' +
+    '<a data-go="sec-saints" tabindex="0">Saints</a>' +
+    '<a data-go="sec-leelas" tabindex="0">Satcharitra Leelas</a>' +
+    '<a data-go="sec-baba" tabindex="0">Sai Baba</a>' +
+    '<a data-go="sec-analogies" tabindex="0">Analogies</a></nav>';
   th += '<table class="tindex-table"><thead><tr><th>Digest</th><th>What it covers</th></tr></thead><tbody>';
   if (DIGESTS.readalongs) {
-    th += '<tr class="tsec"><td colspan="2">Weekly Satsang Summary Reviews</td></tr>';
-    DIGESTS.readalongs.slice().reverse().forEach(function(d){ th += tableRow(digestHash("readalong", d.name), d.name, d.summary, slug("readalong-" + d.name), d); });
+    th += '<tr class="tsec" id="sec-readalongs"><td colspan="2">Weekly Satsang Summary Reviews</td></tr>';
+    /* Latest only — the rest live on the archive sub-page */
+    var latest = DIGESTS.readalongs[DIGESTS.readalongs.length - 1];
+    th += tableRow(digestHash("readalong", latest.name), latest.name, latest.summary, slug("readalong-" + latest.name), latest);
+    th += '<tr class="archive-link"><td colspan="2"><a href="#satsang-archive" target="_self">View all ' + DIGESTS.readalongs.length + ' satsang reviews &rarr;</a></td></tr>';
   }
   if (DIGESTS.stories) {
-    th += '<tr class="tsec"><td colspan="2">Stories & Parables</td></tr>';
+    th += '<tr class="tsec" id="sec-stories"><td colspan="2">Stories & Parables</td></tr>';
     DIGESTS.stories.forEach(function(d){ th += tableRow(digestHash("story", d.name), d.name, d.summary, slug("story-" + d.name), d); });
   }
   if (DIGESTS.primers) {
-    th += '<tr class="tsec"><td colspan="2">Primers</td></tr>';
+    th += '<tr class="tsec" id="sec-primers"><td colspan="2">Primers</td></tr>';
     DIGESTS.primers.forEach(function(d){ th += tableRow(digestHash("primer", d.name), d.name, d.summary, slug("primer-" + d.name), d); });
   }
   if (DIGESTS.wordplay || DIGESTS.laughter) {
-    th += '<tr class="tsec"><td colspan="2">Sri Babuji</td></tr>';
+    th += '<tr class="tsec" id="sec-wordplay"><td colspan="2">Sri Babuji</td></tr>';
     if (DIGESTS.wordplay) DIGESTS.wordplay.forEach(function(d){ th += tableRow(digestHash("wordplay", d.name), d.name, d.summary, slug("wordplay-" + d.name), d); });
     if (DIGESTS.laughter) DIGESTS.laughter.forEach(function(d){ th += tableRow(digestHash("laughter", d.name), d.name, d.summary, slug("laughter-" + d.name), d); });
   }
-  th += '<tr class="tsec"><td colspan="2">Saints</td></tr>';
+  th += '<tr class="tsec" id="sec-saints"><td colspan="2">Saints</td></tr>';
   DIGESTS.saints.forEach(function(d){ th += tableRow(digestHash("saint", d.name), d.name, d.summary, slug("saint-" + d.name), d); });
   if (DIGESTS.leelas) {
-    th += '<tr class="tsec"><td colspan="2">Satcharitra Leelas</td></tr>';
+    th += '<tr class="tsec" id="sec-leelas"><td colspan="2">Satcharitra Leelas</td></tr>';
     DIGESTS.leelas.forEach(function(d){ th += tableRow(digestHash("leela", d.name), d.name, d.summary, slug("leela-" + d.name), d); });
   }
   if (DIGESTS.baba) {
-    th += '<tr class="tsec"><td colspan="2">Sai Baba</td></tr>';
+    th += '<tr class="tsec" id="sec-baba"><td colspan="2">Sai Baba</td></tr>';
     DIGESTS.baba.forEach(function(d){ th += tableRow(digestHash("baba", d.name), d.name, d.summary, slug("baba-" + d.name), d); });
   }
-  th += '<tr class="tsec"><td colspan="2">Analogies</td></tr>';
+  th += '<tr class="tsec" id="sec-analogies"><td colspan="2">Analogies</td></tr>';
   DIGESTS.clusters.forEach(function(c){
     th += tableRow(digestHash("analogy", c.name), c.name, c.items.map(function(i){return i.name}).slice(0,4).join(" · "), slug("analogy-" + c.name), c);
   });
@@ -6358,7 +6382,7 @@ function filterIndex(input){
     else if(el.dataset.orig !== undefined){ el.innerHTML = el.dataset.orig; }
     if (hit) { shown++; if (!first) first = el; }
   });
-  document.querySelectorAll("#tindex .group-title, #tindex .group-sub, #tindex .tsec, #tindex thead").forEach(function(el){ el.style.display = hasQuery ? "none" : ""; });
+  document.querySelectorAll("#tindex .group-title, #tindex .group-sub, #tindex .tsec, #tindex thead, #tindex .secnav, #tindex .archive-link").forEach(function(el){ el.style.display = hasQuery ? "none" : ""; });
   document.getElementById("no-match").style.display = shown ? "none" : "block";
   return first;
 }
@@ -6717,6 +6741,19 @@ function renderCluster(c){
   return html;
 }
 
+/* ---------- satsang reviews archive sub-page ---------- */
+function renderSatsangArchive(){
+  var items = DIGESTS.readalongs.slice().reverse(); /* newest first */
+  var html = '<h1 class="dig-title">All Satsang Reviews</h1>';
+  html += '<p class="group-sub">' + items.length + ' weekly satsang reviews &mdash; newest first. Tap one to open it.</p>';
+  items.forEach(function(d){
+    var s = digestHash("readalong", d.name);
+    html += '<article class="point archive-card"><h3><a href="#' + s + '" target="_self">' + esc(d.name) + '</a></h3>' +
+      '<p>' + esc(d.summary || "") + '</p></article>';
+  });
+  return html;
+}
+
 /* ---------- router ---------- */
 var registry = {};
 var ORDER = [];
@@ -6739,6 +6776,8 @@ function buildRegistry(){
   if (DIGESTS.leelas) DIGESTS.leelas.forEach(function(d){ add("leela", "saint", d); });
   if (DIGESTS.baba) DIGESTS.baba.forEach(function(d){ add("baba", "saint", d); });
   DIGESTS.clusters.forEach(function(c){ add("analogy", "cluster", c); });
+  /* Archive sub-page: all satsang reviews (not in prev/next ORDER chain) */
+  registry["satsang-archive"] = {type:"archive", data:{name:"All Satsang Reviews"}, canonical:"satsang-archive"};
 }
 function prevNextHtml(cur){
   var i = -1, k;
@@ -6780,7 +6819,7 @@ function route(e, routeKey){
         window.history.replaceState(null, "", "#" + r.canonical);
       }
     }
-    document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data) : r.type === "story" ? renderStories(r.data) : r.type === "primer" ? renderPrimer(r.data) : r.type === "saint" ? renderSaint(r.data) : renderCluster(r.data)) + prevNextHtml(r.canonical);
+    document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data) : r.type === "story" ? renderStories(r.data) : r.type === "primer" ? renderPrimer(r.data) : r.type === "saint" ? renderSaint(r.data) : r.type === "archive" ? renderSatsangArchive() : renderCluster(r.data)) + prevNextHtml(r.canonical);
     vi.classList.remove("on"); vd.classList.add("on");
     document.title = r.data.name + " · Sri Babuji Digests";
     var crumb = document.getElementById("digest-crumb");
@@ -6829,6 +6868,11 @@ function tocJump(e){
 }
 document.getElementById("digest").addEventListener("click", tocJump);
 document.getElementById("digest").addEventListener("keydown", function(e){
+  if (e.key === "Enter" || e.key === " ") { tocJump(e); if (e.key === " ") e.preventDefault(); }
+});
+/* section index nav on the main index: scroll without touching the hash route */
+document.getElementById("tindex").addEventListener("click", tocJump);
+document.getElementById("tindex").addEventListener("keydown", function(e){
   if (e.key === "Enter" || e.key === " ") { tocJump(e); if (e.key === " ") e.preventDefault(); }
 });
 </script>
