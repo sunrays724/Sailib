@@ -4627,9 +4627,9 @@ function renderStories(d){
     '<p><em>' + esc(d.captionNote) + '</em></p></article>';
   html += '<nav class="toc" aria-label="Story categories"><span class="toc-h">Browse by category</span><ol class="readalong-toc">';
   d.categories.forEach(function(c){
-    html += '<li><a href="#storycat-' + c.id + '" target="_self">' + esc(c.title) + ' (' + c.stories.length + ')</a></li>';
+    html += '<li><a href="javascript:void(0)" data-go="storycat-' + c.id + '">' + esc(c.title) + ' (' + c.stories.length + ')</a></li>';
   });
-  html += '<li><a href="#storycat-pending" target="_self">Awaiting transcription (' + d.noCaptionVideos.length + ')</a></li>';
+  html += '<li><a href="javascript:void(0)" data-go="storycat-pending">Awaiting transcription (' + d.noCaptionVideos.length + ')</a></li>';
   html += '</ol></nav>';
   d.categories.forEach(function(c){
     html += '<div class="deep-head" id="storycat-' + c.id + '"><h2>' + esc(c.title) + '</h2><p>' + c.stories.length + ' stories</p></div>';
@@ -4642,18 +4642,18 @@ function renderStories(d){
         var label = s.occurrences.length > 1 ? "Watch telling " + (j + 1) : "Watch the telling";
         html += '<p><a href="' + esc(o.watchUrl) + '" target="_blank" rel="noopener"><strong>' + label + '</strong></a> <span class="meta-label">' + esc(o.start) + ' &ndash; ' + esc(o.end) + '</span></p>';
         if (o.narrationTelugu && o.narrationEnglish) {
-          /* Bilingual rendering: Telugu visible, English in expandable details */
+          /* Bilingual rendering: all Telugu together, then all English together in an expander */
           var paras = function(t){ return '<p>' + esc(t).split(/\n\n+/).join('</p><p>') + '</p>'; };
+          var teluguFull = '';
+          var englishFull = '';
           if (o.devoteeQuestion) {
-            html += '<div><span class="story-speaker devotee">Devotee</span>';
-            html += '<div class="story-telugu">' + paras(o.devoteeQuestion) + '</div>';
-            if (o.devoteeQuestionEn) html += '<details><summary>English translation</summary><div class="story-english">' + paras(o.devoteeQuestionEn) + '</div></details>';
-            html += '</div>';
+            teluguFull += '<div><span class="story-speaker devotee">Devotee</span><div class="story-telugu">' + paras(o.devoteeQuestion) + '</div></div>';
+            if (o.devoteeQuestionEn) englishFull += '<div><span class="story-speaker devotee">Devotee</span><div class="story-english">' + paras(o.devoteeQuestionEn) + '</div></div>';
           }
-          html += '<div><span class="story-speaker guruji">Sri Babuji</span>';
-          html += '<div class="story-telugu">' + paras(o.narrationTelugu) + '</div>';
-          html += '<details><summary>Read in English</summary><div class="story-english">' + paras(o.narrationEnglish) + '</div></details>';
-          html += '</div>';
+          teluguFull += '<div><span class="story-speaker guruji">Sri Babuji</span><div class="story-telugu">' + paras(o.narrationTelugu) + '</div></div>';
+          englishFull += '<div><span class="story-speaker guruji">Sri Babuji</span><div class="story-english">' + paras(o.narrationEnglish) + '</div></div>';
+          html += teluguFull;
+          html += '<details><summary>Read in English</summary>' + englishFull + '</details>';
         } else {
           html += '<details><summary>Read the full narration</summary><div class="body"><p>' + esc(o.narration) + '</p></div></details>';
         }
@@ -4871,12 +4871,12 @@ function route(e, routeKey){
     document.title = r.data.name + " · Sri Babuji Digests";
     var crumb = document.getElementById("digest-crumb");
     if(crumb) crumb.textContent = r.data.name;
-    if (e && e.type === "hashchange") glideTo(vd);
-    else if (sectionAnchor) {
+    if (sectionAnchor) {
       var sel = document.getElementById(sectionAnchor);
       if (sel && sel.scrollIntoView) sel.scrollIntoView();
       else window.scrollTo(0, 0);
     }
+    else if (e && e.type === "hashchange") glideTo(vd);
     else window.scrollTo(0, 0);
   }
 }
