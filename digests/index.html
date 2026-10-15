@@ -259,6 +259,8 @@
   .toc{background:var(--accent-soft); border:1px solid var(--line); border-radius:12px;
     padding:12px 18px 8px; margin:16px 0 6px; font-size:.93rem}
   .toc .toc-h{font-weight:700; color:var(--accent-ink); display:block; margin-bottom:4px}
+  .toc .toc-lang{font-weight:700; color:var(--accent-ink); margin:10px 0 2px; font-size:.92rem}
+  .toc .toc-lang:first-of-type{margin-top:4px}
   .toc ol{margin:0; padding-left:20px}
   .toc li{margin:3px 0; cursor:pointer}
   .toc li:hover a{color:var(--accent-ink); text-decoration:underline}
@@ -6488,11 +6490,27 @@ function pointLabel(p){
 }
 function tocHtml(entries){
   if (!entries || entries.length <= 6) return "";
-  var h = '<nav class="toc" aria-label="In this digest"><span class="toc-h">In this digest:</span><ol>';
-  entries.forEach(function(e){
-    h += '<li data-go="' + e.id + '"><a data-go="' + e.id + '" tabindex="0">' + esc(e.label) + "</a></li>";
-  });
-  return h + "</ol></nav>";
+  /* Group bilingual digests by language: strip redundant numbers, restart numbering per language */
+  var stripNum = function(t){ return String(t).replace(/^\d+\.\s*/, ""); };
+  var isTelugu = function(t){ return /\(తెలుగు\)/.test(t); };
+  var hasTelugu = entries.some(function(e){ return isTelugu(e.label); });
+  var h = '<nav class="toc" aria-label="In this digest"><span class="toc-h">In this digest:</span>';
+  if (hasTelugu) {
+    var en = entries.filter(function(e){ return !isTelugu(e.label); });
+    var te = entries.filter(function(e){ return isTelugu(e.label); });
+    h += '<p class="toc-lang">In English</p><ol>';
+    en.forEach(function(e){ h += '<li data-go="' + e.id + '"><a data-go="' + e.id + '" tabindex="0">' + esc(stripNum(e.label).replace(/\s*\(English\)\s*$/, "")) + "</a></li>"; });
+    h += '</ol><p class="toc-lang">తెలుగులో</p><ol>';
+    te.forEach(function(e){ h += '<li data-go="' + e.id + '"><a data-go="' + e.id + '" tabindex="0">' + esc(stripNum(e.label).replace(/\s*\(తెలుగు\)\s*$/, "")) + "</a></li>"; });
+    h += "</ol>";
+  } else {
+    h += "<ol>";
+    entries.forEach(function(e){
+      h += '<li data-go="' + e.id + '"><a data-go="' + e.id + '" tabindex="0">' + esc(e.label) + "</a></li>";
+    });
+    h += "</ol>";
+  }
+  return h + "</nav>";
 }
 
 /* ---- interactive quiz (weekly satsang template): MCQ, true/false, fill-in-blank, reflection ---- */
