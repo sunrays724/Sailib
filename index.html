@@ -3116,6 +3116,17 @@ function finishSearch(){
 q.addEventListener("input", function(){
   updateClearSearch();
   clearTimeout(deb);
+  /* Auto-collapse Today in history when typing a search */
+  var hd = document.getElementById("historyDetail");
+  if(hd && !hd.classList.contains("hidden") && q.value.trim()){
+    hd.classList.add("hidden");
+    hd.innerHTML = "";
+    document.querySelectorAll("[data-history-kind]").forEach(function(b){
+      b.setAttribute("aria-expanded", "false");
+      var bubble = b.closest(".history-bubble");
+      if(bubble) bubble.classList.remove("is-open");
+    });
+  }
   deb = setTimeout(runSearch, 220);
 });
 clearSearch.addEventListener("click", function(){
@@ -3128,6 +3139,17 @@ clearSearch.addEventListener("click", function(){
 form.addEventListener("submit", function(e){
   e.preventDefault();
   clearTimeout(deb);
+  /* Auto-collapse Today in history when searching */
+  var hd = document.getElementById("historyDetail");
+  if(hd && !hd.classList.contains("hidden")){
+    hd.classList.add("hidden");
+    hd.innerHTML = "";
+    document.querySelectorAll("[data-history-kind]").forEach(function(b){
+      b.setAttribute("aria-expanded", "false");
+      var bubble = b.closest(".history-bubble");
+      if(bubble) bubble.classList.remove("is-open");
+    });
+  }
   runSearch();
   finishSearch();
 });
