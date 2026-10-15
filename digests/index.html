@@ -302,6 +302,11 @@
   .quiz-q summary:hover{text-decoration:underline}
   .quiz-ans{margin:8px 0 0; font-size:.93rem}
   .quiz-ans .ok{color:var(--accent-ink); font-weight:700}
+  .quiz-more-wrap{margin:12px 0 0; text-align:center}
+  .quiz-more-btn{background:var(--card); border:1px solid var(--accent); color:var(--accent-ink);
+    border-radius:999px; padding:8px 22px; font-size:.92rem; font-weight:700; cursor:pointer}
+  .quiz-more-btn:hover{background:var(--accent); color:#fff}
+  .quiz-more-list{counter-reset:qq 5}
   .quiz-why{color:var(--muted); font-size:.88rem; margin:6px 0 0}
   .key-points{margin:10px 0 0; padding-left:23px}
   .key-points li{margin:0 0 9px}
@@ -2705,27 +2710,24 @@ DIGESTS.primers = [
     summary: "What is satsang? Sri Babuji's teachings on satsang — its meaning, purpose, and how to do it. Satsang is the fencing protecting the harvest, the chimney sheltering the small lamp of devotion, and simply sitting together in Baba's love.",
     lead: `<p><strong>Satsang — literally "the company of Truth" (sat = truth, sang = company).</strong> But what does it actually mean to sit in satsang? Sri Babuji returns to this question again and again across decades of satsangs, and his answers cut through every misconception: satsang is not a lecture, not a ritual, not propaganda, not a social club. It is the fencing that protects the tender harvest of devotion, the chimney that shelters the small lamp of a good feeling from the winds of the world — and, most simply, just sitting together, because Baba works not through verbal teaching but through love.</p>
       <p>This digest gathers Guruji's clearest explanations: what satsang is, the three kinds of satsangam, how satsang should (and should not) be done, and why regularity matters more than feeling.</p>`,
-    quiz: [
-      {type:"mcq", q:"Guruji says: “Satsang is the fencing protecting the harvest.” What is the harvest?",
+    quiz: [{type:"mcq", q:"Guruji says: “Satsang is the fencing protecting the harvest.” What is the harvest?",
        options:["The number of devotees", "The tender devotion/emotion lit in the heart", "The donations collected", "The temple building"], answer:1,
        why:"“Some kind of emotion is lit, a small lamp is lit — we need a fencing for that, a protection for that.” The mind is easily influenced by the environment; satsang protects the fragile new devotion until it grows strong."},
-      {type:"mcq", q:"In the lamp-and-chimney analogy, what does the chimney (satsangam) protect?",
+{type:"mcq", q:"In the lamp-and-chimney analogy, what does the chimney (satsangam) protect?",
        options:["The temple from rain", "The small lamp of a good bhava from the wind of the world", "The oil from spilling", "The wick from burning out"], answer:1,
        why:"A good feeling — from a good word, a good book, or Sai's grace — is like a small lamp; the world's attractions are the wind that would blow it out. Satsangam is the chimney. When the flame grows big, the very wind becomes its friend."},
-      {type:"mcq", q:"According to Guruji, what is the FIRST kind of satsangam (the truest)?",
+{type:"mcq", q:"According to Guruji, what is the FIRST kind of satsangam (the truest)?",
        options:["Reading books about saints", "The company and service of satpurushas who have seen and experienced the Truth", "Singing bhajans alone", "Visiting temples"], answer:1,
        why:"“The first kind of satsangam: the company and service of those who have seen and experienced the Truth — the satpurushas.” The second is reading their charitras and teachings when their company is not available."},
-      {type:"tf", q:"Guruji says satsang will make you enlightened through his lectures and verbal teaching.", answer:false,
+{type:"tf", q:"Guruji says satsang will make you enlightened through his lectures and verbal teaching.", answer:false,
        why:"“Don't believe this satsang will make you enlightened… I don't believe in lectures, in verbal teaching.” Satsang is “just an opportunity to sit together” — Baba works not through verbal teaching."},
-      {type:"tf", q:"Guruji says it is fine if satsang feels mechanical at first — keep the routine anyway.", answer:true,
+{type:"tf", q:"Guruji says it is fine if satsang feels mechanical at first — keep the routine anyway.", answer:true,
        why:"Like eating lunch at 12 whether hungry or not: regularity builds the state. “If it feels mechanical, that is fine — start the routine anyway.” Breaking the routine is what to avoid."},
-      {type:"fill", q:"“Satsang is just a ____ for all of us to sit together.”", answer:"pretext",
+{type:"fill", q:"“Satsang is just a ____ for all of us to sit together.”", answer:"pretext",
        why:"“This is all just a pretext for all of us to sit together.” The content of the talk is not the point — sitting together in love is."},
-      {type:"reflect", q:"Guruji says satsang is not for boosting our ego, growing the sangha, or Baba's propaganda.",
-       prompt:"Think about your own reason for attending satsang. Is there any trace of ego (“I am a regular”), recruitment (“I must bring ten people”), or identity in it? What would it feel like to sit there wanting nothing but to share the good you received — like recommending a movie you loved?"},
-    ],
-    sections: [
-      {
+{type:"reflect", q:"Guruji says satsang is not for boosting our ego, growing the sangha, or Baba's propaganda.",
+       prompt:"Think about your own reason for attending satsang. Is there any trace of ego (“I am a regular”), recruitment (“I must bring ten people”), or identity in it? What would it feel like to sit there wanting nothing but to share the good you received — like recommending a movie you loved?"}],
+    sections: [{
         title: "Satsang is the fencing protecting the harvest",
         html: `<p>In Shirdi, 15 March 1997, Guruji gives the central image: our mind is weak and easily influenced by the environment — in one place we think one way, in another place we fall into that environment. When a tender new devotion is lit, it needs protection:</p>
           <blockquote><p>"If you don't have the fencing, if you want to really enjoy the harvest, you have to take care of the fencing also, otherwise you don't get the harvest."</p></blockquote>
@@ -2737,7 +2739,7 @@ DIGESTS.primers = [
             <li><a href="https://www.youtube.com/watch?v=bodYFKP2qXc&t=1374s" target="_blank" rel="noopener">The small lamp needs a chimney; the big fire consumes the environment — 22:54</a></li>
           </ul>`
       },
-      {
+{
         title: "Satsang is just sitting together",
         html: `<p>At Tiruvannamalai (16 November 2004), Guruji disarms every expectation about what satsang is supposed to achieve:</p>
           <blockquote><p>"Don't believe this satsang will make you enlightened, and you will get knowledge with my lectures — this and nothing. It just is an opportunity to sit with you for some time."</p></blockquote>
@@ -2748,7 +2750,7 @@ DIGESTS.primers = [
             <li><a href="https://www.youtube.com/watch?v=MRKz86OSU5U&t=2884s" target="_blank" rel="noopener">Satsang is just sitting together; Baba works not through verbal teaching — 48:04</a></li>
           </ul>`
       },
-      {
+{
         title: "The three kinds of satsangam",
         html: `<p>In a Telugu extract on bhajana, Guruji describes satsangam as the chimney that protects the small lamp of a good bhava (a good feeling — from a good word, a good book, or Sai's grace) from the wind of the world's attractions. And when the flame grows big, the very wind that was its enemy becomes its friend — the sadhaka then draws the world toward himself.</p>
           <p>He names three kinds of satsangam:</p>
@@ -2761,7 +2763,7 @@ DIGESTS.primers = [
             <li><a href="https://www.youtube.com/watch?v=Hb7IgIl96XE&t=125s" target="_blank" rel="noopener">Three kinds of satsangam — 2:05</a> <small>(Telugu)</small></li>
           </ul>`
       },
-      {
+{
         title: "How satsang should be done — and how not",
         html: `<p>Asked "how should satsang be done?" (Telugu), Guruji answers with disarming practicality:</p>
           <p><strong>Don't break the routine.</strong> Like eating lunch at 12 whether hungry or not — regularity builds the state. If it feels mechanical after years, that is fine: start the routine anyway. We never try to break our other routines (sleep, office, TV) — only satsang gets the "it's become mechanical" excuse.</p>
@@ -2773,8 +2775,7 @@ DIGESTS.primers = [
             <li><a href="https://www.youtube.com/watch?v=DLIZV1wOCjw&t=140s" target="_blank" rel="noopener">Not for ego, sangha-growth, or propaganda — the good-movie analogy — 2:20</a> <small>(Telugu)</small></li>
             <li><a href="https://www.youtube.com/watch?v=c26SrVjEpHM&t=1412s" target="_blank" rel="noopener">Sitting with ten Sai devotees is puja — 23:32</a> <small>(Telugu)</small></li>
           </ul>`
-      },
-    ],
+      }],
     summary: `Satsang — the company of Truth — is the fencing that protects the tender harvest of devotion and the chimney that shelters the small lamp of a good feeling from the winds of the world. It is not a lecture and not a path to enlightenment through words: Baba works not through verbal teaching, so satsang is simply a pretext to sit together and share love. The truest satsangam is the company of those who have experienced the Truth; next, their lives and teachings in books. Done rightly, it is regular like meals, free of ego and propaganda — just sharing the good received, the way you'd recommend a film you loved.`,
     keyPoints: [
       `<strong>Satsang is protection, not the harvest itself.</strong> The harvest is the devotion lit in the heart; satsang is the fencing around it until it grows strong enough to influence the environment instead of being influenced by it.`,
@@ -2799,8 +2800,7 @@ DIGESTS.primers = [
       <p>What made him unique, in Sri Babuji's words: "They say that Baba is a man of miracles, but he never materialized anything. Such things he called chamatkar, and he emphatically said, 'We don't do chamatkar.'" — "What you call a miracle is natural mothering to a Satguru like Sai Baba." (<em>Rose Petals</em>, June 2011) "With Sai Baba almost all his miracles carry a transforming effect on the experiencer… Baba's biography is his teaching. There was no verbal teaching, no separate teaching, in fact. Baba taught through his acts."</p>
       <p>And who is He, finally? "For me, Baba is synonymous with a real Satguru who uses his power with unconditional love and compassion to help us reach our destination." (Sri Babuji, <em>Bound to Love</em>) Baba on his own form: "Whoever thinks this five-and-a-half-foot body is Sai Baba, hasn't seen Sai Baba at all." (<em>Rose Petals</em>, July 2015) — "A window is needed, and that is the form of the Sadguru… Sai Baba is such a window": look through the form and see the formless.</p>
       <p>He founded no order, no ashram, left no successor — "I have no spiritual heirs. I will answer the needs of my devotees even from my samadhi." On 15 October 1918 (Vijayadashami) he took Mahasamadhi — "I shall be ever active and vigorous even after leaving this earthly body… My bones in My tomb will give you hope and confidence." (<em>Satcharitra</em>) "The once insignificant village of Shirdi, now sanctified by Baba's presence, is a major centre of pilgrimage" — saibaba.com.</p>`,
-    sections: [
-      {
+    sections: [{
         title: "Reference — Guruji on video: what Baba is",
         html: `<ul>
           <li><a href="https://www.youtube.com/watch?v=G57dV5-8Yyw&t=214s" target="_blank" rel="noopener">What is Sai Baba's state of being?</a> — the body-cells analogy: the Satguru's body is the whole; He responds to each devotee as you respond to each cell of your body</li>
@@ -2815,7 +2815,7 @@ DIGESTS.primers = [
           <li><a href="https://www.youtube.com/watch?v=CIkexsHFyOY&t=3794s" target="_blank" rel="noopener">With a Sadguru everything becomes a mantra (Aug 29, 2026)</a></li>
         </ul>`
       },
-      {
+{
         title: "Reference — books & saibaba.com",
         html: `<ul>
           <li><a href="https://www.saibaba.com/holyshirdi/saibaba/index.html" target="_blank" rel="noopener">Who is Sri Sai Baba? — saibaba.com</a> · <a href="https://www.saibaba.com/holyshirdi/saibaba/index-1.html" target="_blank" rel="noopener">part 2: teaching through an experience of love</a> · <a href="https://www.saibaba.com/holyshirdi/saibaba/index-2.html" target="_blank" rel="noopener">part 3: life in Shirdi and mahasamadhi</a></li>
@@ -2823,8 +2823,7 @@ DIGESTS.primers = [
           <li><em>Bound to Love</em> — Sri Babuji's book (Sai Baba primer pp. vii–viii; "For me, Baba is synonymous with a real Satguru…" <small class="ref-page">· p. 63</small>)</li>
           <li><em>Rose Petals</em>, June 2011 ("The Unique Mahima of Shirdi Sai Baba") &amp; July 2015 ("Sadguru, Window to the Sky") — <a href="https://downloads.saibaba.com/rosepetals" target="_blank" rel="noopener">https://downloads.saibaba.com/rosepetals</a></li>
         </ul>`
-      }
-    ],
+      }],
     readMore: "",
     inBrief: `Sai Baba of Shirdi (Maharashtra, India; Mahasamadhi 1918) was a saint-fakir revered by Hindus and Muslims alike — of unknown birth, boundless love, and miraculous help. He spent his life in Shirdi's Dwarkamai mosque and Chavadi, living with utter simplicity while treating all with an equal eye and teaching faith (Shraddha) and patience (Saburi). Worshipped as a God-incarnate sadguru, he promised to remain active in answering his devotees' prayers from his tomb — and millions experience it to this day.`
   },
@@ -2839,8 +2838,7 @@ DIGESTS.primers = [
       <p>His self-image, definitively: "Just like the role I am playing with you – the role of a spoon… I am a spoon, use me properly. The one who gives is Baba." (<em>Rose Petals</em>, Sept 2012) And the disavowal, in full: "Have I called you? Have I invited you? Have I promised you anything?… I am not a teacher! I am not a guru! I am not a saint! … I am just like you… I am a simple Sai devotee. Yes, I am." (<em>Bound to Love</em>) "People unnecessarily call me 'Guruji'. I am not a guru… they need a guru, and they see a guru in me, so they call me 'Guruji'. It is their need." (<em>Rose Petals</em>, Dec 2015)</p>
       <p>He took mahasamadhi on 13 November 2010; his samadhi (Sannidhanam) is in Saipatham, Shirdi. Devotees record prayers answered and guidance continuing — "blessings he always attributed to Baba's grace and love." His whole teaching in one sentence, from <em>Bound to Love</em>: <strong>"the experience and expression of love."</strong></p>
       <p>(A note on sources: the books agree on the life; <em>Rose Petals</em> dates the awakening "at 16" while the Aradhana documentary narration says 18 — his own words put the love "almost innate" from childhood.)</p>`,
-    sections: [
-      {
+    sections: [{
         title: "Reference — Guruji on video: his life and mission, in his own words",
         html: `<ul>
           <li><a href="https://www.youtube.com/watch?v=CIkexsHFyOY&t=5544s" target="_blank" rel="noopener">His youth: the anguish</a> and <a href="https://www.youtube.com/watch?v=CIkexsHFyOY&t=5620s" target="_blank" rel="noopener">meeting his Guru — how to make a path</a> (Aug 29, 2026 satsang)</li>
@@ -2855,7 +2853,7 @@ DIGESTS.primers = [
           <li><a href="https://www.youtube.com/watch?v=uJbwwO4sDNg&t=159s" target="_blank" rel="noopener">Sri Babuji insists: I am not a guru, I am a Sai devotee (documentary)</a></li>
         </ul>`
       },
-      {
+{
         title: "Reference — books & saibaba.com",
         html: `<ul>
           <li><em>Babuji</em> — Yvonne Weier &amp; Geoff Dowson, Saipatham Publications, Shirdi (the full biography)</li>
@@ -2865,8 +2863,7 @@ DIGESTS.primers = [
           <li><a href="https://downloads.saibaba.com/publications/pdfs/Rose_Petals_vol_4.pdf" target="_blank" rel="noopener">Selections from Satsangs with Sri Babuji, Vol. 4</a> (biography introduction) · <a href="https://downloads.saibaba.com/publications/pdfs/Rose_Petals_vol_5.pdf" target="_blank" rel="noopener">Vol. 5</a> · <a href="http://downloads.saibaba.com/publications/pdfs/ROSEPETALS_2011.pdf" target="_blank" rel="noopener">Rose Petals 2011</a></li>
           <li>Satsangs on video — the Sri Babuji channel: <a href="https://www.youtube.com/@SriSainathuniSarathBabuji" target="_blank" rel="noopener">https://www.youtube.com/@SriSainathuniSarathBabuji</a></li>
         </ul>`
-      }
-    ],
+      }],
     readMore: "",
     inBrief: `Sri Sainathuni Sarath Babuji (1954–2010), affectionately called "Guruji," was a South Indian devotee of Shirdi Sai Baba who said of himself: "I am not your guru, you are not my disciples. I am a simple Sai devotee." Settling in Shirdi in 1989, he guided seekers through intimate question-and-answer satsangs, the Telugu monthly magazine Saipatham, and his teachings preserved in the monthly Rose Petals (Sarathchandrikalu) editions — all pointing, as he put it, to one thing: "Baba is both the path and the goal."`
   },
@@ -2882,8 +2879,7 @@ DIGESTS.primers = [
       <blockquote><p>"Saipatham is a path of life which has Baba as its center. A life in which our thoughts, actions and our whole way of living revolve around Baba. Just as a creeper winds around a pole, our life should revolve around Sri Sai."</p></blockquote>
       <blockquote><p>"Saipatham is the celebration of the power of the Sadguru, that supreme alchemist, who turns the basest amongst us to gold."</p></blockquote>
       <p>Together, these words describe not a religious boundary or a separate organization, but a whole way of living: Baba at the center, the Sadguru's love as the transforming power, and grace as the reliance.</p>`,
-    sections: [
-      {
+    sections: [{
         title: "Sri Babuji's video elaborations — Telugu",
         html: `<p>In the Telugu satsang videos, Sri Babuji brings the path into remembrance, shared belonging and daily conduct:</p>
           <ul>
@@ -2894,19 +2890,19 @@ DIGESTS.primers = [
           </ul>
           <p>The first points to anything that keeps Baba in remembrance. The next two refuse division into separate parties. The last turns the question inward: the name or badge is not enough; the path must be lived.</p>`
       },
-      {
+{
         title: "The history of Saipatham, Shirdi",
         html: `<p>In 1989, Sri Babuji moved to Shirdi and rented a simple room in a row of ten rooms — that building came to be known as 'Saipatham' (Path of Sai). As devotees gathered, a satsang hall was built nearby; in 1996 Sri Babuji moved into small rooms next to the hall. The compound was first named 'Saiyana' (Sai as the vehicle to fulfilment), then renamed 'Saipatham' after his old residence to avoid confusion with businesses using the name. The foundation stone had been laid in 1995, where Baba's photo was placed. In 2003 he moved to Guru Charan, a devotee's house further down the lane.</p>`
       },
-      {
+{
         title: "Sannidhanam and the akhanda deepam",
         html: `<p>Adjacent to the satsang hall is Sri Babuji's samadhi, the Sannidhanam — the place he himself indicated as his final resting place. Ammagaru lit the deepam there, and it was lit twice daily for twelve years, until Vijayadasami 2007, when Sri Babuji lit the akhanda deepam (ever-burning lamp) in the satsang hall. The Sannidhanam continues as a place of prayer and meditation.</p>`
       },
-      {
+{
         title: "Daily schedule at Saipatham",
         html: `<p>Morning near the Sannidhanam (8:30–9:00 AM): Sai Vanti Daivambu, Sai Alapana, meditation, arati. At the Satsang Hall (9:00–10:00 AM): Satcharitra / Anubhava Samhita parayana, Sai namam, arati. Evening near the Sannidhanam (6:30–7:00 PM): readings, meditation, arati. At the Satsang Hall (7:00–8:00 PM): Nitya Prarchana, Sai Alapana, parayana, Sai Namam, arati. Donations are not accepted.</p>`
       },
-      {
+{
         title: "References — official page, videos and books",
         html: `<ul>
           <li><a href="https://saipatham.saibaba.com/saipatham/index.html" target="_blank" rel="noopener">What is Saipatham? — official Saipatham page</a></li>
@@ -2929,8 +2925,7 @@ DIGESTS.primers = [
           <li><a href="https://www.youtube.com/watch?v=byBYPP6fIHQ" target="_blank" rel="noopener">2026 Guru Purnima — Opening the Saipatham Free Medical Camp</a></li>
           <li><a href="https://www.youtube.com/watch?v=RCmPQBwevW0" target="_blank" rel="noopener">Oct 10 2026 Satsang (Guruji Q&amp;A)</a></li>
         </ul>`
-      }
-    ],
+      }],
     readMore: "",
     inBrief: `Saipatham — also said or written as Saipadam or Sai Padham — is the path Sri Sai Baba showed and lived. It centers life on Baba, trusts his grace, and receives the Sadguru's unconditional love as both the way and the goal. In daily life, remembrance and practicing Baba's principles matter more than labels, badges or separate groups.`
   }
@@ -2943,36 +2938,34 @@ DIGESTS.laughter = [
     lead: `<p><strong>Laughter is part of the way Sri Babuji teaches:</strong> sometimes a story disarms the room, sometimes a word turns over in his hand, and sometimes the joke is aimed gently at our habits — or at himself.</p>
       <p>This is a growing collection of moments caught in the <em>Rose Petals</em> books, not an exhaustive catalogue. There are surely many more. Readers are warmly invited to share moments they remember so they can be traced, sourced and added.</p>
       <p>The first thirty are told with their context; seventy-four more are gathered in a compact list. Where the same moment was found on video, the link opens at the exact timestamp so the laughter can be heard in the room.</p>`,
-    sections: [
-      {
+    sections: [{
         title: "When solemnity suddenly gives way",
         html: `<p class="section-note">A journey, a household surprise or an imagined ashram can become the opening. Sri Babuji lets the room see itself, then allows the teaching to arrive through the laugh.</p><div class="laughter-entry"><h4>The Rishikesh rafting trip</h4><p>On a river-rafting trip in Rishikesh, Guruji noticed that almost everybody in the boat was only acting — &quot;The oars were mostly above the water!&quot; He acted out rowing with a lot of effort, bringing much laughter. His punchline: &quot;So in satsang, even though our devotion is so weak, other people&#x27;s devotion will row us on, on and on. I was looking at that and I thought, &#x27;Oh, this is satsang!&#x27;&quot;</p><p class="wordplay-source"><cite>Rose Petals, January 2013 (missing-edition extract)</cite></p></div><div class="laughter-entry"><h4>The brooming technique for enlightenment</h4><p>A newcomer decides the main practice here is washing dishes and is told she should &quot;apprentice with some senior, experienced person!&quot; Guruji spins it out: people will move on, set up ashrams, build meditation halls &quot;with dishes and brooms inside,&quot; and soon &quot;brooming practices and techniques will sweep the world!&quot; — until he is hailed as &quot;the discoverer of a new technique for enlightenment!&quot;</p><p class="wordplay-source"><cite>Rose Petals, March 2015</cite></p></div><div class="laughter-entry"><h4>The rat that ate Baba&#x27;s photo</h4><p>Guruji came home at 1 or 2 in the night and went to the puja room — shock! The old Baba photo was gone from its frame; only the empty frame remained. &quot;What happened was — rats! A rat had taken the photo from the frame and eaten it. Later we found some of the pieces in a corner.&quot; The whole house was shocked — &quot;What happened? What happened?&quot; — and the big new Baba picture took its place.</p><p class="wordplay-source"><cite>Rose Petals, October 2011 (missing-edition extract)</cite></p></div><div class="laughter-entry"><h4>The 2:45 a.m. cold bath</h4><p>When young Guruji resolved to bathe at 3 a.m. in winter, his mind would protest, &quot;Three o&#x27;clock, it&#x27;s cold, very cold, and oh, I have to get up!&quot; His response: &quot;Oh, now you are trying to trick me — come on then!&quot; The next day he got up even earlier, at 2:45 a.m., using water from an earthen storage pot, which made it even colder. &quot;Next time the mind didn&#x27;t even dare to think that thought! Even the thought wouldn&#x27;t come to me because it knows what I would do. People used to think I was crazy.&quot;</p><p class="wordplay-source"><cite>Rose Petals, May 2012</cite></p></div><div class="laughter-entry"><h4>Walked twice from Vidyanagar to Kota</h4><p>Missing the bus became another of the mind&#x27;s tricks: &quot;Today I missed the bus to Vidyanagar, okay, so I&#x27;ll go tomorrow...&quot; Guruji&#x27;s punishment was instant — that day he would walk twice from Vidyanagar to Kota. &quot;&#x27;A-ha, so you are depending on a bus? Come on, I&#x27;ll see your end!&#x27;&quot; When asked whether the treatment worked: &quot;Yes, it will definitely work. Why won&#x27;t it work?&quot;</p><p class="wordplay-source"><cite>Rose Petals, May 2012</cite></p></div><div class="laughter-entry"><h4>The dais amnesia</h4><p>With friends you can beautifully expound what Guruji said in satsang, and your friend gets enchanted — &quot;Oh, I&#x27;ll arrange a meeting tomorrow, a big gathering, and you can give a speech about it.&quot; But once you stand on the dais, &quot;nothing comes from the pulpit. &#x27;Guruji, last time in the States...&#x27; you say, &#x27;Sorry, in India, when he gave a satsang in Shirdi... no, no, not in Shirdi. What is that place&#x27;s name? Tirupati, no, I mean Tiruvannamalai.&#x27; Everything goes, the mind becomes blank. You forget everything — names of places, even my name!&quot;</p><p class="wordplay-source"><cite>Rose Petals, May 2015</cite> · <a href="https://www.youtube.com/watch?v=VGcOxGkfA3s&amp;t=3296s" target="_blank" rel="noopener">Watch the moment — 26 Oct 2005 Tiruvannamalai satsang (00:54:56) — tells it again at 03:46:10 in the 2023 Dhyana Mandiram session</a></p></div>`
       },
-      {
+{
         title: "Turning the joke toward himself",
         html: `<p class="section-note">Some of the warmest moments come from Sri Babuji’s own younger years: testing resolve, being teased, arguing, and refusing to dramatize the path.</p><div class="laughter-entry"><h4>Cycling from Kota to Vidyanagar without touching the handlebars</h4><p>As a schoolboy Guruji learned balance the hard way: &quot;We used to say, &#x27;Let&#x27;s not touch the handlebars all the way from Kota to Vidyanagar!&#x27; We used to go from our house until we entered the college without touching the handlebars and then stop and put the cycle on its stand.&quot; The moral he draws: once balance is learned, &quot;even without pedaling or without hands, you can balance the whole thing.&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2014</cite></p></div><div class="laughter-entry"><h4>&quot;One furlong, one kilometre...&quot; — the trek</h4><p>Asked &quot;Where are we at?&quot; on the spiritual path, Guruji answers like a trekking guide: &quot;One furlong, one kilometre, two kilometres, ten kilometres, twenty kilometres. You are trekking, enjoy it! Enjoy nature. While trekking you don&#x27;t measure how far you&#x27;ve gone, how many steps you&#x27;ve taken. &#x27;Oh, I still have to walk one furlong! Oh my God!&#x27; Then it&#x27;s not trekking.&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2014</cite></p></div><div class="laughter-entry"><h4>The school wrestling champion</h4><p>Before his seeking years, Guruji was a school sportsman: &quot;Before that I was a wrestling champion in my school. Wrestling was my favourite sport. In those days, it was the only martial art, there was no boxing, karate, nothing else was there.&quot; This comes right after he reports the result of six years of body-torturing austerities: &quot;Nothing happened!&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2015</cite></p></div><div class="laughter-entry"><h4>&quot;Look, the bhakta has come!&quot;</h4><p>As a strict young vairagi, Guruji would not enter a cinema theatre even to fetch his father, who used to visit a friend who owned one. &quot;So I used to stand outside and ask the watchman to send for him. And all the people used to joke and say to my father, &#x27;Look, the bhakta has come! Go, go out! If he comes inside, he&#x27;ll become impure and be spoiled!&#x27;&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2015</cite></p></div><div class="laughter-entry"><h4>&quot;Such a nice boy — and see now what has become of him!&quot;</h4><p>Between 1972 and &#x27;78 Guruji went from college politics, drama and literature to extreme simplicity — living in Tiruvannamalai &quot;without having a rupee in my pocket, not carrying even a bag or a backpack.&quot; People said, &quot;Such a nice boy, and see now what has become of him!&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2015</cite></p></div><div class="laughter-entry"><h4>&quot;My problem was not so common — that was the problem!&quot;</h4><p>Guruji&#x27;s youthful spiritual problem was so unusual that &quot;it was so difficult to find anyone even to understand my problem, let alone give a solution!&quot; His Master never gave him a solution — &quot;but he understood my problem sympathetically. That attracted me to him.&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2015</cite></p></div><div class="laughter-entry"><h4>&quot;Let God rest happily in heaven&quot;</h4><p>As a young seeker arguing with philosophers about the beyond-mind Brahman, Guruji would demand: &quot;If it&#x27;s beyond our mind and thought, why do we talk about it? If it&#x27;s so beyond everything, why think of it at all? Why do we need to bother about Brahman, and why does He need to bother about us? ... Let God rest happily in his so-called heaven. What about me? My problem! When I ask about my problem, you talk about God. I&#x27;m not concerned about Him! What about me, first tell me that!&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2015</cite></p></div><div class="laughter-entry"><h4>Arguing with the Master while the mind was on Baba</h4><p>Guruji once argued philosophy with his Master while his mind was elsewhere entirely: &quot;Yes, the argument was going on and I was wondering how I was arguing. The argument was good and my Master was enthusiastic because he had never faced such an opponent. He would encourage me, saying, &#x27;Come on! Come on! Come on!&#x27;&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2015</cite></p></div>`
       },
-      {
+{
         title: "A quick reply that changes the question",
         html: `<p class="section-note">The humor is often conversational. A question is accepted, tilted by one degree, and handed back with its hidden assumption exposed.</p><div class="laughter-entry"><h4>&quot;I asked you for money, not a job!&quot;</h4><p>A man came to Guruji in trouble: &quot;I&#x27;m in trouble, I need money.&quot; Guruji said, &quot;Okay, I&#x27;ll give you this job.&quot; &quot;&#x27;But I asked you for money, not a job!&#x27; he said. &#x27;Yes, why do you think I&#x27;m giving you a job — precisely to get money!&#x27;&quot; Exactly so, he says, with the Sadguru&#x27;s prescription: focus on Baba — &quot;that&#x27;s the job I&#x27;m giving you — just do it!&quot;</p><p class="wordplay-source"><cite>Rose Petals, April 2014</cite></p></div><div class="laughter-entry"><h4>Grandmother: &quot;He&#x27;s a big Siva bhakta&quot;</h4><p>As a boy, Guruji asked his grandmother — a schoolteacher who &quot;never said, &#x27;I don&#x27;t know&#x27;&quot; — about the odd human-looking god in the family photos. &quot;So when I asked, &#x27;Who is that Sai Baba?&#x27; she said, &#x27;He&#x27;s a big Siva bhakta.&#x27; &#x27;And what is he doing?&#x27; In the picture, there was a small horse and some hills or mountains... &#x27;He lives in the Himalayas and is doing tapas.&#x27;&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2011 (missing-edition extract)</cite> · <a href="https://www.youtube.com/watch?v=MRKz86OSU5U&amp;t=899s" target="_blank" rel="noopener">Watch the moment — 16 Nov 2004 Tiruvannamalai satsang (00:14:59) — tells the same grandmother story, incl. &#x27;she never used to say I don&#x27;t know&#x27;</a></p></div><div class="laughter-entry"><h4>&quot;A promise without compromise!&quot;</h4><p>A devotee presses him: &quot;Guruji, you said &#x27;becoming&#x27; — is that a promise?&quot; Guruji, who had just been staring pointedly with wide eyes to show how Baba looks at us, answers without missing a beat: &quot;Yes, a promise without compromise!&quot;</p><p class="wordplay-source"><cite>Rose Petals, January 2014</cite></p></div><div class="laughter-entry"><h4>&quot;I try in all possible ways to repel them&quot;</h4><p>&quot;If anybody comes to me it is Baba&#x27;s will, not mine. I try in all possible ways to repel them. But if they still come, it means that it&#x27;s Baba&#x27;s power bringing them to me, and I enjoy that. When I see them, I see Baba&#x27;s power, I see Baba in them.&quot;</p><p class="wordplay-source"><cite>Rose Petals, January 2014</cite> · <a href="https://www.youtube.com/watch?v=dFqjPVsek04&amp;t=3955s" target="_blank" rel="noopener">Watch the moment — Sep 4, 2026 satsang (01:05:55) — &#x27;I should do all possible way in my power to repel them&#x27;</a></p></div><div class="laughter-entry"><h4>Don&#x27;t superimpose Baba on people</h4><p>&quot;I am not asking you to see Baba in everything... Not trying to superimpose our image of Baba on others, saying Baba, Baba, Baba. That&#x27;s not it. When we relate to people, the awareness that Baba is in all living creatures is enough.&quot;</p><p class="wordplay-source"><cite>Rose Petals, January 2014</cite> · <a href="https://www.youtube.com/watch?v=dFqjPVsek04&amp;t=4038s" target="_blank" rel="noopener">Watch the moment — Sep 4, 2026 satsang (01:07:18) — &#x27;trying to superimpose our image of Baba... saying Baba Baba&#x27;</a></p></div><div class="laughter-entry"><h4>The upside-down container in the bucket</h4><p>Guruji gives a bathroom experiment: &quot;just take a container and put it upside down in a bucket of water. Just at the vertical, 90 degrees. Even though the vessel is empty, not a drop of water will enter. Why? It is empty; to our thinking, it is empty. But it is too upright. So then if we tilt it just a little bit, just one degree, the water will come in... After some time there is no need for you to tilt it more because the water gushes in.&quot;</p><p class="wordplay-source"><cite>Rose Petals, December 2011 (missing-edition extract)</cite> · <a href="https://www.youtube.com/watch?v=MRKz86OSU5U&amp;t=3800s" target="_blank" rel="noopener">Watch the moment — 16 Nov 2004 Tiruvannamalai satsang (01:03:20) — the same empty-vessel-in-the-bucket analogy</a></p></div>`
       },
-      {
+{
         title: "Everyday images that keep moving",
         html: `<p class="section-note">Buckets, stoves, buffaloes and wet cloths are ordinary enough to picture immediately. Then each image takes an unexpected turn and becomes difficult to forget.</p><div class="laughter-entry"><h4>&quot;Be here and try to be on the stove!&quot;</h4><p>&quot;In order to boil water or to heat milk, what do you do? You put it on the stove, on the fire, so that it catches the heat of the fire. If you really want to catch fire, be here and try to be on the stove! If you put the milk in the refrigerator and then light the stove, how can it be heated?&quot;</p><p class="wordplay-source"><cite>Rose Petals, December 2012 (missing-edition extract)</cite> · <a href="https://www.youtube.com/watch?v=kZ8X7cT4SXw&amp;t=2626s" target="_blank" rel="noopener">Watch the moment — Sep 26, 2026 satsang (00:43:46) — &#x27;If you really want to catch fire, be here and try to be on the stove&#x27;</a></p></div><div class="laughter-entry"><h4>&quot;Don&#x27;t live like a buffalo&quot;</h4><p>We anxiously gulp experiences &quot;like a buffalo eating grass&quot; — afraid another creature will take it — &quot;and then it slowly brings it back and tries to digest it... when we are alone, when we are sitting quietly, we try to bring it back and ruminate over it, digesting it. Don&#x27;t live like a buffalo or a cow! Live like human beings who eat thoroughly and experience fully in the moment.&quot;</p><p class="wordplay-source"><cite>Rose Petals, December 2012 (missing-edition extract)</cite> · <a href="https://www.youtube.com/watch?v=kZ8X7cT4SXw&amp;t=2831s" target="_blank" rel="noopener">Watch the moment — Sep 26, 2026 satsang (00:47:11) — &#x27;Don&#x27;t try to live like a buffalo and a cow&#x27;</a></p></div><div class="laughter-entry"><h4>The wet cloth that goes back into the bucket</h4><p>&quot;It is just as though you were a wet cloth in the sun: Baba&#x27;s grace is like the heat of the sun. All you have to do is keep your cloth in the sun, and the wetness — our so-called ignorance — will be dried away.&quot; The trouble: &quot;the cloth doesn&#x27;t keep itself always in the sun. It wants to keep itself in the shade, or even after becoming half-dried, again it goes into the bucket!&quot;</p><p class="wordplay-source"><cite>Rose Petals, October 2012</cite> · <a href="https://www.youtube.com/watch?v=dFqjPVsek04&amp;t=2280s" target="_blank" rel="noopener">Watch the moment — Sep 4, 2026 satsang (00:38:00) — &#x27;your being is like a wet cloth and the heat of the sun&#x27;</a></p></div><div class="laughter-entry"><h4>&quot;What is your name? Atman!&quot;</h4><p>&quot;After some time of verbalizing and conceptualizing, you&#x27;ll say, &#x27;I am Brahman.&#x27; What is your name? &#x27;Atman!&#x27; Yes! I&#x27;m not joking, you sometimes hear this from these kinds of people in holy places.&quot;</p><p class="wordplay-source"><cite>Rose Petals, September 2015</cite> · <a href="https://www.youtube.com/watch?v=CIkexsHFyOY&amp;t=5801s" target="_blank" rel="noopener">Watch the moment — Aug 29, 2026 satsang (01:36:41) — &#x27;What is your name? Atma. Not joking.&#x27;</a></p></div><div class="laughter-entry"><h4>&quot;More different or less different?&quot;</h4><p>Asked how different a saint&#x27;s experience is from ours, Guruji turns it around: &quot;In which prospect are you more interested — more different or less different? Which is more attractive to you? I&#x27;ll give you an example, and you can tell me whether it is less different or more different.&quot;</p><p class="wordplay-source"><cite>Rose Petals, November 2015</cite> · <a href="https://www.youtube.com/watch?v=CIkexsHFyOY&amp;t=4488s" target="_blank" rel="noopener">Watch the moment — Aug 29, 2026 satsang (01:14:48) — the same question, before the two-dogs-at-the-gate example</a></p></div><div class="laughter-entry"><h4>Shake, break or go-go dancing</h4><p>On losing individuality in a group journey: &quot;It&#x27;s like participating in a group dance, rather than giving an individual performance, like shake, break or go-go dancing. It&#x27;s like a tribal dance, there is a natural beauty in it.&quot; A journey like this, he adds, &quot;can be the fire which melts the iceberg — this I-rock of ego!&quot;</p><p class="wordplay-source"><cite>Rose Petals, April 2013</cite> · <a href="https://www.youtube.com/watch?v=C_y0NBqU9bs&amp;t=3227s" target="_blank" rel="noopener">Watch the moment — Sep 12, 2026 satsang (00:53:47) — retells the same &#x27;Journey to the Source&#x27; talk: &#x27;shake break or go-go... a tribal dance&#x27;</a></p></div>`
       },
-      {
+{
         title: "The laugh inside a larger insight",
         html: `<p class="section-note">Here the lightness does not interrupt the teaching; it carries it. The journey, the dance, the e-mail and even a sorrowful film all reveal how the mind interprets experience.</p><div class="laughter-entry"><h4>&quot;Do you know where you are going?&quot; — the journey as microcosm</h4><p>A devotee says nobody on the mystery tour has known &quot;where we&#x27;re going, or when or how,&quot; and it&#x27;s a very nice feeling. Guruji: &quot;What I want to give you is an idea of your own life in a microcosm, in miniature. In fact, do you know where you are going? You are simply living.&quot; And: &quot;I could give you a schedule, then say it has changed, and then change it again. Each time you&#x27;d have the illusion that you knew where you were going, just like you have in your lives now — the same illusion.&quot;</p><p class="wordplay-source"><cite>Rose Petals, April 2013</cite> · <a href="https://www.youtube.com/watch?v=kZ8X7cT4SXw&amp;t=4189s" target="_blank" rel="noopener">Watch the moment — Sep 26, 2026 satsang (01:09:49) — retells the same talk: &#x27;nobody&#x27;s really known where they&#x27;re going... do you know where you are going?&#x27;</a></p></div><div class="laughter-entry"><h4>Dixit&#x27;s housemaid and the e-mail letter</h4><p>Happiness lies in awareness, not possession: &quot;Like Dixit&#x27;s housemaid: she doesn&#x27;t put on the sari and we don&#x27;t spend the money — it stays five, ten, fifteen years on deposit — still we enjoy it.&quot; So with the Sadguru: &quot;It&#x27;s the very awareness that, &#x27;Yes! This is my e-mail letter!&#x27; &#x27;I&#x27;ve got it!&#x27; — that should make you happy... So let us all be like Kakasaheb Dixit&#x27;s maid — she happily has her sari, you have got Baba... Dance, dance, dance!&quot;</p><p class="wordplay-source"><cite>Rose Petals, February 2011 (missing-edition extract)</cite></p></div><div class="laughter-entry"><h4>The man who saw Rakta Sambandham two hundred times</h4><p>On why we crave even painful aesthetic experiences: &quot;I know a person who has seen that movie two hundred times. Going there just to cry! What is that? Crying is an unpleasant experience. But why does he crave it? Because even though he is crying, what he is getting there is an aesthetic experience, and that gives him such joy.&quot;</p><p class="wordplay-source"><cite>Rose Petals, February 2012</cite></p></div><div class="laughter-entry"><h4>Wordsworth — &#x27;his words are always worthy&#x27;</h4><p>On the poet&#x27;s struggle to share the inexpressible: &quot;Then he takes his pen. He becomes a Wordsworth — the English poet. His words are always worthy, that&#x27;s why he is words-worth.&quot; Earlier in the same riff he imitates a crying baby — &quot;Baaa baaa&quot; in different modes and tunes — to show how the mother understands the spirit behind wordless cries.</p><p class="wordplay-source"><cite>Rose Petals, February 2012</cite></p></div>`
       },
-      {
+{
         title: "More moments caught in the books",
         html: `<p class="section-note">Seventy-four more moments from the same search, kept compact so the collection remains browsable. Each title is the moment; the edition beside it is where the surrounding exchange can be read.</p><ul class="more-moments"><li><strong>&quot;In Poondi, the thing that was missing I got&quot;</strong><span>Rose Petals, October 2015</span></li><li><strong>The thousand-births darshan</strong><span>Rose Petals, November 2012</span></li><li><strong>&quot;Spirituality seems to be the best [pretext]&quot;</strong><span>Rose Petals, September 2014</span></li><li><strong>&quot;I have no disciples — we have no discipline&quot;</strong><span>Rose Petals, December 2015</span></li><li><strong>The sign of maturity is not seeking signs</strong><span>Rose Petals, December 2015</span></li><li><strong>Believing you can live without belief</strong><span>Rose Petals, September 2013</span></li><li><strong>&quot;Then you will be able to tell me what I have experienced!&quot;</strong><span>Rose Petals, September 2012</span></li><li><strong>&quot;If they could help it, they definitely wouldn&#x27;t have been like that!&quot;</strong><span>Rose Petals, April 2014</span></li><li><strong>The G-factor: race becomes grace</strong><span>Rose Petals, April 2012</span></li><li><strong>&quot;People become normal after coming to me!&quot;</strong><span>Rose Petals, April 2015</span></li><li><strong>&quot;You catch the stone and throw it back!&quot;</strong><span>Rose Petals, April 2015</span></li><li><strong>&quot;I specialize only in mukti!&quot;</strong><span>Rose Petals, April 2015</span></li><li><strong>The spiritual monster</strong><span>Rose Petals, April 2015</span></li><li><strong>&quot;We are all children, grown-up children!&quot;</strong><span>Rose Petals, July 2014</span></li><li><strong>&quot;Oh, ow, ow! Ah, again! Come on, again!&quot;</strong><span>Rose Petals, July 2014</span></li><li><strong>Not wicked, wick — though he sometimes seems wicked</strong><span>Rose Petals, July 2012</span></li><li><strong>To &#x27;be longing&#x27; is &#x27;belonging&#x27;</strong><span>Rose Petals, July 2013</span></li><li><strong>Back to the corner</strong><span>Rose Petals, July 2015</span></li><li><strong>&quot;If it was your choice you would be sitting here&quot;</strong><span>Rose Petals, June 2015</span></li><li><strong>Willing and willing — &quot;that would be our last will!&quot;</strong><span>Rose Petals, June 2015</span></li><li><strong>&quot;Trying!&quot;</strong><span>Rose Petals, June 2015</span></li><li><strong>&quot;Where all of this is going to end&quot;</strong><span>Rose Petals, June 2015</span></li><li><strong>&quot;That&#x27;s what I&#x27;m trying to do!&quot;</strong><span>Rose Petals, June 2014</span></li><li><strong>&quot;Even if you cut onions you&#x27;ll get tears&quot;</strong><span>Rose Petals, June 2012</span></li><li><strong>&quot;Help me like this! Don&#x27;t help me like that!&quot;</strong><span>Rose Petals, March 2013</span></li><li><strong>The cake test</strong><span>Rose Petals, March 2015</span></li><li><strong>&quot;For us, it might have lasted a few years&quot;</strong><span>Rose Petals, March 2014</span></li><li><strong>&quot;My pa-a-atterns!&quot; / &quot;Come on, exploit me!&quot;</strong><span>Rose Petals, March 2014</span></li><li><strong>&quot;No, I don&#x27;t want to do it!&quot; — smelling their sweat</strong><span>Rose Petals, May 2012</span></li><li><strong>&quot;That is his fault, it is not my fault&quot;</strong><span>Rose Petals, May 2012</span></li><li><strong>&quot;We even need somebody to show us how helpless we are!&quot;</strong><span>Rose Petals, November 2014</span></li><li><strong>&quot;There is no way that you can help Baba to help you!&quot;</strong><span>Rose Petals, November 2014</span></li><li><strong>&quot;Maybe I&#x27;m only imagining it!&quot;</strong><span>Rose Petals, November 2014</span></li><li><strong>&quot;It makes all the difference&quot;</strong><span>Rose Petals, November 2015</span></li><li><strong>&quot;If you depend!&quot;</strong><span>Rose Petals, November 2013</span></li><li><strong>&quot;No promises; no assurances; no reassurances&quot;</strong><span>Rose Petals, November 2013</span></li><li><strong>&quot;Is there no other work for Him?&quot;</strong><span>Rose Petals, November 2013</span></li><li><strong>&quot;The form wants you to realize it!&quot;</strong><span>Rose Petals, November 2013</span></li><li><strong>The mattress and the dining table</strong><span>Rose Petals, October 2012</span></li><li><strong>The spiritual businessmen</strong><span>Rose Petals, October 2012</span></li><li><strong>The laundry room and the line in Poondi</strong><span>Rose Petals, October 2012</span></li><li><strong>The accident and Baba&#x27;s photo</strong><span>Rose Petals, October 2013</span></li><li><strong>&quot;It&#x27;s your headache whether you get it or not&quot;</strong><span>Rose Petals, October 2013</span></li><li><strong>Grace &quot;has no power failures&quot;</strong><span>Rose Petals, October 2013</span></li><li><strong>Baba&#x27;s signature, smeared with ink</strong><span>Rose Petals, February 2015</span></li><li><strong>&quot;&#x27;Hours&#x27; is too big a word for it&quot;</strong><span>Rose Petals, February 2015</span></li><li><strong>&quot;All your reasoning will end up with no reason&quot;</strong><span>Rose Petals, February 2014</span></li><li><strong>&quot;Just the smallest glimpse&quot; — [much laughter]</strong><span>Rose Petals, February 2014</span></li><li><strong>&quot;All these people here have fear&quot;</strong><span>Rose Petals, February 2014</span></li><li><strong>&quot;I haven&#x27;t solved it at all!&quot;</strong><span>Rose Petals, February 2014</span></li><li><strong>Being sense-able</strong><span>Rose Petals, January 2015</span></li><li><strong>No &#x27;Ganges Sutra&#x27;</strong><span>Rose Petals, January 2015</span></li><li><strong>&quot;So irrelevant, so shallow&quot; — the hollow man</strong><span>Rose Petals, February 2013</span></li><li><strong>&quot;Having no real stuff&quot;</strong><span>Rose Petals, February 2013</span></li><li><strong>&quot;If they are not interested, they&#x27;ll try to avoid you!&quot;</strong><span>Rose Petals, January 2013 (missing-edition extract)</span></li><li><strong>&quot;My clothes are not good, but I like to wear them like this!&quot;</strong><span>Rose Petals, January 2013 (missing-edition extract)</span></li><li><strong>&quot;Focus on Baba! Whether you like it or not&quot;</strong><span>Rose Petals, January 2013 (missing-edition extract)</span></li><li><strong>Badminton: &quot;Will you calculate its mass?&quot;</strong><span>Rose Petals, May 2014 (missing-edition extract)</span></li><li><strong>&quot;That is the &#x27;express-way&#x27;!&quot;</strong><span>Rose Petals, May 2014 (missing-edition extract)</span></li><li><strong>Effort is needed &quot;so that things don&#x27;t get worse&quot;</strong><span>Rose Petals, May 2014 (missing-edition extract)</span></li><li><strong>Are pujas &quot;done to focus on the fruit or flowers?&quot;</strong><span>Rose Petals, July 2011 (missing-edition extract)</span></li><li><strong>&quot;That&#x27;s bosh!&quot;</strong><span>Rose Petals, December 2012 (missing-edition extract)</span></li><li><strong>The &quot;maintenance-free&quot; focus</strong><span>Rose Petals, August 2012</span></li><li><strong>Self-deception vs Self-realization</strong><span>Rose Petals, August 2014</span></li><li><strong>&quot;We are all bores, dry bores&quot;</strong><span>Rose Petals, August 2014</span></li><li><strong>&quot;A good looong look&quot;</strong><span>Rose Petals, August 2014</span></li><li><strong>Cold rice for forty-eight years</strong><span>Rose Petals, August 2014</span></li><li><strong>&quot;The mind which we have, they don&#x27;t have!&quot;</strong><span>Rose Petals, August 2015</span></li><li><strong>&quot;You can trick it!&quot;</strong><span>Rose Petals, August 2015</span></li><li><strong>The travel-agency ticket</strong><span>Rose Petals, August 2015</span></li><li><strong>&quot;That you have to know&quot;</strong><span>Rose Petals, October 2014</span></li><li><strong>&quot;Maybe going forward could also be worse!&quot;</strong><span>Rose Petals, October 2014</span></li><li><strong>&quot;Choiceless, right — awareness, that&#x27;s the problem&quot;</strong><span>Rose Petals, June 2015</span></li><li><strong>&quot;If you really feel that you are many miles away&quot;</strong><span>Rose Petals, April 2012</span></li></ul>`
       },
-      {
+{
         title: "References \u2014 Rose Petals and exact video moments",
         html: `<ul><li><a href="https://downloads.saibaba.com/rosepetals" target="_blank" rel="noopener"><em>Rose Petals</em> archive</a> — the 2011–2015 editions cited under each moment above; entries marked “missing-edition extract” retain the source label from the research corpus.</li><li><a href="https://www.youtube.com/watch?v=VGcOxGkfA3s&amp;t=3296s" target="_blank" rel="noopener">The dais amnesia</a> — 26 Oct 2005 Tiruvannamalai satsang (00:54:56) — tells it again at 03:46:10 in the 2023 Dhyana Mandiram session</li><li><a href="https://www.youtube.com/watch?v=MRKz86OSU5U&amp;t=899s" target="_blank" rel="noopener">Grandmother: &quot;He&#x27;s a big Siva bhakta&quot;</a> — 16 Nov 2004 Tiruvannamalai satsang (00:14:59) — tells the same grandmother story, incl. &#x27;she never used to say I don&#x27;t know&#x27;</li><li><a href="https://www.youtube.com/watch?v=dFqjPVsek04&amp;t=3955s" target="_blank" rel="noopener">&quot;I try in all possible ways to repel them&quot;</a> — Sep 4, 2026 satsang (01:05:55) — &#x27;I should do all possible way in my power to repel them&#x27;</li><li><a href="https://www.youtube.com/watch?v=dFqjPVsek04&amp;t=4038s" target="_blank" rel="noopener">Don&#x27;t superimpose Baba on people</a> — Sep 4, 2026 satsang (01:07:18) — &#x27;trying to superimpose our image of Baba... saying Baba Baba&#x27;</li><li><a href="https://www.youtube.com/watch?v=MRKz86OSU5U&amp;t=3800s" target="_blank" rel="noopener">The upside-down container in the bucket</a> — 16 Nov 2004 Tiruvannamalai satsang (01:03:20) — the same empty-vessel-in-the-bucket analogy</li><li><a href="https://www.youtube.com/watch?v=kZ8X7cT4SXw&amp;t=2626s" target="_blank" rel="noopener">&quot;Be here and try to be on the stove!&quot;</a> — Sep 26, 2026 satsang (00:43:46) — &#x27;If you really want to catch fire, be here and try to be on the stove&#x27;</li><li><a href="https://www.youtube.com/watch?v=kZ8X7cT4SXw&amp;t=2831s" target="_blank" rel="noopener">&quot;Don&#x27;t live like a buffalo&quot;</a> — Sep 26, 2026 satsang (00:47:11) — &#x27;Don&#x27;t try to live like a buffalo and a cow&#x27;</li><li><a href="https://www.youtube.com/watch?v=dFqjPVsek04&amp;t=2280s" target="_blank" rel="noopener">The wet cloth that goes back into the bucket</a> — Sep 4, 2026 satsang (00:38:00) — &#x27;your being is like a wet cloth and the heat of the sun&#x27;</li><li><a href="https://www.youtube.com/watch?v=CIkexsHFyOY&amp;t=5801s" target="_blank" rel="noopener">&quot;What is your name? Atman!&quot;</a> — Aug 29, 2026 satsang (01:36:41) — &#x27;What is your name? Atma. Not joking.&#x27;</li><li><a href="https://www.youtube.com/watch?v=CIkexsHFyOY&amp;t=4488s" target="_blank" rel="noopener">&quot;More different or less different?&quot;</a> — Aug 29, 2026 satsang (01:14:48) — the same question, before the two-dogs-at-the-gate example</li><li><a href="https://www.youtube.com/watch?v=C_y0NBqU9bs&amp;t=3227s" target="_blank" rel="noopener">Shake, break or go-go dancing</a> — Sep 12, 2026 satsang (00:53:47) — retells the same &#x27;Journey to the Source&#x27; talk: &#x27;shake break or go-go... a tribal dance&#x27;</li><li><a href="https://www.youtube.com/watch?v=kZ8X7cT4SXw&amp;t=4189s" target="_blank" rel="noopener">&quot;Do you know where you are going?&quot; — the journey as microcosm</a> — Sep 26, 2026 satsang (01:09:49) — retells the same talk: &#x27;nobody&#x27;s really known where they&#x27;re going... do you know where you are going?&#x27;</li></ul>`
-      }
-    ],
+      }],
     readMore: "",
     inBrief: `Sri Babuji’s humor is not separate from the teaching: it lowers the guard, exposes an assumption and leaves an image that can be recalled later. These 104 book-caught moments are a beginning — thirty in context, seventy-four in brief, and twelve linked to the exact moment on video.`
   }
@@ -2984,8 +2977,7 @@ DIGESTS.wordplay = [
     summary: "Race becomes grace through guru-G; a cover is removed by dis-covering. Thirteen sourced examples of Sri Babuji letting the sound and shape of words reveal their meaning.",
     lead: `<p><strong>In English, this kind of play is called a pun — or, more formally, paronomasia:</strong> using the sound, spelling or double meaning of a word to open another meaning inside it.</p>
       <p>Sri Babuji's wordplay is rarely decoration. A letter, a syllable or a contradiction becomes a compact teaching: race receives its G, the cover comes away, and a familiar word is heard afresh.</p>`,
-    sections: [
-      {
+    sections: [{
         title: "Sound-plays — one small change, a different world",
         html: `<div class="wordplay-entry">
           <h4>Race → grace → guru-G</h4>
@@ -3008,7 +3000,7 @@ DIGESTS.wordplay = [
           <p class="wordplay-source"><cite>Rose Petals, May 2014, “Effort from the Heart,” p. 2</cite></p>
         </div>`
       },
-      {
+{
         title: "Words opened from the inside",
         html: `<div class="wordplay-entry">
           <h4>Un-foldment and dis-covering</h4>
@@ -3036,7 +3028,7 @@ DIGESTS.wordplay = [
           <p class="wordplay-source"><a href="https://www.youtube.com/watch?v=MRKz86OSU5U&t=3594s" target="_blank" rel="noopener">Watch “the inside view” — 59:54</a></p>
         </div>`
       },
-      {
+{
         title: "Paradox, echo and a laugh",
         html: `<div class="wordplay-entry">
           <h4>The familiar stranger</h4>
@@ -3064,15 +3056,14 @@ DIGESTS.wordplay = [
           <p class="wordplay-source"><cite>Rose Petals, January 2015, “The Principle of Flow,” p. 2</cite></p>
         </div>`
       },
-      {
+{
         title: "References",
         html: `<ul>
           <li><a href="https://saipatham.saibaba.com/rose-petals/apr2012web.html" target="_blank" rel="noopener">Rose Petals, April 2012 — “The Iron and the Magnet”</a></li>
           <li><a href="https://downloads.saibaba.com/rosepetals" target="_blank" rel="noopener">Rose Petals archive</a> — the dated editions and printed pages cited above</li>
           <li><a href="https://www.youtube.com/@SriSainathuniSarathBabuji" target="_blank" rel="noopener">Sri Babuji video channel</a> — each video citation above opens at the exact spoken moment</li>
         </ul>`
-      }
-    ],
+      }],
     readMore: "",
     inBrief: `Sri Babuji often lets a word teach through its own sound and structure: race becomes grace through guru-G; a cover is removed by dis-covering; an interview becomes an inside view. These puns — paronomasia — are brief, playful ways of turning attention from the familiar word toward the experience beneath it.`
   }
@@ -3080,26 +3071,15 @@ DIGESTS.wordplay = [
 
 DIGESTS.readalongs = [
   {
-    name: "October 1, 2026 — SaiSEEkers Satsang (Read-Along)",
-    summary: "A full read-along for the October 1 SaiSEEkers satsang: key points, a timestamped contents guide, and the Telugu discourse transcript — the Nitya Prarthana as the Sai Arunachala Padigam, the early devotees' worship of Baba in the Masjid (Mahalsapati, the wooden plank, serving like dancing on a sword's edge), Sai Baba namam, a chain of devotees' leelas (Shama, Das Ganu, the Nagpur doctor, Lakshman Bhat, Venkataravu, Garde), and Q&A on attachments, miracle claims, teamwork, and the four-day experiment; plus quick trivia.",
+    name: "October 1, 2026 — SaiSEEkers Satsang (Post Satsang review)",
+    summary: "A full post-satsang review of the October 1 SaiSEEkers satsang: key points, a timestamped contents guide, and the Telugu discourse transcript — the early devotees' worship of Baba in the Masjid (Mahalsapati, the wooden plank, serving like dancing on a sword's edge), Sai Baba namam, a chain of devotees' leelas (Shama, Das Ganu, the Nagpur doctor, Lakshman Bhat, Venkataravu, Garde), and Q&A on attachments, miracle claims, teamwork, and the four-day experiment; plus quick trivia.",
     video: "https://www.youtube.com/watch?v=2Oui6-qlUOg",
     duration: "1:50:06",
     languages: "Telugu",
     date: "Oct 1, 2026",
     note: "Auto-transcribed Telugu audio (te-orig captions), lightly cleaned for reading. The opening ~13 minutes are uncaptioned. Obvious mishearings corrected; rough stretches kept as-is. Follow along as the audio plays.",
-    streamNote: "Captions begin at 00:12:59; the first ~13 minutes are uncaptioned. The satsang runs 00:12:59–01:48:05: opening chants and the Nitya Prarthana with its meaning (~00:13:23–00:24:00), the discourse on the early devotees' worship in the Masjid — Mahalsapati, the wooden plank, serving like dancing on a sword's edge (~00:24:00–00:42:12), Sai Baba namam (~00:42:12–00:53:22), a chain of devotees' leelas (00:53:22–01:08:09), Q&A on attachments, miracle claims, teamwork and the four-day experiment (~01:08:30–01:19:23), more namam (~01:19:23–01:41:02), and the arati with its meaning in English, closing with the Sharanam song (~01:41:02–01:48:05). The stream continues to 1:50:06.",
-    keyPointGroups: [
-      {
-        title: "The Nitya Prarthana — the Sai Arunachala Padigam",
-        points: [
-          "Our Nitya Prarthana in Sai Padham is the free Sai adaptation of Bhagavan Sri Ramana Maharshi's Arunachala Padigam — a hymn that flowed freely from Bhagavan's inmost being, “a triveni sangamam of bhakti, jnana and vairagya” — a mighty, Veda-like utterance, not like ordinary prayers.",
-          "Taking its meaning to heart and reading it with shraddha daily, “with feeling,” greatly aids sadhana and makes one a recipient of Sri Sainath's grace — for Sri Sai devotees, Sri Sai is the form of all deities.",
-          "If the prayer's lofty feeling is beyond us now, “turning it over with whatever yearning and tenderness we can muster, the feeling gradually becomes our own — and our prayer becomes fruitful.”",
-          "The prayer closes on the divine magnet: Sai in our hearts who, remembered once, draws the devotee in, stills every movement of the senses, turns him toward Himself, pulls him in, ripens him, swallows him — and makes him another magnet like Himself. “That power is none other than Sakshat Sri Sainath Himself.”",
-          "And the vision: “There is no God like Sai — may Sai's name be on everyone's lips, may Sai's form shine everywhere, may the three worlds be intoxicated with Sai's glory.”"
-        ]
-      },
-      {
+    streamNote: "Captions begin at 00:12:59; the first ~13 minutes are uncaptioned. The satsang runs 00:12:59–01:48:05: opening chants (~00:12:59–00:24:00), the discourse on the early devotees' worship in the Masjid — Mahalsapati, the wooden plank, serving like dancing on a sword's edge (~00:24:00–00:42:12), a chain of devotees' leelas (00:53:22–01:08:09), Q&A on attachments, miracle claims, teamwork and the four-day experiment (~01:08:30–01:19:23), closing with the Sharanam song (~01:41:02–01:48:05). The stream continues to 1:50:06.",
+    keyPointGroups: [{
         title: "The early devotees' worship — Mahalsapati and the wooden plank",
         points: [
           "To the village Baba looked a mad fakir; but His “unparalleled vairagya, simple sattvic life and extraordinary brilliance” drew Mahalsapati's stainless heart “like a magnet” — while others still saw a mad fakir, he rose to worshipping Baba as God in the masjid.",
@@ -3108,7 +3088,7 @@ DIGESTS.readalongs = [
           "“Only he who sleeps like me — with eyes open, awake in sleep — can sleep on a plank.” Baba's test for Mahalsapati: hand on His heart, awake while He did Allah's remembrance — “the moment the remembrance stops, the heartbeat changes — wake me at once.”"
         ]
       },
-      {
+{
         title: "Serving a Sadguru — like dancing on a sword's edge",
         points: [
           "“Serving a Sadguru like the all-powerful Sri Sai is like dancing on a sword's edge.” The Rohilla night: Baba told Mahalsapati to stand guard while He prayed for a woman the Rohilla sought to kill; a midnight official's noise broke the meditation — Baba's fury, then “what happened was for the best.”",
@@ -3117,7 +3097,7 @@ DIGESTS.readalongs = [
           "Baba often offered him three rupees daily — “you'll become rich, live comfortably.” Mahalsapati always answered: “Baba, I don't need these; worshipping Your feet always — that itself is more than enough for me.”"
         ]
       },
-      {
+{
         title: "The leelas — one word that cures",
         points: [
           "Shama's piles: Baba's senna-leaf decoction cured at once; two years later the same medicine, made by Shama himself without telling Baba, made it worse — Baba's blessing alone removed it. “The mahima is not in the medicine.”",
@@ -3127,7 +3107,7 @@ DIGESTS.readalongs = [
           "Venkataravu of Mulki: praying to Baba's photo in Bombay, his daughter in Mulki wrote asking if he had worshipped “on such-and-such a day at such-and-such a time” — exactly that hour; his atheist son saw it all and became a devotee. Garde of Nagpur: a vow made and forgotten, remembered on a Thursday, kept within days."
         ]
       },
-      {
+{
         title: "From the Q&A",
         points: [
           "On attachment: no need to detach from husband, wife, mother, child — “attach all attachments to Baba.” “Baba is like the rail engine; everything else is a compartment” — the engine pulls; the compartments follow. “Then what trouble remains?”",
@@ -3137,123 +3117,98 @@ DIGESTS.readalongs = [
           "On teamwork: drop the concept; “all of us together doing Baba's work — that itself becomes the team.” Like the cinema hall: each buys his own ticket in the queue — beautiful teamwork without trying — then all watch and enjoy together.",
           "The four-day experiment: when a problem comes, stay quiet four days; tell him on the fifth; wait six more — “it has happened many times.” When it is unavoidable, “Baba Himself will give you the thought” — and the others involved will get it too."
         ]
-      }
-    ],
-    sections: [
-      {
+      }],
+    sections: [{
         time: "12:59", seconds: 779, title: "Opening chants",
         html: `<p><em>In Telugu: opening invocations — “Sri Sachchidananda Sadguru Sainath Maharaj ki jai; Sadguru Sri Sainathuni Sharad Babuji ki jai.”</em></p>`
       },
-      {
-        time: "13:23", seconds: 803, title: "Nitya Prarthana — the Sai Arunachala Padigam, explained and recited",
-        html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “In Sai Padham, our Nitya Prarthana — this is the free Sai adaptation of the Arunachala Padigam composed by Bhagavan Sri Ramana Maharshi. This hymn, which flowed freely from Bhagavan's inmost being, is a triveni sangamam of bhakti, jnana and vairagya.”</p><p><strong class="speaker">Guruji:</strong> “This prayer is a mighty, Veda-like utterance — it is not like ordinary prayers. If one takes its meaning to heart and reads it with shraddha, its effect is extraordinary. For Sri Sai devotees — for whom Sri Sai is the form of all deities — reading this prayer daily with feeling greatly aids their sadhana and makes them recipients of Sri Sainath's grace.”</p><p><em>The prayer is then recited in full — a lover's quarrel with Sai: “Swallow my ego whole this very instant; then I will overcome death and shine alone as the immortal one” — closing on the divine magnet: “I have found a new divine magnet — remember it once, and it draws you in, stills every movement of the senses, turns you toward itself, pulls you in, ripens you, swallows you, and makes you another magnet like itself... That power is none other than Sakshat Sri Sainath Himself.” And the vision: “There is no God like Sai — may Sai's name be on everyone's lips, may Sai's form shine everywhere, may the three worlds be intoxicated with Sai's glory.”</em></p>`
-      },
-      {
+{
         time: "24:00", seconds: 1440, title: "The early devotees' worship of Baba in the Masjid",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “When Baba first came to Shirdi, His ways seemed strange to the villagers; most wrote Him off as a mad fakir. But behind His strange ways shone His unparalleled vairagya, His simple sattvic life, His extraordinary brilliance — and these drew Mahalsapati's stainless heart like a magnet.”</p><p><em>The discourse traces Mahalsapati's rise — from doubting Baba might be mad, to worshipping Him as God in the masjid while the village still saw a fakir; the esteem of sadhus like Janakidas and Devidas, and of Anandnath Swami and Gangagiri Maharaj, turned his respect into worship. He slept in the masjid nightly, though his house was less than half a furlong away; later Tatya Kote Patil joined him. In 1889 Baba sent him home to family life — “daughters are like tamarind fruits, sons like mango fruits” — promising, “sitting in the masjid, I never speak lies”: the next year a son, Martand, was born on Gokulashtami, a Sunday. Mahalsapati returned to his nights in the masjid, where Baba put him through severe sadhanas.</em></p><p><em>Once Baba forbade him ever to sleep with his backbone touching the ground. Dozing off that way one day, his body turned cold and the death-breath began — until he saw two Muslim fakirs praying beside him, and recovered. When he went to tell Baba, Baba spotted him from afar and scolded: “Hey Bhagat, what did I say, what did you do? Keep your body alert!”</em></p>`
       },
-      {
+{
         time: "31:41", seconds: 1901, title: "The wooden plank — and sleeping “with eyes open”",
         html: `<p><em>In Telugu — Guruji narrates: Baba always kept a brick and an old cloth — devotees thought them His guru's gift; Mahalsapati wrapped the brick in the cloth as Baba's pillow. For a while Baba hung a wooden plank from the masjid roof and slept on it wondrously; when crowds came to gawk, He threw it into the dhuni.</em></p><p><em>Nana Sahab Dengle, unable to bear Baba sleeping on the bare floor, presented a plank — eighteen inches wide, five cubits long. Baba tied tattered cloth strips as ropes at its four corners and hung it a cubit below the roof beams, four lamps burning at the corners. In the blink of an eye, with no help, Baba would mount it and lie among the lamps — and the tattered ropes bore His stout weight without snapping. When Das Ganu and others hid to watch one night, Baba smashed the plank in anger and threw it into the burning dhuni.</em></p><p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “When Kaka Saheb Dixit offered another plank, Baba refused: ‘How can I sleep on a plank leaving Mahalsapati on the ground? Only he who sleeps like me — with eyes open, awake in sleep — can sleep on a plank.’ Baba told Mahalsapati: ‘Put your hand on my heart; don't sleep — I shall be doing Allah's remembrance. While the remembrance lasts, my heartbeat is one way; the moment it stops, the beat changes — wake me at once.’ But Mahalsapati would doze, and his hand felt heavy as a rock on Baba's chest.”</em></p>`
       },
-      {
+{
         time: "35:52", seconds: 2152, title: "Serving a Sadguru like dancing on a sword's edge — the Rohilla night",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “Serving a Sadguru like the all-powerful Sri Sai is like dancing on a sword's edge.”</p><p><em>One night Baba told Mahalsapati not to sleep but stand guard outside while He prayed to Allah for a woman the Rohilla was trying to kill by force. A mamlatdar from Nivas arrived with his peons and insisted on midnight darshan; the noise broke Baba's meditation. Baba raged — “You rascal, will you slit my throat with a single hair? Now Neegoji Patil's wife is dead. Take your clothes and go” — then calmed: “what happened was for the best,” had Mahalsapati prepare the chillum, and at dawn gave him udi and sent him home. On the way Mahalsapati met Neegoji Patil's relatives come for funeral supplies: the wife — struck by plague, which Baba had called the Rohilla — had died the previous night, at the very hour Baba scolded him.</em></p><p><em>Mahalsapati lived on alms and refused all gifts — a thousand rupees from Chintamanrao, a hundred from M.A. Sete — “firmly.” When a devotee pressed ten rupees on him, Baba Himself took it from the devotee and gave it to another. The shastra: “receiving gifts destroys tapas-shakti, tejo-shakti and kirti — even a liberated ascetic gets bound by worship with gifts.” Baba often offered him three rupees daily — “take three rupees a day, you'll become rich, live comfortably.” Mahalsapati always answered: “Baba, I don't need these; worshipping Your feet always — that itself is more than enough for me.”</em></p>`
       },
-      {
-        time: "42:12", seconds: 2532, title: "Sai Baba namam chanting",
-        html: `<p><em>The Sai Baba namam is chanted (~11 minutes).</em></p>`
-      },
-      {
+{
         time: "51:50", seconds: 3110, title: "Leelas: Shama's piles — the medicine is not the cure; Das Ganu and Dada Maharaj",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “The mahima is not in the medicine.” When Shama suffered piles, Baba Himself made a senna-leaf decoction — the piles subsided at once. Two years later, when they returned, Shama remembered and prepared the same medicine himself, without telling Baba — and the pain grew worse. He went to Baba; Baba blessed him, and the pain vanished. The cure was Baba's blessing, not the medicine.</p><p><em>Das Ganu wished to write an ovi-form commentary on Jnaneshwar's Amritanubhava so that all could understand it. Dada Maharaj of Satara — famed as the Amritanubhava's great interpreter — told him to stay some months and study the root text first. Das Ganu answered: “If my writing the tika is Sai Baba's will, Baba Himself will give me the needed intellect and make the book clear to me; for that I will not take refuge in anyone else.” Dada Maharaj prayed to Baba for him anyway; when Das Ganu read his two finished chapters, Dada Maharaj praised: “Baba is truly capable — only by His grace could you write such a fine tika. You need no one else's help.”</em></p>`
       },
-      {
+{
         time: "54:51", seconds: 3291, title: "Leelas: udi stories — the headmaster, Balu Kaka, Karambelkar's wife",
         html: `<p><em>In Telugu — Guruji narrates: the Shirdi school headmaster complained that the children would not study — “we'll take Baba's udi and pass, sir.” The exams came; the children passed, and the school got a good result. Of Balu Kaka, Baba said he would recover — and he did. Of Karambelkar's wife, Baba asked, “Hasn't she come here yet?” — and she died. Baba's word held, either way.</em></p>`
       },
-      {
+{
         time: "56:30", seconds: 3390, title: "Leelas: the Nagpur doctor — ten years of illness, one word",
         html: `<p><em>In Telugu — Guruji narrates: Krishnaji Narayan of Harda, called Chotu Bayya Saheb, suffered ten to twelve years of bile-acidity — whatever he ate came up as vomit; no doctor or Ayurvedic vaidya helped. An old Nagpur vaidya's violent purgative nearly killed him, and the vaidya then said: “From now on use no medicines for this — only a satpurusha's grace will cure it.” Years later he came to Shirdi and told Baba nothing. At Guru Purnima, when Mausi Bai complained of piles, Baba pointed at him: “He too has long suffered the same illness.” His brother Narayanrao confirmed it. Baba said, “From now on stop all medicines — he will not have this trouble again.” Eight years passed without a single attack — one word of Baba cured what a decade of medicine could not.</em></p>`
       },
-      {
+{
         time: "59:51", seconds: 3591, title: "Leelas: Lakshman Bhat's land — 150 paid, 175 counted; the Bhils on the train",
         html: `<p><em>In Telugu — Guruji narrates: buying land from Lakshman Bhat of Shirdi in 1910, the narrator bid 150 against Bhat's 200. Baba called Bhat privately: “Both of you come to a settlement — take 175, the middle way; don't settle for less.” Bhat told no one; the deal closed at 150 — and at home Bhat counted 175 rupees.</em></p><p><em>And Ganapati Dondu Katham's train ride of 1914: near Nasik, fifteen or twenty Bhils boarded their compartment menacingly; he read abhangs from the Bhakti Marga Pradipika aloud — the Bhils sat five minutes, then jumped off the moving train. He turned to find an old fakir in the compartment — who vanished before his eyes. At Shirdi, Baba greeted them: “Reached safely?” — the Bhils had come to rob, and fled at the sight of the fakir.</em></p>`
       },
-      {
+{
         time: "1:04:28", seconds: 3868, title: "Leelas: Venkataravu of Mulki — the letter at the same hour; Garde's vow",
         html: `<p><em>In Telugu — Guruji narrates: Venkataravu of Mulki received Baba's photo and udi on Christmas 1916, while his High Court lawyer son-in-law had vanished and was rumored dead. Unable to reach Shirdi, he wore the udi and prayed to Baba's photo with ardor — in Bombay. At that same hour in Mulki, his daughter felt a strong impulse and wrote asking whether he had worshipped Baba and prayed for blessings “on such-and-such a day at such-and-such a time” — exactly that hour. His devotion doubled; his atheist eldest son, who had mocked him, saw it all and became a devotee.</em></p><p><em>And Garde of Nagpur: his little nephew dangerously ill, medicines failing, he vowed to bring the boy to Baba's darshan — the boy recovered overnight, but the vow stayed unfulfilled when the family moved away. A year later Garde himself fell ill; on a Thursday, at the bhajan in his house, he remembered — and vowed again: if his health returned he would come to Shirdi at once with his nephew. In two or three days he recovered, and went.</em></p>`
       },
-      {
+{
         time: "1:08:30", seconds: 4110, title: "Q&A — attachments: Baba is the engine; miracle claims — leave them there",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “There is nothing wrong with attachment — husband and wife, mother and child — and no need to detach. Keep all your attachments — but attach them all to Baba. Baba is like the rail engine; everything else is a compartment. The engine in front pulls; all the compartments are attached to it. Then what trouble remains?”</p><p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “When someone reports a miracle — vibhuti falling during puja, say — do not believe it, and do not make an issue of it. You need not even tell them you don't believe. Listen — and leave it there. Do not link yourself to it.”</p>`
       },
-      {
+{
         time: "1:12:19", seconds: 4339, title: "Q&A — river pradakshina; the gap between word and deed; teamwork like the cinema hall; the four-day experiment",
         html: `<p><em>In Telugu — Guruji answers: the Narmada pradakshina — start at the source on the far bank, walk to the sea keeping within ten meters of the river, cross, and return — takes about five months; a Ganga round would take nearly a lifetime. Rules are good: “the satisfaction of enduring hardship for a niyama, and the control it gives, is very good — if you can do it.”</em></p><p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “Watch the gap between what you say, what you think, and what you do. What you give up for what shows your priorities. Do not wait until there is nothing left to do — grow into this: whatever comes in the way, hold on to Baba. Baba gives everything.”</p><p><em>On teamwork: drop the concept — “all of us together doing Baba's work; that itself becomes the team.” Like the cinema hall: no one comes as a team to buy tickets — each stands in the queue and buys his own, beautiful teamwork without trying — and then all watch and enjoy together.</em></p><p><em>And the four-day experiment: when a problem comes, stay quiet four days; tell him on the fifth; wait six more — “it has happened many times.” When it is unavoidable, “Baba Himself will give you the thought” — and the others involved will get it too.</em></p>`
-      },
-      {
-        time: "1:19:23", seconds: 4763, title: "Sai Baba namam chanting",
-        html: `<p><em>The Sai Baba namam is chanted (~22 minutes), closing with “Sri Sharad Babuji ki jai.”</em></p>`
-      },
-      {
-        time: "1:41:02", seconds: 6062, title: "The arati — meaning in English, then the closing Sharanam",
-        html: `<p><strong class="speaker">Guruji:</strong> <em>In English — captions garbled; the sense where clear:</em> “Let us understand and grasp the meaning of the arati we are about to perform. Lord Sainath, take care of us, thy children, by always keeping thy gracious eye on us...”</p><p><em>The arati is then performed. The satsang closes with the Sharanam song — “Sri Sadguru Sainatha Maharaj ki jai.”</em></p>`
-      }
-    ],
-    inBrief: "The October 1 SaiSEEkers satsang opens with the Nitya Prarthana — the Sai adaptation of Ramana Maharshi's Arunachala Padigam, “a triveni sangamam of bhakti, jnana and vairagya” — closing on Sai the divine magnet who swallows the devotee and makes him another magnet. The discourse follows the early devotees' worship of Baba in the Masjid: Mahalsapati drawn like a magnet and sleeping in the masjid; the wooden plank of Nana Sahab Dengle, hung on tattered ropes with four lamps, on which only one who sleeps “with eyes open, awake in sleep” could lie; serving a Sadguru “like dancing on a sword's edge” — the Rohilla night, and Mahalsapati's refusal of all gifts: “Baba, I don't need these; worshipping Your feet always is enough for me.” Then a chain of leelas: Shama's piles — “the mahima is not in the medicine”; Das Ganu's tika written by Baba's grace alone; the Nagpur doctor's ten-year illness cured by one word; Lakshman Bhat counting 175 where 150 was paid; the Bhils fleeing the vanished fakir; Venkataravu's daughter writing at the same hour; Garde's vow kept on a Thursday. The Q&A: attach all attachments to Baba — “Baba is the rail engine, everything else a compartment”; neither believe nor deny miracle claims — “leave it there”; rules and niyamas bring satisfaction and control; watch the gap between word, thought and deed; teamwork is all of us doing Baba's work together; and the four-day experiment — “Baba Himself will give you the thought.” The satsang closes with the arati and the Sharanam song.",
-    quiz: [
-      {type:"mcq", q:"Our Nitya Prarthana is the Sai adaptation of which work?",
-       options:["Tukaram's abhangs", "Ramana Maharshi's Arunachala Padigam", "Annamayya's kirtans", "Kabir's dohas"], answer:1,
-       why:"“In Sai Padham, our Nitya Prarthana — this is the free Sai adaptation of the Arunachala Padigam composed by Bhagavan Sri Ramana Maharshi” — a triveni sangamam of bhakti, jnana and vairagya."},
-      {type:"mcq", q:"What drew Mahalsapati to Baba when the village still saw a mad fakir?",
+      }],
+    inBrief: "The October 1 SaiSEEkers satsang's discourse follows the early devotees' worship of Baba in the Masjid: Mahalsapati drawn like a magnet and sleeping in the masjid; the wooden plank of Nana Sahab Dengle, hung on tattered ropes with four lamps, on which only one who sleeps “with eyes open, awake in sleep” could lie; serving a Sadguru “like dancing on a sword's edge” — the Rohilla night, and Mahalsapati's refusal of all gifts: “Baba, I don't need these; worshipping Your feet always is enough for me.” Then a chain of leelas: Shama's piles — “the mahima is not in the medicine”; Das Ganu's tika written by Baba's grace alone; the Nagpur doctor's ten-year illness cured by one word; Lakshman Bhat counting 175 where 150 was paid; the Bhils fleeing the vanished fakir; Venkataravu's daughter writing at the same hour; Garde's vow kept on a Thursday. The Q&A: attach all attachments to Baba — “Baba is the rail engine, everything else a compartment”; neither believe nor deny miracle claims — “leave it there”; rules and niyamas bring satisfaction and control; watch the gap between word, thought and deed; teamwork is all of us doing Baba's work together; and the four-day experiment — “Baba Himself will give you the thought.” The satsang closes with the Sharanam song.",
+    quiz: [{type:"mcq", q:"What drew Mahalsapati to Baba when the village still saw a mad fakir?",
        options:["Baba's miracles and wealth", "Baba's unparalleled vairagya, simple sattvic life and extraordinary brilliance", "A dream of the village elders", "The promise of a son"], answer:1,
        why:"“His unparalleled vairagya, His simple sattvic life, His extraordinary brilliance — and these drew Mahalsapati's stainless heart like a magnet.”"},
-      {type:"mcq", q:"Why did Baba refuse Kaka Saheb Dixit's offer of a new wooden plank?",
+{type:"mcq", q:"Why did Baba refuse Kaka Saheb Dixit's offer of a new wooden plank?",
        options:["He disliked wooden furniture", "Only he who sleeps with eyes open, awake in sleep, can sleep on a plank", "Mahalsapati had forbidden it", "The masjid roof was too weak"], answer:1,
        why:"“Only he who sleeps like me — with eyes open, awake in sleep — can sleep on a plank.” And: “How can I sleep on a plank leaving Mahalsapati on the ground?”"},
-      {type:"mcq", q:"What did Mahalsapati answer when Baba offered him three rupees daily?",
+{type:"mcq", q:"What did Mahalsapati answer when Baba offered him three rupees daily?",
        options:["He accepted and grew rich", "“Baba, I don't need these; worshipping Your feet always is enough for me”", "He asked for thirty instead", "He gave it to Tatya"], answer:1,
        why:"“Baba, I don't need these; worshipping Your feet always — that itself is more than enough for me.” He lived on alms and refused all gifts."},
-      {type:"mcq", q:"What is the lesson of Shama's piles?",
+{type:"mcq", q:"What is the lesson of Shama's piles?",
        options:["Senna leaves always cure piles", "The mahima is not in the medicine — the cure was Baba's blessing", "Baba disapproved of Ayurveda", "Shama should have rested more"], answer:1,
        why:"The same decoction, made by Shama himself without telling Baba, made the pain worse — Baba's blessing alone removed it. “The mahima is not in the medicine.”"},
-      {type:"mcq", q:"What did Das Ganu tell Dada Maharaj of Satara when asked to study the root text first?",
+{type:"mcq", q:"What did Das Ganu tell Dada Maharaj of Satara when asked to study the root text first?",
        options:["He agreed and stayed for months", "“If writing it is Sai Baba's will, Baba Himself will give me the intellect”", "He abandoned the project", "He asked for a co-author"], answer:1,
        why:"“If my writing the tika is Sai Baba's will, Baba Himself will give me the needed intellect and make the book clear to me; for that I will not take refuge in anyone else.”"},
-      {type:"mcq", q:"What cured the Nagpur doctor's ten-to-twelve-year illness?",
+{type:"mcq", q:"What cured the Nagpur doctor's ten-to-twelve-year illness?",
        options:["The old vaidya's purgative", "A change of climate", "Baba's one word: “from now on stop all medicines”", "A stricter diet"], answer:2,
        why:"Without being told anything, Baba pointed at him — “he too has long suffered the same illness” — and said, “from now on stop all medicines.” Eight years without a single attack."},
-      {type:"mcq", q:"In the attachments teaching, what is Baba and what is everything else?",
+{type:"mcq", q:"In the attachments teaching, what is Baba and what is everything else?",
        options:["Baba is the destination; we are the road", "Baba is the rail engine; everything else is a compartment", "Baba is the passenger; we are the ticket", "Baba is the station; we are the train"], answer:1,
        why:"“Baba is like the rail engine; everything else is a compartment. The engine in front pulls; all the compartments are attached to it.” Attach all attachments to Baba — “then what trouble remains?”"},
-      {type:"tf", q:"Mahalsapati accepted a thousand rupees from the devotee Chintamanrao.", answer:false,
+{type:"tf", q:"Mahalsapati accepted a thousand rupees from the devotee Chintamanrao.", answer:false,
        why:"He “firmly” refused — a thousand rupees from Chintamanrao, a hundred from M.A. Sete; when pressed with ten rupees, Baba Himself took it from the devotee and gave it to another."},
-      {type:"tf", q:"The wooden plank was hung from the masjid roof on new iron chains.", answer:false,
+{type:"tf", q:"The wooden plank was hung from the masjid roof on new iron chains.", answer:false,
        why:"It hung on tattered cloth strips tied as ropes — which bore Baba's stout weight without snapping — with four lamps burning at the corners."},
-      {type:"tf", q:"Venkataravu's daughter wrote asking if he had worshipped Baba at the very hour he had.", answer:true,
+{type:"tf", q:"Venkataravu's daughter wrote asking if he had worshipped Baba at the very hour he had.", answer:true,
        why:"In Mulki she felt a strong impulse and wrote asking whether he had worshipped Baba and prayed for blessings “on such-and-such a day at such-and-such a time” — exactly that hour."},
-      {type:"tf", q:"Sri Babuji says that when someone reports a miracle, you should argue them out of it.", answer:false,
+{type:"tf", q:"Sri Babuji says that when someone reports a miracle, you should argue them out of it.", answer:false,
        why:"“Do not believe it, and do not make an issue of it. You need not even tell them you don't believe. Listen — and leave it there. Do not link yourself to it.”"},
-      {type:"fill", q:"“Serving a Sadguru like the all-powerful Sri Sai is like dancing on a ____'s edge.”", answer:"sword"},
-      {type:"fill", q:"“Baba is the rail ____; everything else is a compartment.”", answer:"engine"},
-      {type:"reflect", q:"Mahalsapati told Baba: “I don't need these; worshipping Your feet always is enough for me.”",
+{type:"fill", q:"“Serving a Sadguru like the all-powerful Sri Sai is like dancing on a ____'s edge.”", answer:"sword"},
+{type:"fill", q:"“Baba is the rail ____; everything else is a compartment.”", answer:"engine"},
+{type:"reflect", q:"Mahalsapati told Baba: “I don't need these; worshipping Your feet always is enough for me.”",
        prompt:"Think of one thing you keep asking Baba for — or one comfort you keep reaching for. What would a day look like if His presence were truly “more than enough”? What would fall away, and what would remain?"},
-      {type:"reflect", q:"Sri Babuji's four-day experiment: when a problem comes, stay quiet four days before asking.",
-       prompt:"Recall a problem you rushed to someone with. What might have happened if you had sat with it quietly for four days first — what thought might Baba have given you? Try the experiment with one live question this week."}
-    ]
+{type:"reflect", q:"Sri Babuji's four-day experiment: when a problem comes, stay quiet four days before asking.",
+       prompt:"Recall a problem you rushed to someone with. What might have happened if you had sat with it quietly for four days first — what thought might Baba have given you? Try the experiment with one live question this week."}]
   },
   {
-    name: "October 7, 2026 — SaiSEEkers Satsang (Read-Along)",
-    summary: "A full read-along for the October 7 SaiSEEkers satsang: key points, a timestamped contents guide, two Telugu spoken segments, the English Q&A transcript, and Telugu quotes from the tribute slideshow.",
+    name: "October 7, 2026 — SaiSEEkers Satsang (Post Satsang review)",
+    summary: "A full post-satsang review of the October 7 SaiSEEkers satsang: key points, a timestamped contents guide, two Telugu spoken segments, the English Q&A transcript, and Telugu quotes from the tribute slideshow.",
     video: "https://www.youtube.com/watch?v=MEJaSBicDD4",
     duration: "3:30:26",
     languages: "Sanskrit / Telugu / English",
     date: "Oct 7, 2026",
     note: "Auto-transcribed audio, lightly cleaned for reading. Obvious mishearings corrected; rough stretches kept as-is. Follow along as the audio plays.",
     streamNote: "The livestream's first 12 minutes are silent (waiting). The event runs about 12:42–1:35:00, after which the stream continues silently. The substantive discourse is: (1) two Telugu spoken segments at ~28:00–30:30 (a formal introduction of Guruji and his childhood story of Baba), and (2) the English Q&A at 57:04–1:08:30. The ~13:00–28:00, ~30:30–56:00 stretches are Telugu bhajans (devotional singing, not transcribed). From ~1:25:00–1:35:00 the video shows event footage and a tribute slideshow — Guruji's photo with Telugu quote overlays (transcribed from the on-screen text below) — but no spoken discourse.",
-    keyPointGroups: [
-      {
+    keyPointGroups: [{
         title: "From the Telugu segments (~28:00–30:30)",
         points: [
           "A formal Telugu introduction presents Guruji: born in Nellore as the first child of Sri Surendra Babu and Smt. Venkatarathnamma — \"Puja Sri Sainathuni Sarath Babuji\" — on an auspicious day, by Sri Sai's special grace.",
@@ -3262,7 +3217,7 @@ DIGESTS.readalongs = [
           "\"I don't know why — Baba felt very familiar to me\" — yet at the same time \"there was something transcendent, mysterious about him.\""
         ]
       },
-      {
+{
         title: "From the English Q&A (57:04–1:08:30)",
         points: [
           "A devotee asks Guruji: were you clear about what you were seeking? Guruji says yes — it was a felt sense of dissatisfaction, frustration, \"something is missing.\"",
@@ -3279,7 +3234,7 @@ DIGESTS.readalongs = [
           "His master always connected everything as a manifestation of Sai Baba — \"wherever he went, whatever experiences he had, he always thought it was Baba who was giving it.\""
         ]
       },
-      {
+{
         title: "From the tribute slideshow (~1:28:00–1:31:00, Telugu text on screen)",
         points: [
           `“సాయిపథం ఒక జీవనవిధానం, ఒక ఆదర్శం!” (Saipatham is a way of life, an ideal!)`,
@@ -3287,100 +3242,98 @@ DIGESTS.readalongs = [
           `“ఒకవేళ నేను మీతో మాట్లాడుతున్నాను, ఇంకా ఎంతోమందితో నేను మాట్లాడలేకపోతున్నాను. ఎవరైనా నెగెటివ్ టాక్ తెస్తే మాత్రం... పరనిందా ప్రసంగాలు వద్దు, బాబా మాటల్లో చెప్పాలంటే.” (If I am talking to you, I am unable to talk to many others. If anyone brings negative talk... no slanderous discussions — in Baba's words.)`,
           `“మామూలుగా ఒక సామెత ఉంది. 'ధనమూలమిదం జగత్' అని. జిల్లెళ్ళమూడి అమ్మ కాబోలు, దాన్ని కరెక్ట్ చేశారు. 'ధనమూలమిదం జగత్' అంటారుగాని, 'జ్ఞానమూలమిదం జగత్' అని.” (There is a common saying: "dhanamulamidam jagat" (the world is rooted in wealth). Jillellamudi Amma, I believe, corrected it: people say "dhanamulamidam jagat," but it is "jnanamulamidam jagat" (the world is rooted in wisdom).)`
         ]
-      }
-    ],
-    sections: [
-      {
+      }],
+    sections: [{
         time: "12:42", seconds: 762, title: "Opening chants",
         html: `<p><em>Sanskrit invocation — “Shri Sachchidanand Sadguru Sainath Maharaj ki jai” and related chants.</em></p>`
       },
-      {
+{
         time: "~13:00–28:00", seconds: 780, title: "Bhajans",
         html: `<p><em>Telugu devotional songs — bhajan singing. Not transcribed; the singing does not transcribe cleanly.</em></p>`
       },
-      {
+{
         time: "28:01", seconds: 1681, title: "Formal introduction of Guruji (Telugu)",
         html: `<p><em>A speaker formally introduces Guruji in Telugu:</em></p><p>“Nelluru Vaastavyulaina, Sri Surendra Babu, Sri Mati Venkatarathna Magaala Pradha Mha Santana nga janmincharu. Puja Sri, Sai Nathuni Sarad Babu ji. Sai Bhakti Sampradayam loo, chiras thayiga nilichipoeya oo Mangalakaramayna rojay, Sri Babu ji janminchalam, Sri Sai Nathuni Krupa Visesham, Sri Sai ki, Sri Babu ji ki madhyavu na Premaanu Vandhana ki,”</p><p><em>Translation: “Residents of Nellore — Sri Surendra Babu and Smt. Venkatarathnamma's first-born child. Worshipful Sri Sainathuni Sarath Babuji. In the Sai Bhakti tradition, on an eternally auspicious day — Sri Babuji's birth, by Sri Sainathuni's special grace — to Sri Sai, and to the love between Sri Babuji...”</em></p>`
       },
-      {
+{
         time: "29:25", seconds: 1765, title: "His childhood: the Baba picture at grandmother's house (Telugu)",
         html: `<p><em>The speaker — likely Guruji himself — recounts his childhood attraction to Baba:</em></p><p>“Sri Babuji about his childhood matters, recalling: 'When I was a small boy' — about Sri Sai Baba, I... In our grandmother's house, like in everyone's house, with pictures of all deities — there was also a Sai Baba picture. To me, Baba seemed different from all the others. Not like other deities — he seemed so natural, real, like an ordinary person. I don't know why. Baba felt very familiar to me. At the same time, there was something transcendent, mysterious about him.”</p><p><em>Transcribed from Telugu audio; lightly cleaned for readability.</em></p>`
       },
-      {
+{
         time: "~30:30–56:00", seconds: 1830, title: "Bhajans",
         html: `<p><em>Telugu devotional songs resume — bhajan singing. Not transcribed.</em></p>`
       },
-      {
+{
         time: "57:04", seconds: 3424, title: "“Were you very clear about what you were seeking?”",
         html: `<p><strong class="speaker">Devotee:</strong> Guruji, with you, we are still seeking. Were you very clear about what you were seeking?</p><p><strong class="speaker">Guruji:</strong> Very clear. You see, I lack something, I miss something. Some dissatisfaction, some sense of frustration, something is missing.</p>`
       },
-      {
+{
         time: "57:26", seconds: 3446, title: "Exploring different ways",
         html: `<p><strong class="speaker">Guruji:</strong> So I explored in different ways. Is it this essential pleasure, is it this pleasure, or that one, this one? But definitely it was not. Because I see people exploring in different ways and thinking that we are cool people — let me try that also. Different signposts.</p>`
       },
-      {
+{
         time: "58:04", seconds: 3484, title: "The cycle of clarity and confusion",
         html: `<p><strong class="speaker">Guruji:</strong> It seems sometimes it becomes clear, and suddenly it is serious, it is not clear, and actually it will be more confused. And again it starts. And again it seems — oh, now I know, it is very clear. Again after some time it is not the clarity at all.</p>`
       },
-      {
+{
         time: "58:43", seconds: 3523, title: "Meeting the master",
         html: `<p><strong class="speaker">Guruji:</strong> Then I met my master. Immediately met. It's not so immediate — met after that. It's not so immediate.</p><p><strong class="speaker">Devotee:</strong> And were there any experiences that happened, or what would happen if it was not so clear and difficult?</p>`
       },
-      {
+{
         time: "59:04", seconds: 3544, title: "The experience of connectedness",
         html: `<p><strong class="speaker">Guruji:</strong> It's the experience of connectedness. And it took time.</p><p><strong class="speaker">Devotee:</strong> Why did it take time?</p>`
       },
-      {
+{
         time: "59:34", seconds: 3574, title: "Concepts became an obstacle",
         html: `<p><strong class="speaker">Guruji:</strong> Because by the time I had collected so many concepts — so many concepts and so much reading, so much thinking — this became an obstacle to readily accepting something. I was not fresh when I went to him.</p>`
       },
-      {
+{
         time: "59:56", seconds: 3596, title: "Nothing to do with concepts",
         html: `<p><strong class="speaker">Devotee:</strong> What did this happen then? You felt the connection more — did the concepts go out of the window?</p><p><strong class="speaker">Guruji:</strong> Actually that experience has nothing to do with the concepts at all. Something happened. It's nothing to do with those concepts and the answers. Not on an intellectual level. And it also made it clear that it was actually not the answers to those questions which mattered to me.</p>`
       },
-      {
+{
         time: "1:00:34", seconds: 3634, title: "Dry Vedantic concepts",
         html: `<p><strong class="speaker">Guruji:</strong> Something desperate behind it. Because I was so used to listening and reading about these dry Vedantic concepts which to me had no value at all. And if you just inquire deep into it, this Vedanta — there was nobody that was actually able to answer them. They talk. They joke.</p>`
       },
-      {
+{
         time: "1:01:04", seconds: 3664, title: "With your master it was different",
         html: `<p><strong class="speaker">Guruji:</strong> And with your master it was different. The way he approached the whole questions is different. And as far as I know, nobody has approached it like that. He never dealt with me on that level.</p>`
       },
-      {
+{
         time: "1:01:27", seconds: 3687, title: "If Brahman is beyond mind, why talk about it?",
         html: `<p><strong class="speaker">Guruji:</strong> If I read a Vedantic text, they say that Brahman is beyond the intellect, beyond the mind. It cannot be burned by fire. It cannot be blown by the wind. It cannot become wet by water. You can't think of it. It is beyond your thought. And the second paragraph starts: it is so wonderful, it is like that, it is like this. If it is beyond your mind and thought, why do you talk about it? If it is so beyond everything, why do you think of it at all? Let God be there. We need not bother about that fellow, and he need not bother about us. Why do you have to bother him? Not necessarily. Let God happily rest in his so-called heaven. What about me, my problem? When I ask about my problem, you talk about God. I am not concerned about him — whether he has any problems, or whether he is happy, or whether he is full of bliss. Who cares whether he is full of bliss or not? What about me? Tell me that.</p>`
       },
-      {
+{
         time: "1:02:48", seconds: 3768, title: "The Bill Gates analogy",
         html: `<p><strong class="speaker">Guruji:</strong> It is just like, for instance, you don't have money. If somebody comes to you — do you know Bill Gates? How much money he has? He is a multi-millionaire. Oh my God, he may be a multi-millionaire. But what about me? Can I ask him if he gives me? No, he is beyond everything. You can't contact him. Why do you talk about him?</p>`
       },
-      {
+{
         time: "1:03:21", seconds: 3801, title: "“You do not realize who you are”",
         html: `<p><strong class="speaker">Guruji:</strong> When I go to somebody: because you do not realize who you are, you have a problem. I don't realize what I am, but my problem is — I do not know what I am. My problem is because I know what I am now. I never have a doubt that I am not this. I definitely know. It is my experience that I am having this misery, this frustration, and so on and so on. What about the solution to this problem?</p>`
       },
-      {
+{
         time: "1:04:13", seconds: 3853, title: "“Think you are Brahman” is self-hypnotism",
         html: `<p><strong class="speaker">Guruji:</strong> No — you have to think that you are Brahman, you are Atma. It is not effective. How can I think? Do you want me to self-hypnotize myself, that I am so-and-so? No, I am not coming for hypnotic effects. Talk about reality. This is self-hypnotism, what you are talking about. When you have a problem, thinking that I don't have a problem — I am always blissful, I am very happy — this is self-hypnotism. I tried that. It is not. I doubt very much about it. That is what I want from you. I want a solution for this. Do you have a solution or not?</p>`
       },
-      {
+{
         time: "1:05:38", seconds: 3938, title: "The enquiry must be relevant to my problem",
         html: `<p><strong class="speaker">Guruji:</strong> If I really have a doubt about my own identity — what you say is, that is my problem. Suddenly that I have a problem, that I have a doubt whether I am so-and-so or not — then it is relevant to the enquiry. But this enquiry is not relevant to me. What you are saying is relevant to my problem.</p><p><strong class="speaker">Devotee:</strong> And with your master, you couldn't put all these questions?</p><p><strong class="speaker">Guruji:</strong> Yes, why not? I would put all the questions. I used all the tricks. I told you he didn't try to approach it on that level — try to justify those, whether the concepts... trying to answer them on the intellectual level. He brusquely set aside all those things and tried to make the whole enquiry fresh, the spirit of it — going to the brass tacks of the whole enquiry. That was a different approach, which I liked.</p>`
       },
-      {
+{
         time: "1:06:26", seconds: 3986, title: "A fresh start again",
         html: `<p><strong class="speaker">Guruji:</strong> And actually it started unlearning, because so much had become dead — what had been accumulated — and it was removed. And then the seeking started, a fresh start again.</p>`
       },
-      {
+{
         time: "1:06:47", seconds: 4007, title: "He always connected it to Sai Baba",
         html: `<p><strong class="speaker">Guruji:</strong> But he always connected as a manifestation of Sai Baba. He was not seeking any path, but he made it very clear. We read even <em>Sai Baba the Master</em> — in the first chapter itself. Of course that was his concept. That was his idea. That was his way of approaching. Whether I prove it or not, that is a different thing. But his connection with Sai Baba was there. And wherever he went, and whatever the experiences he had, he always thought it was Baba who was giving it.</p>`
       },
-      {
+{
         time: "~1:25:00–1:28:00", seconds: 5100,
         title: "Event footage",
         tocTitle: "Event footage (crowds, Guruji blessing devotees)",
         html: `<p><em>Video shows nighttime event footage: crowds of devotees gathered, Guruji in white blessing people. No discernible speech — ambient crowd sounds.</em></p>`
       },
-      {
+{
         time: "~1:28:00–1:31:00", seconds: 5280,
         title: "Tribute slideshow (Telugu quotes on screen)",
         tocTitle: "Tribute slideshow: Guruji's photo with Telugu quotes (text transcribed below)",
@@ -3389,29 +3342,18 @@ DIGESTS.readalongs = [
           <p><strong>Slide 2 — Making Baba the center:</strong><br>“సాయిపథం అనేటువంటిది ఒక ఆదర్శం, ఒక జీవిత విధానం. ఏమిటి ఆ జీవిత విధానం అంటే, బాబాను సెంటర్గా చేసుకొని...”<br><em>(Saipatham is an ideal, a way of life. What is that way of life? Making Baba the center...)</em></p>
           <p><strong>Slide 3 — On negative talk:</strong><br>“ఒకవేళ నేను మీతో మాట్లాడుతున్నాను, ఇంకా ఎంతోమందితో నేను మాట్లాడలేకపోతున్నాను. ఎవరైనా నెగెటివ్ టాక్ తెస్తే మాత్రం... పరనిందా ప్రసంగాలు వద్దు, బాబా మాటల్లో చెప్పాలంటే.”<br><em>(If I am talking to you, I am unable to talk to many others. If anyone brings negative talk... no slanderous discussions — in Baba's words.)</em></p>
           <p><strong>Slide 4 — “Dhanamulamidam jagat”:</strong><br>“మామూలుగా ఒక సామెత ఉంది. 'ధనమూలమిదం జగత్' అని. జిల్లెళ్ళమూడి అమ్మ కాబోలు, దాన్ని కరెక్ట్ చేశారు. 'ధనమూలమిదం జగత్' అంటారుగాని, 'జ్ఞానమూలమిదం జగత్' అని.”<br><em>(There is a common saying: "dhanamulamidam jagat" (the world is rooted in wealth). Jillellamudi Amma, I believe, corrected it: people say "dhanamulamidam jagat," but it is "jnanamulamidam jagat" (the world is rooted in wisdom).)</em></p>`
-      }
-    ]
+      }]
   },
   {
-    name: "October 8, 2026 — SaiSEEkers Satsang (Read-Along)",
-    summary: "A full read-along for the October 8 SaiSEEkers satsang: key points, a timestamped contents guide, and the Telugu transcript — the Nitya Prarthana, Sai Satcharitra Chapter 24 (Baba's humour: the groundnut leela, Sudama, Anna Chinchanikar and Mavshibai), Tatya's fourteen years beside Baba, and Q&A on group satsang, Shirdi, the battery, and unbreakable connection.",
+    name: "October 8, 2026 — SaiSEEkers Satsang (Post Satsang review)",
+    summary: "A full post-satsang review of the October 8 SaiSEEkers satsang: key points, a timestamped contents guide, and the Telugu transcript — Sai Satcharitra Chapter 24 (Baba's humour: the groundnut leela, Sudama, Anna Chinchanikar and Mavshibai), Tatya's fourteen years beside Baba, and Q&A on group satsang, Shirdi, the battery, and unbreakable connection.",
     video: "https://www.youtube.com/watch?v=s5HpFsY-8dU",
     duration: "2:03:31",
     languages: "Telugu / English",
     date: "Oct 8, 2026",
     note: "YouTube auto-captions (te-orig), unedited — expect misheard words, especially in the English passages. Transcribed from Telugu; lightly cleaned for readability. Follow along as the video plays.",
-    streamNote: "Captions begin at 00:19:20; the first ~19 minutes (music and bhajans) are uncaptioned. The satsang runs 00:19:20–~01:58:00: the Nitya Prarthana explained and recited (~00:19–00:44), Sai Satcharitra Chapter 24 reading (~00:44–00:57), Tatya's reminiscences (~00:57–01:15), devotee Q&A (~01:15–01:40), the arati with its meaning explained (~01:55), and the closing Sharanam song (~01:58). The stream continues silently to 2:03:31.",
-    keyPointGroups: [
-      {
-        title: "The Nitya Prarthana",
-        points: [
-          "Our Nitya Prarthana in Sai Padham is the Sai adaptation of Bhagavan Sri Ramana Maharshi's Arunachala Padigam — a hymn that flowed freely from Bhagavan's inmost being.",
-          "It is a triveni sangamam — a confluence of three rivers — of bhakti, jnana and vairagya: a mighty utterance, not like ordinary prayers.",
-          "Reading it daily with feeling, taking its meaning to heart, greatly aids sadhana and makes one a recipient of Sri Sainath's grace.",
-          "Even if the lofty feeling of the prayer is beyond us now, turning it over in the heart with yearning gradually makes it our own — and the prayer becomes fruitful."
-        ]
-      },
-      {
+    streamNote: "Captions begin at 00:19:20; the first ~19 minutes (music and bhajans) are uncaptioned. The satsang runs 00:19:20–~01:58:00: Sai Satcharitra Chapter 24 reading (~00:44–00:57), Tatya's reminiscences (~00:57–01:15), devotee Q&A (~01:15–01:40), and the closing Sharanam song (~01:58). The stream continues silently to 2:03:31.",
+    keyPointGroups: [{
         title: "Sai Satcharitra, Chapter 24 — Baba's humour",
         points: [
           "The groundnut leela: Shama spots groundnut seeds stuck to Hemadpant's coat; Baba reveals the 'proof' — 'He has one bad habit: eating alone.'",
@@ -3421,14 +3363,14 @@ DIGESTS.readalongs = [
           "Anna Chinchanikar and Mavshibai: Baba settles their quarrel with 'What is wrong in kissing one's mother?' — and defends Mavshibai's vigorous seva with the satka: never interfere in another's service to Baba."
         ]
       },
-      {
+{
         title: "Tatya's fourteen years beside Baba",
         points: [
           "Tatya Kote Patil — who as a boy teased Baba at the masjid gate — slept beside Baba in the masjid for fourteen years; only he and Mhalsapati were ever allowed.",
           "Baba would press Tatya's aching head, back and legs at night; when Tatya sulked away for ten days, Baba grieved — and said, 'We two are one.'"
         ]
       },
-      {
+{
         title: "From the Q&A",
         points: [
           "Group or individual satsang? Do both — the group's questions become your questions, and the group lends the mind its collective strength.",
@@ -3436,117 +3378,92 @@ DIGESTS.readalongs = [
           "The peace of Shirdi drains at home like a battery — recharge it by regular darshan, made a niyama; grow from a small lamp the wind kills into a fire the wind feeds.",
           "Pray for a connection so strong that even if you tried to disconnect, you could not — that is real connection; the feeling fluctuates, the connection does not."
         ]
-      }
-    ],
-    sections: [
-      {
-        time: "00:19:20", seconds: 1160, title: "Nitya Prarthana — the Sai Arunachala Padigam, explained",
-        html: `<p><em>In Telugu — the meaning of our daily prayer, lightly cleaned for reading:</em></p><p>“In Sai Padham, our Nitya Prarthana — this is the Sai adaptation of Bhagavan Sri Ramana Maharshi's Arunachala Padigam. This hymn flowed freely from Bhagavan's inmost being: a triveni sangamam — a confluence of three rivers — of bhakti, jnana and vairagya. This prayer, proclaimed by the Maharshi, is a mighty Vedic utterance — not like ordinary prayers. If its meaning is taken to heart and it is read with shraddha, its effect is extraordinary. For Sri Sai devotees — for whom Sri Sai is the embodiment of all deities, the God of their worship — reading this prayer daily with feeling greatly aids their sadhana and makes them recipients of Sri Sainath's grace.”</p><p>“Some may doubt: can an ordinary devotee hold the lofty feeling expressed in this prayer — is it proper to pray so without it? True. But by turning those lofty feelings over and over in the heart, with all the yearning we can muster, that feeling gradually becomes our own inner disposition — and our prayer becomes fruitful.”</p>`
-      },
-      {
-        time: "00:21:24", seconds: 1284, title: "The Nitya Prarthana recited",
-        html: `<p><em>In Telugu — the prayer itself is recited (~00:21–00:30). Two of its cries:</em></p><p>“సాయినాథ ఒక్కటే నా ప్రార్థన — ఈ నా అహాన్ని ఈక్షణాన్ని పూర్తిగా మింగివేయి”<br><em>(“O Sainatha, I have just one prayer — swallow this ego of mine completely, this very instant.”)</em></p><p>“ఈ జీవ హంతకుడు ఎక్కడో లేడు — మన హృదయాలలోనే పొంచి ఉన్నాడు. ఆయన ఎవరో కాదు — సద్గురు సాయినాథుడే.”<br><em>(“This slayer of the ego is nowhere else — he lurks in our own hearts. He is none other than Sadguru Sainatha.”)</em></p><p><em>The recitation is followed by the aspiration song (~00:29:22) — “సాయి వంటి దైవంబు లేడోయి” (“there is no God like Sai”): may Sai's name be on every tongue, Sai's form delight everywhere, and Sai's love-nectar rain unceasingly.</em></p>`
-      },
-      {
-        time: "00:31:10", seconds: 1870, title: "Sai Baba namam chanting",
-        html: `<p><em>In Telugu: “Sai Baba” namam chanting (~00:31–00:44). Not transcribed line by line.</em></p>`
-      },
-      {
+      }],
+    sections: [{
         time: "00:44:30", seconds: 2670, title: "Sai Satcharitra, Chapter 24 — the groundnut leela",
         html: `<p><em>Sai Satcharitra, Chapter 24 — “Baba's humour” (baba hasyam chamathkaram) — read in Telugu. The groundnut leela of Hemadpant, lightly cleaned:</em></p><p>“On a Sunday, the Shirdi market day, Hemadpant sat before Baba pressing His feet, doing japa in his mind. Shama, laughing, said to Annasaheb: 'There seem to be groundnut seeds stuck to your coat — look!' As Hemadpant brushed his sleeves, groundnut seeds fell to the floor; he stretched out his sleeve and more seeds rolled down. All were amazed — how did groundnuts get into his sleeves? While all wondered at the marvel, Baba said: 'He has one bad habit — eating alone. Today being market day, he ate groundnuts on his way here. These groundnuts are the proof of it. What is so astonishing in this?'”</p><p>“Hemadpant replied: 'Baba, I have never eaten alone. I have never even seen the Shirdi market — I did not go there today. How would I have bought groundnuts? I never eat anything without giving to those with me.' Baba said: 'Yes, that is true — you give to those near you. But when no one is near, what can you or I do? But before eating, do you remember me? Am I not always near you? Do you offer to me before eating?'”</p>`
       },
-      {
+{
         time: "00:47:12", seconds: 2832, title: "The moral — offer to the guru before the senses",
         html: `<p><em>The chapter's moral, lightly cleaned:</em></p><p>“Note carefully what Baba said in this episode: even before the five senses, the mind and intellect taste the pleasures of the senses. So first remember God — then it too becomes, in a way, an offering to God. The senses cannot exist without their objects; so if those objects are first offered to the guru, attachment to them naturally disappears. In this way all the vrittis — kama, krodha, lobha and the rest — should first be offered to the guru; practiced so, God helps uproot them all. In short: never enjoy anything with the five senses without remembering the guru. Discipline the mind so, and we will always keep Baba in remembrance — then devotion, dispassion and liberation become ours.”</p>`
       },
-      {
+{
         time: "00:50:45", seconds: 3045, title: "Sudama's groundnuts",
         html: `<p><em>Hemadpant recalls Sudama's story — the same moral:</em></p><p>“Krishna, Balarama and their fellow-student Sudama lived in Guru Sandipani's ashram. Sent to the forest for firewood, Sudama carried groundnuts meant for all three — but ate them alone while Krishna slept on his lap. When Krishna asked what he was eating, Sudama lied: 'Nothing — my teeth are chattering with cold.' The all-knowing Krishna said: 'I dreamt — one man was eating another's things; asked what he ate, he said nothing.' Sudama, though Krishna's dear friend, suffered grinding poverty all his later life — for what he did, he himself had to reap. Years later, when his wife sent a fistful of flattened rice as an offering, Krishna was pleased and granted him a golden city to enjoy. Whoever has the habit of eating without giving to those near should remember this. The Shruti too says the same: first offer to God, and enjoy only what remains after His meal. Baba taught this same truth in the form of humour.”</p>`
       },
-      {
+{
         time: "00:54:30", seconds: 3270, title: "Anna Chinchanikar and Mavshibai",
         html: `<p><em>Two more humour episodes from the chapter:</em></p><p>“Anna Chinchanikar massaged Baba's left hand while the old widow Mavshibai — whom Baba called 'mother' — massaged His back, fingers interlaced, pressing hard. Once her face came very close to Anna's, and being of a teasing nature she cried: 'Oh! Anna is a bad man — trying to kiss me! Even at this age, no shame?' Anna flared up, rolling up his sleeves. All laughed at the old couple's quarrel. Baba, who loved both equally, settled it with skill: 'Anna, why make a needless fuss? What is wrong in kissing one's mother?' Hearing Baba's words, both were satisfied, and all laughed heartily.”</p><p>“Another day, when other devotees anxiously told Mavshibai to massage gently lest Baba's intestines snap, Baba rose in fury, dashed His satka to the ground, and pressed it into His own belly against a pillar — suffering so His devotee's seva would not be stopped. From then all learned: never interfere in another's service to Baba — He alone knows each one's seva.”</p>`
       },
-      {
+{
         time: "00:57:39", seconds: 3459, title: "Tatya's reminiscences — fourteen years beside Baba",
         html: `<p><em>Tatya Kote Patil's memories — in Telugu, lightly cleaned:</em></p><p>“When Sri Sai first set foot on Shirdi soil, I was six or seven. My friends and I would stand at the masjid gate teasing Baba — Raghu Patil threw stones at Him; when Baba picked up His satka we ran away laughing. It was almost our daily routine. Baba was then about eighteen, with a thin moustache, sitting silently by a pillar.”</p><p>“Later, only Mhalsapati slept with Baba in the masjid each night. As my closeness with Baba grew, I too began sleeping there — and when Baba began alternating nights between the masjid and the chavadi, I alternated with Him. No one else was ever allowed. The three of us slept with heads to east, north and west, feet meeting in the middle — sometimes tangling in sleep, which made us laugh at dawn. If Tatya snored, Baba and Mhalsapati would shake him and press his head, back and legs hard. So for fourteen years, leaving his parents at home, Tatya slept with Baba.”</p><p>“Baba knew my body ached from the fields, so He pressed my limbs as I slept — it pained me, and I scolded them both: 'I should serve you, not be served by you!' Baba ignored me: 'Don't worry — we two are one. People think I am great, but that is not true — I am like you.' Once I sulked away for ten or twelve days; Baba grieved, calling after me when I passed at a distance. Kakasaheb Dixit counselled me back. Those days are gone; their sweet memory remains forever.”</p>`
       },
-      {
+{
         time: "01:15:12", seconds: 4512, title: "Q&A — group satsang or individual practice?",
         html: `<p><strong class="speaker">Devotee:</strong> <em>In Telugu —</em> “Guruji, is it better to attend group satsang, or to do everything individually at home, happily alone?”</p><p><strong class="speaker">Sri Babuji:</strong> <em>In Telugu, lightly cleaned —</em> “Do both. Do individual practice too. When you cannot do it individually, being in the group lends the mind the strength of the whole group. Sitting here now — could you ask a question alone? Now ten people are here; the questions they ask will be useful to you too. Isn't group satsang useful? That is the group's advantage — and do individual practice as well.”</p>`
       },
-      {
+{
         time: "01:16:49", seconds: 4609, title: "Q&A — how to be in Shirdi",
         html: `<p><strong class="speaker">Devotee:</strong> <em>In Telugu —</em> “Shirdi is the kshetra we visit most. How should we be there — what should we do? They say maya is there and will deceive us.”</p><p><strong class="speaker">Sri Babuji:</strong> <em>In Telugu, lightly cleaned —</em> “In the old days, when someone said they were going to the Samadhi Mandir, the elders would say: sit so that Baba looks at you — not you looking at Baba. When you go before Baba, what do you do? It is His gaze falling on us that matters — not our concentrating with closed eyes. Go as His. Sit with the feeling 'I am in His presence' — that is enough. His gaze is on us even if we don't go; but we experience it only when we go, so remember: His gaze is on you. And do not borrow beyond your means for the trip — four days of joy there is not worth fear and tension back home.”</p>`
       },
-      {
+{
         time: "01:25:15", seconds: 5115, title: "Keeping the charge — the battery",
         html: `<p><strong class="speaker">Devotee:</strong> <em>In Telugu —</em> “After seeing Baba here, the peace stays a month — then fear returns. What should we do to keep that peace at home?”</p><p><strong class="speaker">Sri Babuji:</strong> <em>In Telugu, lightly cleaned —</em> “Correct — our own mind tells us: the charge is over, recharge it. Go for darshan again — Baba's samskara — and it lasts another month, then drains again. Some make it a niyama: once in fifteen days, once a month — going whether there is fear or not, whether work is going well or not. Don't go only out of need; go out of love, for Baba's sake. A small lamp is blown out by the wind — but make it a big fire, and the same wind makes it blaze. Grow until the environment comes under your influence — then wherever you sit, satsang happens around you. Frequent coming, staying here — that is the practice.”</p>`
       },
-      {
+{
         time: "01:30:02", seconds: 5402, title: "Q&A (English) — feeling disconnected from Baba",
         html: `<p><strong class="speaker">Devotee:</strong> <em>In English — captions heavily garbled; the sense where clear:</em> “It is hard for me to be away, because the focus of my devotion has been a lot on Baba in the mandir, the murti — and since loving Him I have felt more disconnected in my love for Baba...”</p><p><strong class="speaker">Sri Babuji:</strong> <em>In English — captions heavily garbled; the sense where clear:</em> “Let us pray for a strong connection — which, even if you try to disconnect yourself, that is real connection. ... You are already connected. ... From our side, don't try to connect — feel the connection. The feeling goes up and down with the environment; the connection itself does not.”</p>`
-      },
-      {
-        time: "01:55:04", seconds: 6904, title: "The arati — meaning explained, then sung",
-        html: `<p><em>In English —</em> “Let us understand and grasp the meaning of the arati we are about to perform.” <em>The English captions of the meaning are garbled; the sense where clear: the Lord keeps His eyes on us, His children; knowing the truth, we find the whole universe — and the prayer ends in surrender, joining together to perform the arati.</em></p><p><em>The arati is then sung (~01:56), and the satsang closes with the Sharanam song (~01:58:05).</em></p>`
-      }
-    ],
-    inBrief: "The October 8 SaiSEEkers satsang opens with the Nitya Prarthana — the Sai adaptation of Ramana Maharshi's Arunachala Padigam, a triveni of bhakti, jnana and vairagya to be read daily with feeling. Then Sai Satcharitra Chapter 24: Baba's humour — the groundnut leela, whose moral is to offer everything to the guru before the senses taste it (Sudama's story drives it home); Anna Chinchanikar and Mavshibai, whom Baba defends with 'what is wrong in kissing one's mother?' and the satka. Tatya's reminiscences follow: fourteen years sleeping beside Baba in the masjid — 'we two are one.' The Q&A teaches: do both group and individual satsang; in the Samadhi Mandir sit so Baba looks at you; keep Shirdi's charge like a battery, recharged by regular darshan; and pray for a connection so strong you could not break it if you tried.",
-    quiz: [
-      {type:"mcq", q:"Our Nitya Prarthana is the Sai adaptation of which work?",
-       options:["Tukaram's abhangs", "Ramana Maharshi's Arunachala Padigam", "Annamayya's kirtans", "The Bhagavad Gita"], answer:1,
-       why:"“In Sai Padham, our Nitya Prarthana — this is the Sai adaptation of Bhagavan Sri Ramana Maharshi's Arunachala Padigam.”"},
-      {type:"mcq", q:"The prayer is described as a triveni sangamam — a confluence — of which three?",
+      }],
+    inBrief: "The October 8 SaiSEEkers satsang opens with Sai Satcharitra Chapter 24: Baba's humour — the groundnut leela, whose moral is to offer everything to the guru before the senses taste it (Sudama's story drives it home); Anna Chinchanikar and Mavshibai, whom Baba defends with 'what is wrong in kissing one's mother?' and the satka. Tatya's reminiscences follow: fourteen years sleeping beside Baba in the masjid — 'we two are one.' The Q&A teaches: do both group and individual satsang; in the Samadhi Mandir sit so Baba looks at you; keep Shirdi's charge like a battery, recharged by regular darshan; and pray for a connection so strong you could not break it if you tried.",
+    quiz: [{type:"mcq", q:"The prayer is described as a triveni sangamam — a confluence — of which three?",
        options:["Faith, hope and charity", "Bhakti, jnana and vairagya", "Nama, rupa and lila", "Dharma, artha and kama"], answer:1,
        why:"“A triveni sangamam of bhakti, jnana and vairagya” — devotion, knowledge and dispassion flowing as one."},
-      {type:"mcq", q:"In the groundnut leela, what 'bad habit' did Baba attribute to Hemadpant?",
+{type:"mcq", q:"In the groundnut leela, what 'bad habit' did Baba attribute to Hemadpant?",
        options:["Sleeping during satsang", "Eating alone without remembering Baba", "Arguing with Shama", "Skipping the market"], answer:1,
        why:"“He has one bad habit — eating alone.” And Baba's deeper question: “Before eating, do you remember me? Am I not always near you?”"},
-      {type:"mcq", q:"In Sudama's story, what was the consequence of eating the groundnuts without offering Krishna?",
+{type:"mcq", q:"In Sudama's story, what was the consequence of eating the groundnuts without offering Krishna?",
        options:["He was cursed by Sandipani", "He suffered grinding poverty all his later life", "He forgot the Vedas", "He was sent away from the ashram"], answer:1,
        why:"“Sudama, though Krishna's dear friend, suffered grinding poverty all his later life — for what he did, he himself had to reap.”"},
-      {type:"mcq", q:"When Mavshibai teased Anna Chinchanikar, how did Baba settle their quarrel?",
+{type:"mcq", q:"When Mavshibai teased Anna Chinchanikar, how did Baba settle their quarrel?",
        options:["He scolded Mavshibai for teasing", "He asked Anna to apologize", "He said, “What is wrong in kissing one's mother?”", "He sent them both away"], answer:2,
        why:"“Anna, why make a needless fuss? What is wrong in kissing one's mother?” — both were satisfied, and all laughed."},
-      {type:"mcq", q:"How many years did Tatya sleep beside Baba in the masjid?",
+{type:"mcq", q:"How many years did Tatya sleep beside Baba in the masjid?",
        options:["Seven years", "Ten years", "Fourteen years", "Twenty years"], answer:2,
        why:"“For fourteen years, leaving his parents at home, Tatya slept with Baba” — only he and Mhalsapati were ever allowed."},
-      {type:"mcq", q:"On group vs individual satsang, what does Sri Babuji advise?",
+{type:"mcq", q:"On group vs individual satsang, what does Sri Babuji advise?",
        options:["Group satsang only", "Individual practice only", "Do both — the group's questions become yours", "Neither matters"], answer:2,
        why:"“Do both. Do individual practice too... the questions they ask will be useful to you too. That is the group's advantage.”"},
-      {type:"mcq", q:"In the Samadhi Mandir, how should one sit?",
+{type:"mcq", q:"In the Samadhi Mandir, how should one sit?",
        options:["Eyes closed in deep concentration", "So that Baba looks at you", "Reciting loudly", "Facing the entrance"], answer:1,
        why:"“Sit so that Baba looks at you — not you looking at Baba... Sit with the feeling 'I am in His presence' — that is enough.”"},
-      {type:"tf", q:"Baba's moral from the groundnut episode is to remember and offer to Him before enjoying anything with the senses.", answer:true,
+{type:"tf", q:"Baba's moral from the groundnut episode is to remember and offer to Him before enjoying anything with the senses.", answer:true,
        why:"“Never enjoy anything with the five senses without remembering the guru.”"},
-      {type:"tf", q:"Sudama's poverty ended as soon as he apologized to Krishna.", answer:false,
+{type:"tf", q:"Sudama's poverty ended as soon as he apologized to Krishna.", answer:false,
        why:"He suffered lifelong poverty; only years later did an offered fistful of flattened rice bring Krishna's grace — a golden city."},
-      {type:"tf", q:"Sri Babuji says it is fine to borrow beyond your means to visit Shirdi.", answer:false,
+{type:"tf", q:"Sri Babuji says it is fine to borrow beyond your means to visit Shirdi.", answer:false,
        why:"“Do not borrow beyond your means for the trip — four days of joy there is not worth fear and tension back home.”"},
-      {type:"tf", q:"Real connection with Baba is one you could not break even if you tried.", answer:true,
+{type:"tf", q:"Real connection with Baba is one you could not break even if you tried.", answer:true,
        why:"“Let us pray for a strong connection — which, even if you try to disconnect yourself” cannot be broken — “that is real connection.”"},
-      {type:"fill", q:"“Before eating, do you ____ me? Am I not always near you?”", answer:"remember"},
-      {type:"fill", q:"“First ____ to God, and enjoy only what remains after His meal.”", answer:"offer"},
-      {type:"fill", q:"“Tatya slept beside Baba in the masjid for ____ years.”", answer:"fourteen"},
-      {type:"fill", q:"“The peace of Shirdi drains like a ____; regular darshan recharges it.”", answer:"battery"},
-      {type:"reflect", q:"Baba asks Hemadpant: “Before eating, do you remember me?”",
+{type:"fill", q:"“Before eating, do you ____ me? Am I not always near you?”", answer:"remember"},
+{type:"fill", q:"“First ____ to God, and enjoy only what remains after His meal.”", answer:"offer"},
+{type:"fill", q:"“Tatya slept beside Baba in the masjid for ____ years.”", answer:"fourteen"},
+{type:"fill", q:"“The peace of Shirdi drains like a ____; regular darshan recharges it.”", answer:"battery"},
+{type:"reflect", q:"Baba asks Hemadpant: “Before eating, do you remember me?”",
        prompt:"Take one meal today as the experiment: pause before the first bite, remember Baba, and offer it inwardly. Notice what changes — in the taste, the hurry, the gratitude. What would change if every sense-enjoyment began this way?"},
-      {type:"reflect", q:"Sri Babuji says a small lamp is blown out by the wind, but a big fire is fed by it.",
-       prompt:"Think of your own practice as a flame right now — lamp or fire? What is the 'wind' in your week (a place, a mood, a person) that blows it out? What would one regular niyama — a small, unbreakable appointment with Baba — do to that flame?"}
-    ]
+{type:"reflect", q:"Sri Babuji says a small lamp is blown out by the wind, but a big fire is fed by it.",
+       prompt:"Think of your own practice as a flame right now — lamp or fire? What is the 'wind' in your week (a place, a mood, a person) that blows it out? What would one regular niyama — a small, unbreakable appointment with Baba — do to that flame?"}]
   },
   {
-    name: "October 10, 2026 — SaiSEEkers Satsang (Read-Along)",
-    summary: "A full read-along for the October 10 SaiSEEkers satsang: key points, a timestamped contents guide, and the English discourse transcript on Baba's two pice — shraddha and saburi — 'happily waiting', the long bell, the airport, Narada's sadhu, and longing that does not end at the goal; plus quick trivia.",
+    name: "October 10, 2026 — SaiSEEkers Satsang (Post Satsang review)",
+    summary: "A full post-satsang review of the October 10 SaiSEEkers satsang: key points, a timestamped contents guide, and the English discourse transcript on Baba's two pice — shraddha and saburi — 'happily waiting', the long bell, the airport, Narada's sadhu, and longing that does not end at the goal; plus quick trivia.",
     video: "https://www.youtube.com/watch?v=RCmPQBwevW0",
     duration: "3:13:30",
     languages: "Telugu / English",
     date: "Oct 10, 2026",
     note: "Auto-transcribed audio, lightly cleaned for reading. The Telugu prayers and songs are garbled by the English transcription — their sense is given where clear. Obvious mishearings corrected; rough stretches kept as-is. Follow along as the audio plays.",
-    streamNote: "The livestream's first ~11 minutes are silent (waiting). The satsang runs about 11:29–1:50:00: Telugu prayers and songs (~11:29–45:00), the English discourse (~47:00–1:41:00), a Telugu song (~1:50:00), and the English meaning of the aarti (~2:07:00). From ~2:10:00 to the end (3:13:30) the stream continues silently.",
-    keyPointGroups: [
-      {
+    streamNote: "The livestream's first ~11 minutes are silent (waiting). The satsang runs about 11:29–1:50:00: Telugu prayers and songs (~11:29–45:00), the English discourse (~47:00–1:41:00), a Telugu song (~1:50:00). From ~2:10:00 to the end (3:13:30) the stream continues silently.",
+    keyPointGroups: [{
         title: "Baba's two pice — shraddha and saburi",
         points: [
           "Baba first got His devotee's head shaved — all thoughts cleared — and then asked for two pice: shraddha, total loving attention on the Guru, and saburi.",
@@ -3555,7 +3472,7 @@ DIGESTS.readalongs = [
           "Siddiq Falke, kept from entering the masjid, waited nine months at a distance — and was then chosen to dine with Baba. What made it? 'His patience, saburi. What was the basis for his saburi? His love.'"
         ]
       },
-      {
+{
         title: "Happily waiting — the long bell, the beloved, the airport",
         points: [
           "A bored schoolboy hears the long bell and jumps with joy — he is not yet home, but the very thought that he can go home makes him happy. 'The long bell gives him that trust, that is saburi.'",
@@ -3564,7 +3481,7 @@ DIGESTS.readalongs = [
           "The one who rings the long bell — the Sadguru — gives saburi; the devotee cannot give it to himself."
         ]
       },
-      {
+{
         title: "The sadhu who danced — ecstasy burns the karma",
         points: [
           "A sadhu doing tapas under a tree asks Narada to ask Vishnu when darshan will come. Vishnu's answer: after as many births as the leaves of the tree — millions.",
@@ -3572,155 +3489,141 @@ DIGESTS.readalongs = [
           "'Happiness and ecstatic happiness is the key to darshan. It could be this minute, or it may take forever. How long is a meaningless question — how much longing you have?'"
         ]
       },
-      {
+{
         title: "Longing that does not end at the goal",
         points: [
           "Does longing end when we reach our goal? No — the gopis' longing, Ramana's Arunachala Padikam: the experience of union cannot be described in words, so saints describe it in the language of separation and longing.",
           "Longing is not suffering: it carries an aesthetic joy, like the drowning man who then knows the value of one breath.",
           "'Call, call, call' — eight to ten hours of calling, and it will be given. 'Baba is giving... we ask for something and when it is given, we don't recognize.'"
         ]
-      }
-    ],
-    sections: [
-      {
+      }],
+    sections: [{
         time: "11:29", seconds: 689, title: "Opening Telugu prayers",
         html: `<p><em>Telugu prayers open the satsang — the Saipatham prayer, a verse of Sri Ramana Maharshi on Sai, and a devotional prayer to Sai Natha. (Transcribed from Telugu audio; garbled in places.)</em></p>`
       },
-      {
+{
         time: "19:43", seconds: 1183, title: "English devotional song",
         html: `<p><em>A devotee sings in English:</em></p><p>"That is what I want. A blissful life where there is love and devotion. A life where the hearts are filled with devotion..."</p>`
       },
-      {
+{
         time: "24:00", seconds: 1440, title: "Song on serving the Guru",
         html: `<p><em>An English song on the guru's grace:</em></p><p>"He is the one who taught me to be a good person. He served my Guru for 12 years..."</p>`
       },
-      {
+{
         time: "37:05", seconds: 2225, title: "Radha Bhai Deshmukh",
         html: `<p><em>In Telugu: the story of Radha Bhai Deshmukh — "I saw Baba and fell in love with Him. I loved Baba very much" — who stayed three days without food or drink.</em></p>`
       },
-      {
+{
         time: "41:00", seconds: 2460, title: "Haji Siddhik Falke; the two pice — saburi",
         html: `<p><em>In Telugu: Haji Siddhik Falke's story — the Haj pilgrim Baba would not let into the masjid — closing on the two pice: "Saburi is the second money... Saburi is the greatest wealth."</em></p>`
       },
-      {
+{
         time: "47:51", seconds: 2871, title: "\"Happily waiting\" — the definition of saburi",
         html: `<p><strong class="speaker">Devotee:</strong> Guruji, last year you defined saburi as "waiting patiently"...</p><p><strong class="speaker">Guruji:</strong> Sorry — happily waiting. Patiently is not the word that I use. Happily waiting.</p><p><strong class="speaker">Guruji:</strong> Not waiting like a patient — a patient is one who suffers from a disease. Waiting like one who waits for the beloved — with the thrill of something about to happen.</p>`
       },
-      {
+{
         time: "49:13", seconds: 2953, title: "The schoolboy and the long bell",
         html: `<p><strong class="speaker">Guruji:</strong> When a child is in school, very much bored with the lessons, and he wants to go home — and the long bell rings — he jumps. Is he at home? He is still in the school, in the classroom, in front of the same teacher. But he feels as if he has gone home.</p><p><strong class="speaker">Devotee:</strong> He hasn't got Nirvana. He hasn't got realization. Why should he be happy now, in the school itself?</p><p><strong class="speaker">Guruji:</strong> The long bell gives him that trust — that is saburi. The so-called goal is the cessation of the suffering; unless that suffering has gone, how can we be happily waiting?</p>`
       },
-      {
+{
         time: "53:03", seconds: 3183, title: "Waiting for the beloved vs waiting for the boss",
         html: `<p><strong class="speaker">Guruji:</strong> That is in fact your life — we are waiting happily. Waiting for the beloved changes the whole quality of waiting. It refuses to be waiting, in fact — the waiting becomes waiting upon, waiting upon our beloved.</p>`
       },
-      {
-        time: "1:00:00", seconds: 3600, title: "Sai Baba Namam",
-        html: `<p><em>The Sai Baba Namam is chanted.</em></p>`
-      },
-      {
+{
         time: "1:14:57", seconds: 4497, title: "Nishta: unflinching perseverance",
         html: `<p><strong class="speaker">Guruji:</strong> Nishta is one of the pice Baba asks — always keeping the mind on what we want, where we are going; and whatever comes, whether palatable or not, happy or unhappy, just perseverantly following it, never getting disappointed, never giving up.</p><p><strong class="speaker">Guruji:</strong> Nishta doesn't mean faith — it is unflinching perseverance. What flinches here is your likes and dislikes. We have so many pulls; there must be a stronger pull to pull you away from the others — and that I call the object of love.</p>`
       },
-      {
+{
         time: "1:16:05", seconds: 4565, title: "Siddiq Falke's nine months",
         html: `<p><strong class="speaker">Guruji:</strong> Siddiq Falke, who had done the Haj pilgrimage, came to Baba — and Baba didn't allow him even to step into the masjid. He waited for nine months at a distance. And then he was chosen — very few were allowed — to dine with Baba.</p><p><strong class="speaker">Devotee:</strong> What made him that? His patience, saburi. What was the basis for his saburi? His love.</p>`
       },
-      {
+{
         time: "1:20:01", seconds: 4801, title: "Baba's two pice: shraddha and saburi",
         html: `<p><strong class="speaker">Devotee:</strong> Baba says: first He got my head shaved, and then He asked for two pice. Did He mean that only after all the thoughts were cleared, He asked for the dakshina of the Guru? If everything is gone, what remains is that — shraddha and saburi.</p><p><strong class="speaker">Guruji:</strong> His total attention, his loving attention on the Guru — shraddha and saburi. That is all that remains; that is the only two pice that remains with him, and even that He took as an offering.</p>`
       },
-      {
+{
         time: "1:21:19", seconds: 4879, title: "The sadhu, Narada and Vishnu's darshan",
         html: `<p><strong class="speaker">Guruji:</strong> There was an old man with a burning in his heart for the darshan of Lord Vishnu. He went to a forest, sat under a tree, and did tapas. Narada, passing by, took a liking to him. The man had one question: "When you next visit Vaikuntha, ask Vishnu when he will give me darshan."</p><p><strong class="speaker">Devotee:</strong> Vishnu's answer: not until the sadhu takes as many births as the leaves of the tree under which he sits — millions of births.</p>`
       },
-      {
+{
         time: "1:25:57", seconds: 5157, title: "The sadhu dances — ecstasy burns the karma",
         html: `<p><strong class="speaker">Guruji:</strong> Narada feared the man would die of a heart attack. But the sadhu started dancing with joy and ecstasy — "The Lord promised He will give me darshan!" And as he danced, Lord Vishnu came and gave him darshan.</p><p><strong class="speaker">Devotee:</strong> Narada protested — "You made a fool of me." Vishnu said: the very hope, the very news that I would give darshan, gave him such happiness and ecstasy that all the karma of all these years was burned. Then he was ready — so I gave darshan immediately.</p><p><strong class="speaker">Guruji:</strong> Happiness and ecstatic happiness is the key to darshan. "How long will it take — so many births?" There is no answer to it. It could be this minute, or it may take forever. How long is a meaningless question. How much longing you have — that is the answer.</p>`
       },
-      {
-        time: "1:29:32", seconds: 5372, title: "Does longing end when we reach our goal?",
-        html: `<p><strong class="speaker">Devotee:</strong> Does longing end when we reach our goal?</p><p><strong class="speaker">Guruji:</strong> In one way — no. That is why you see the gopis' longing expressed even after union, and Ramana's Arunachala Padikam. Even Baba used to sing songs of longing.</p>`
-      },
-      {
+{
         time: "1:32:56", seconds: 5576, title: "Union described in words of separation",
         html: `<p><strong class="speaker">Guruji:</strong> The experience of union cannot be described in words. So the saints describe it in words of separation and longing — the gopis' longing for Krishna in the Bhagavata, Ramana's longing for Arunachala. That is the only way to express it: to tell you how much they are enjoying, they tell you how much they suffered without it.</p>`
       },
-      {
+{
+        time: "1:29:32", seconds: 5372, title: "Does longing end when we reach our goal?",
+        html: `<p><strong class="speaker">Devotee:</strong> Does longing end when we reach our goal?</p><p><strong class="speaker">Guruji:</strong> In one way — no. That is why you see the gopis' longing expressed even after union, and Ramana's Arunachala Padikam. Even Baba used to sing songs of longing.</p>`
+      },
+{
         time: "1:35:49", seconds: 5749, title: "The drowning man and one breath",
         html: `<p><strong class="speaker">Guruji:</strong> When you are drowning and you grasp for your breath — then you know the real value of one breath. Now you breathe millions of times and don't know its value. Longing is like that: happiness and unhappiness both there — a paradox.</p>`
       },
-      {
+{
         time: "1:37:42", seconds: 5862, title: "Call, call, call",
         html: `<p><strong class="speaker">Devotee:</strong> If we become dependent on you to create that happiness, what do we do when you are not with us?</p><p><strong class="speaker">Guruji:</strong> Call, call, call. If you are really honest, sincere — it is the only way. Minimum eight, ten hours, I will say — calling, calling, calling. Call, and it will be given. Baba is giving — we ask for something, and when it is given, we don't recognize; then we want something else.</p>`
       },
-      {
+{
         time: "1:39:32", seconds: 5972, title: "Waiting becomes waiting upon",
         html: `<p><strong class="speaker">Guruji:</strong> Waiting for our beloved — the waiting refuses to be waiting; it becomes waiting upon. The very sight of your beloved makes you happy. Even the waiting is so thrilling — you enjoy it. That waiting ceases to be real waiting.</p>`
       },
-      {
+{
         time: "1:50:23", seconds: 6623, title: "Telugu song: Sadguru Pradama Sandarshanam",
         html: `<p><em>A Telugu song on the Sadguru's first darshan. (Transcribed from Telugu audio; garbled.)</em></p>`
-      },
-      {
-        time: "2:07:10", seconds: 7630, title: "Meaning of the aarti (in English)",
-        html: `<p><em>Guruji explains the meaning of the aarti in English:</em></p><p>"Lord Sainath, take care of us, thy children, by always keeping thy gracious eye on us. Once we know the truth, we find that though thou pervadest the whole universe, anything seen apart from thee is but false. I am blind and a bondsman of thee. Pray grant me the divine vision of the Lord..."</p>`
-      },
-    ],
+      }],
     inBrief: "Baba's two pice are shraddha — total loving attention on the Guru — and saburi, which is not patient waiting but happy waiting: the schoolboy's joy at the long bell, waiting upon the beloved rather than the boss. Nishta is unflinching perseverance, held by the stronger pull of love. The sadhu who danced at Narada's news shows that ecstatic happiness burns karma and is the key to darshan — 'it could be this minute, or it may take forever.' And longing does not end at the goal: the saints sing union in the language of separation.",
-    quiz: [
-      {type:"mcq", q:"Guruji corrects the devotee: saburi is not “patiently waiting” but…",
+    quiz: [{type:"mcq", q:"Guruji corrects the devotee: saburi is not “patiently waiting” but…",
        options:["Silently waiting", "Happily waiting", "Hopefully waiting", "Endlessly waiting"], answer:1,
        why:"“Sorry — happily waiting. Patiently is not the word that I use.” A patient is one who suffers from a disease; we wait like one who waits for the beloved — with the thrill of something about to happen."},
-      {type:"mcq", q:"In the schoolboy example, what gives the bored boy the trust that he will go home?",
+{type:"mcq", q:"In the schoolboy example, what gives the bored boy the trust that he will go home?",
        options:["The teacher's promise", "The long bell", "His friends calling out", "Finishing his homework"], answer:1,
        why:"“The long bell gives him that trust — that is saburi.” He is still in the classroom, in front of the same teacher — but the very thought that he can go home makes him happy."},
-      {type:"mcq", q:"What are Baba's two pice?",
+{type:"mcq", q:"What are Baba's two pice?",
        options:["Faith and charity", "Shraddha and saburi", "Prayer and fasting", "Love and service"], answer:1,
        why:"Shraddha — total loving attention on the Guru — and saburi. Baba first got the devotee's head shaved, clearing all thoughts, and then asked for these two."},
-      {type:"mcq", q:"How does Guruji translate “nishta”?",
+{type:"mcq", q:"How does Guruji translate “nishta”?",
        options:["Blind faith", "Unflinching perseverance", "Deep meditation", "Total surrender"], answer:1,
        why:"“Nishta doesn't mean faith — it is unflinching perseverance.” What flinches is our likes and dislikes; a stronger pull — the object of love — keeps the mind from straying."},
-      {type:"mcq", q:"Siddiq Falke, kept from entering the masjid, waited at a distance for how long before Baba let him dine with Him?",
+{type:"mcq", q:"Siddiq Falke, kept from entering the masjid, waited at a distance for how long before Baba let him dine with Him?",
        options:["Nine days", "Nine weeks", "Nine months", "Nine years"], answer:2,
        why:"“What made him that? His patience, saburi. What was the basis for his saburi? His love.”"},
-      {type:"mcq", q:"In the sadhu–Narada story, how many births did Vishnu say were needed before darshan?",
+{type:"mcq", q:"In the sadhu–Narada story, how many births did Vishnu say were needed before darshan?",
        options:["A hundred", "A thousand", "As many as the leaves of the tree", "Seven"], answer:2,
        why:"Millions of births — yet hearing the promise, the sadhu danced with joy, his karma burned, and Vishnu gave darshan at once."},
-      {type:"mcq", q:"According to Guruji, how do the saints describe the experience of union?",
+{type:"mcq", q:"According to Guruji, how do the saints describe the experience of union?",
        options:["In precise philosophical terms", "In words of separation and longing", "They never speak of it at all", "Only through silence"], answer:1,
        why:"The gopis' longing for Krishna, Ramana's Arunachala Padikam — union itself cannot be described, so they sing it in the language of separation."},
-      {type:"tf", q:"Guruji says “patiently” is the right word for saburi.", answer:false,
+{type:"tf", q:"Guruji says “patiently” is the right word for saburi.", answer:false,
        why:"“Patiently is not the word that I use.” A patient suffers from a disease — we wait with the thrill of something about to happen, like waiting for the beloved."},
-      {type:"tf", q:"The sadhu's ecstatic happiness at the promise of darshan burned his karma, and Vishnu gave him darshan at once.", answer:true,
+{type:"tf", q:"The sadhu's ecstatic happiness at the promise of darshan burned his karma, and Vishnu gave him darshan at once.", answer:true,
        why:"“Happiness and ecstatic happiness is the key to darshan.” The very news of the promise gave such ecstasy that all the karma of those years was burned."},
-      {type:"tf", q:"Waiting for the beloved and waiting for the boss feel the same — only the duration of the wait differs.", answer:false,
+{type:"tf", q:"Waiting for the beloved and waiting for the boss feel the same — only the duration of the wait differs.", answer:false,
        why:"Same two hours at the airport, wholly different waiting: “it refuses to be waiting; the waiting becomes waiting upon.”"},
-      {type:"tf", q:"Longing ends completely once we reach our goal.", answer:false,
+{type:"tf", q:"Longing ends completely once we reach our goal.", answer:false,
        why:"The gopis, Ramana, Baba's own songs of longing — the experience of union is sung in the language of separation; longing does not end at the goal."},
-      {type:"fill", q:"“The long bell gives him that ____ — that is saburi.”", answer:"trust"},
-      {type:"fill", q:"“Happiness and ____ happiness is the key to darshan.”", answer:"ecstatic"},
-      {type:"fill", q:"“‘How long will it take?’ There is no answer to it. It could be ____, or it may take forever.”", answer:"this minute",
+{type:"fill", q:"“The long bell gives him that ____ — that is saburi.”", answer:"trust"},
+{type:"fill", q:"“Happiness and ____ happiness is the key to darshan.”", answer:"ecstatic"},
+{type:"fill", q:"“‘How long will it take?’ There is no answer to it. It could be ____, or it may take forever.”", answer:"this minute",
        why:"“How long is a meaningless question — how much longing you have?”"},
-      {type:"fill", q:"“____, ____, ____ — minimum eight, ten hours… and it will be given.”", answer:"Call, call, call",
+{type:"fill", q:"“____, ____, ____ — minimum eight, ten hours… and it will be given.”", answer:"Call, call, call",
        why:"“Baba is giving — we ask for something, and when it is given, we don't recognize.”"},
-      {type:"reflect", q:"Guruji says waiting for the beloved turns waiting into “waiting upon.”",
+{type:"reflect", q:"Guruji says waiting for the beloved turns waiting into “waiting upon.”",
        prompt:"Recall a moment from your own week of waiting — for a person, a result, or an answer to come. What changed, or what would change, if you waited “upon” instead of merely waiting? What is your “long bell” — the trust that lets you wait happily right now?"},
-      {type:"reflect", q:"The sadhu danced with joy at news that meant millions more births — because the promise itself was enough.",
-       prompt:"What does this say about where happiness lives: in the arrival, or in the trust? Can you remember a time when the certainty of a good outcome made the wait itself joyful?"}
-    ]
+{type:"reflect", q:"The sadhu danced with joy at news that meant millions more births — because the promise itself was enough.",
+       prompt:"What does this say about where happiness lives: in the arrival, or in the trust? Can you remember a time when the certainty of a good outcome made the wait itself joyful?"}]
   }  ,
   {
-    name: "October 13, 2026 — SaiSEEkers Satsang (Read-Along)",
-    summary: "A full read-along for the October 13 SaiSEEkers satsang: key points, a timestamped contents guide, and the Telugu discourse transcript on drawing close to Baba — “without ‘me’ remaining, only Baba remains” — the cinema hall, the Buddha's questions, satyam the causeless, runanubandha, the mango and the ten blows, prarabdha as natural law, and Annamayya's single medicine for the bhavaroga; plus quick trivia.",
+    name: "October 13, 2026 — SaiSEEkers Satsang (Post Satsang review)",
+    summary: "A full post-satsang review of the October 13 SaiSEEkers satsang: key points, a timestamped contents guide, and the Telugu discourse transcript on drawing close to Baba — “without ‘me’ remaining, only Baba remains” — the cinema hall, the Buddha's questions, satyam the causeless, runanubandha, the mango and the ten blows, prarabdha as natural law, and Annamayya's single medicine for the bhavaroga; plus quick trivia.",
     video: "https://www.youtube.com/watch?v=PBvGWwx2Tqw",
     duration: "1:44:34",
     languages: "Telugu",
     date: "Oct 13, 2026",
     note: "Auto-transcribed Telugu audio (te-orig captions), lightly cleaned for reading. The opening ~5 minutes are uncaptioned. The English meaning of the arati is garbled by the captions — the sense is given where clear. Follow along as the audio plays.",
-    streamNote: "The 1:44:34 livestream: opening chants and the Nitya Prarthana with its meaning (~5:08–16:17), Sai Baba namam chanting (~16:17–32:24), the Telugu discourse (~32:24–1:14:05), a Telugu song (~1:14:05), Annamayya's teaching on the bhavaroga and more namam (~1:19:06–1:36:22), the arati with its meaning explained in English (~1:36:22), and the closing Sharanam song (~1:41:02).",
-    keyPointGroups: [
-      {
+    streamNote: "The 1:44:34 livestream: opening chants (~5:08–16:17), the Telugu discourse (~32:24–1:14:05), a Telugu song (~1:14:05), Annamayya's teaching on the bhavaroga (~1:19:06–1:21:05), and the closing Sharanam song (~1:41:02).",
+    keyPointGroups: [{
         title: "Drawing close to Baba — “without ‘me’ remaining”",
         points: [
           "Baba activity is not social activity: its goal is drawing close to Baba — expressing love so that love grows. Whatever brings us close to Baba is spiritual activity.",
@@ -3729,7 +3632,7 @@ DIGESTS.readalongs = [
           "Love's nature is merging — “merge into me,” “let me merge into you” — but merging is the effect, not the target. Remember Baba, and what obstructs remembrance falls away by itself."
         ]
       },
-      {
+{
         title: "Birth, death, and our helplessness",
         points: [
           "We do not know why we exist or why we live. We did not know why we were born — we were simply born. We do not know when we will go. Birth is not in our hands, death is not in our hands — and the life between is equally not in our hands.",
@@ -3737,7 +3640,7 @@ DIGESTS.readalongs = [
           "The attempt to bring what is not in our hands under our control is itself labor pain (purudu). Life is the struggle to get out of helplessness — and deliverance is getting out of limitation."
         ]
       },
-      {
+{
         title: "The Buddha's questions — and the quality of birth",
         points: [
           "The Buddha set out with these very questions: What is truth? What is death — what is its nature? What is disease, what is old age? How are they to be conquered? He did not conquer death — but he answered the questions by turning seekers inward: don't do metaphysics first; find out what you are, what your suffering is.",
@@ -3745,7 +3648,7 @@ DIGESTS.readalongs = [
           "The devotee's attitude is the opposite of escape: “We want to be with Baba — one birth is not enough for that.” Give us endless births with Baba, not birthlessness."
         ]
       },
-      {
+{
         title: "Satyam — the causeless",
         points: [
           "Satyam is that which has no cause — whose existence is its own cause. Your name has a cause (your parents named you); your body has a cause. But what exists with no cause but itself? Think on it.",
@@ -3753,7 +3656,7 @@ DIGESTS.readalongs = [
           "Baba's word: upadesa removes ignorance; jnana cannot be taught. Whatever the Guru says removes ignorance — ignorance removed by ignorance, like a thorn drawing out a thorn."
         ]
       },
-      {
+{
         title: "Baba's ananda vs the world's “sense of security”",
         points: [
           "The world's happiness is a “sense of security” — crores in the bank. But the share market can crash, a bomb can fall — and the security is gone. It is a security that can perish.",
@@ -3761,7 +3664,7 @@ DIGESTS.readalongs = [
           "On unanswered prayers: we do not know whether what we ask is good or bad for us. “He who gave ten will not withhold two without reason.” Ask — and trust that what is good for you, He will definitely give."
         ]
       },
-      {
+{
         title: "Runanubandha — knowing the Sadguru",
         points: [
           "Runanubandha is Baba's own word. He said: God has entrusted some beings to Me — their welfare, their upliftment is My responsibility. The bond is predefined; nothing new is added in between.",
@@ -3769,7 +3672,7 @@ DIGESTS.readalongs = [
           "And the search does not end at becoming His devotee — “it does not stop until we become Baba.”"
         ]
       },
-      {
+{
         title: "Grace and effort — the mango and the ten blows",
         points: [
           "You throw stones at a mango — nine miss, the tenth fells it. Did one blow fell it, or ten? The tenth worked only because of the first nine.",
@@ -3777,7 +3680,7 @@ DIGESTS.readalongs = [
           "So do not stop at nine, thinking “Baba's grace is not there” — and do not mistake the tenth for your own doing. Keep throwing: the tenth blow must become the tenth."
         ]
       },
-      {
+{
         title: "Prarabdha as natural law",
         points: [
           "Prarabdha is what happens if nothing interferes — like a thrown object falling to the ground. That is the law, known to all.",
@@ -3785,115 +3688,91 @@ DIGESTS.readalongs = [
           "Which is natural, which unnatural? Like the laxative: we break a natural condition with an unnatural one, then call the return “natural.” Only experience reveals prarabdha — it cannot be settled by argument."
         ]
       },
-      {
+{
         title: "Annamayya — the single medicine for the bhavaroga",
         points: [
           "“We wake, bathe, light the lamp — and forget to pray that the darkness within be removed.” Burning with kama, cheated by moha, we keep re-birthing this birth — we buy the bhavaroga, the disease of worldly existence.",
           "Annamayya says: “My Guru gave me one single medicine for all the diseases that come with birth — and that is enough.”",
           "Sri Babuji's Gurudev said: “Sri Sai is the greatest doctor of all; His is a government hospital that accepts everyone.” The one medicine for the bhavaroga is Sri Sai."
         ]
-      }
-    ],
-    sections: [
-      {
+      }],
+    sections: [{
         time: "5:08", seconds: 308, title: "Opening chants",
         html: `<p><em>In Telugu: opening invocations — “Sri Sachchidananda Sadguru Sainath Maharaj ki jai; Sadguru Sri Sainathuni Sharad Babuji ki jai.”</em></p>`
       },
-      {
-        time: "5:33", seconds: 333, title: "Nitya Prarthana — the Sai Arunachala Padigam, explained and recited",
-        html: `<p><em>In Telugu — Guruji introduces the Nitya Prarthana: the Sai adaptation of Bhagavan Sri Ramana Maharshi's Arunachala Padigam — “a triveni sangamam of bhakti, jnana and vairagya” — then recites it with its meaning.</em></p><p>“If one takes its meaning to heart and reads it with shraddha, its effect is extraordinary. For Sri Sai devotees — for whom Sri Sai is the form of all deities — reading this prayer daily with feeling greatly aids their sadhana and makes them recipients of Sri Sainath's grace.”</p><p><em>The prayer is a lover's quarrel with Sai — “Swallow my ego whole this very instant; then I will overcome death and shine alone as the immortal one” — closing on the magnet: Sai the divine magnet who draws the devotee in, turns him round, swallows him, and makes him another magnet. “That power is none other than Sakshat Sri Sainath Himself.”</em></p>`
-      },
-      {
-        time: "16:17", seconds: 977, title: "Sai Baba namam chanting",
-        html: `<p><em>The Sai Baba namam is chanted (~16 minutes).</em></p>`
-      },
-      {
+{
         time: "32:24", seconds: 1944, title: "Drawing close to Baba — “without ‘me’ remaining, only Baba remains”",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “Baba activity is different from social activity. Its goal is drawing close to Baba — expressing our love so that it grows. Whatever brings us close to Baba is spiritual activity.”</p><p><strong class="speaker">Guruji:</strong> “Drawing close to Baba means: without ‘me’ remaining, only Baba remains. How close? Until distance and duality themselves disappear.”</p><p><strong class="speaker">Guruji:</strong> “You sit in a cinema hall watching a film — you forget yourself; you cry with the characters, laugh with them. Do you go to the theatre to forget yourself? The forgetting is the by-product. Our goal is to experience Baba, enjoy Him, be fulfilled — and what needs forgetting gets forgotten on its own.”</p>`
       },
-      {
+{
         time: "40:28", seconds: 2428, title: "Birth and death — our helplessness; deliverance from limitation",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “We do not know why we exist, why we live. We did not know why we were born — we were simply born. We do not know when we will go. Birth is not in our hands, death is not in our hands — and the life between is equally not in our hands.”</p><p><strong class="speaker">Guruji:</strong> “All our activity now is midwifing our own next birth — we are giving ourselves our next delivery. And the attempt to bring what is not in our hands under our control — that effort itself is labor pain. Getting out of this helplessness, out of limitation — that is deliverance.”</p>`
       },
-      {
+{
         time: "44:43", seconds: 2683, title: "Q&A — the Buddha's questions; the quality of birth over birthlessness",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “The Buddha set out with these very questions: What is truth? What is death — what is its nature? What is disease, what is old age? How are they to be conquered? Did he conquer death? Did he stop growing old? But to the questions themselves he gave the answer: don't do metaphysics first — find out what you are, what your suffering is.”</p><p><strong class="speaker">Guruji:</strong> “The problem is not birth but the quality of birth. If life is full of ananda, what is wrong with a thousand births? Janma-rahityam is not the question here — the state of affairs must change. We want to be with Baba — one birth is not enough for that.”</p>`
       },
-      {
+{
         time: "51:12", seconds: 3072, title: "Satyam — that which is causeless, self-existent being",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “Satyam is that which has no cause — whose existence is its own cause. You exist — your existence has a cause. You carry a name — someone named you. But what exists with no cause but itself? Think on it — not ‘equal to’ something, for the moment you define it, you become its cause.”</p><p><strong class="speaker">Guruji:</strong> “Baba's word: upadesa removes ignorance; jnana cannot be taught. Whatever the Guru says removes ignorance — ignorance removed by ignorance.”</p>`
       },
-      {
+{
         time: "55:07", seconds: 3307, title: "The ananda of Baba vs the world's fragile “sense of security”",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “The world's happiness is a ‘sense of security’ — crores in the bank. But the share market can crash, a bomb can fall — and the security is gone. What Baba gives is different: love, and a security that does not perish — with a pressure of ananda the world cannot give.”</p><p><strong class="speaker">Guruji:</strong> “We ask — and whether what we ask is good or bad for us, we do not know. He who gave ten will not withhold two without reason. Ask — and trust that what is good for you, He will definitely give.”</p>`
       },
-      {
+{
         time: "1:01:10", seconds: 3670, title: "Runanubandha with Baba; knowing the Sadguru",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “Runanubandha is Baba's own word. He said: God has entrusted some beings to Me — their welfare, their upliftment is My responsibility. The bond is predefined.”</p><p><strong class="speaker">Guruji:</strong> “‘My devotee I choose Myself’ — He chooses; we must know Him. ‘Telusuko’ — not search, but recognize: take in the experience of His jnana-tattva and draw close. And the search does not end at becoming His devotee — it does not stop until we become Baba.”</p>`
       },
-      {
+{
         time: "1:04:23", seconds: 3863, title: "Grace and effort — the mango and the ten blows",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “You throw stones at a mango — nine miss, the tenth fells it. Did one blow fell it, or ten? The tenth worked only because of the first nine. Baba's grace comes in a single stroke — but our efforts are the nine blows. Without them the tenth means nothing.”</p><p><strong class="speaker">Guruji:</strong> “Many stop at nine, thinking ‘Baba's grace is not there’ — or mistake the tenth for their own doing. Keep throwing: the tenth blow must become the tenth.”</p>`
       },
-      {
+{
         time: "1:09:03", seconds: 4143, title: "Prarabdha as natural law — like a thrown object falling",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “Prarabdha is what happens if nothing interferes — like a thrown object falling to the ground. That is the law. And Baba's hand catching it mid-air — that too is part of the law, as natural as the fall.”</p>`
       },
-      {
+{
         time: "1:14:05", seconds: 4445, title: "Song — “Saibhanuni jnana tejammu Sharadguruvai velisenu”",
         html: `<p><em>In Telugu: the song “Saibhanuni jnana tejammu Sharadguruvai velisenu” — the Sun Sai's light of jnana dawned as Sharad-Guru — sung by the devotees.</em></p>`
       },
-      {
+{
         time: "1:19:06", seconds: 4746, title: "Annamayya — the Guru's single medicine for the bhavaroga",
         html: `<p><strong class="speaker">Guruji:</strong> <em>In Telugu, lightly cleaned —</em> “We wake, bathe, light the lamp — and forget to pray that the darkness within be removed. Burning with kama, cheated by moha, we keep re-birthing this birth — we buy the bhavaroga, the disease of worldly existence.”</p><p><strong class="speaker">Guruji:</strong> “Annamayya says: my Guru gave me one single medicine for all the diseases that come with birth — and that is enough. My Gurudev said: Sri Sai is the greatest doctor of all; His is a government hospital that accepts everyone.”</p>`
       },
-      {
-        time: "1:21:05", seconds: 4865, title: "Sai Baba namam chanting",
-        html: `<p><em>The Sai Baba namam is chanted (~15 minutes), closing with “Jai Sadguru Sri Sainathuni Sharad Babuji ki jai.”</em></p>`
-      },
-      {
-        time: "1:36:22", seconds: 5782, title: "The arati — meaning explained, then performed",
-        html: `<p><strong class="speaker">Guruji:</strong> <em>In English — captions garbled; the sense where clear:</em> “Let us understand and grasp the meaning of the arati we are about to perform. Lord Sainath, take care of us, thy children, by always keeping thy gracious eye on us. Once we know the truth, we find that though thou pervadest the whole universe, anything seen apart from thee is but false...”</p><p><em>The arati is then performed.</em></p>`
-      },
-      {
+{
         time: "1:41:02", seconds: 6062, title: "Closing Sharanam song",
         html: `<p><em>In Telugu: the closing Sharanam song, ending the satsang.</em></p>`
-      }
-    ],
-    inBrief: "The October 13 SaiSEEkers satsang opens with the Nitya Prarthana — the Sai adaptation of Ramana Maharshi's Arunachala Padigam — and moves into the heart of the teaching: drawing close to Baba means “without ‘me’ remaining, only Baba remains”; forgetting oneself is the by-product, not the goal, like the cinema hall. Birth and death are not in our hands — our activity keeps midwifing our next birth — and the Buddha's questions turn us inward: the problem is not birth but its quality; a thousand joyful births with Baba are welcome. Satyam is the causeless, self-existent; Baba's ananda outlasts the world's fragile “sense of security”; runanubandha is Baba's own word for the predefined bond — He chooses, we must know Him. Grace and effort meet in the mango and the ten blows; prarabdha is natural law, like a thrown object falling, with Baba's catching hand part of the same law. Annamayya's single medicine for the bhavaroga is Sri Sai — “the greatest doctor of all.” The satsang closes with the arati, its meaning explained, and the Sharanam song.",
-    quiz: [
-      {type:"mcq", q:"Our Nitya Prarthana is the Sai adaptation of which work?",
-       options:["Tukaram's abhangs", "Ramana Maharshi's Arunachala Padigam", "Annamayya's kirtans", "Kabir's dohas"], answer:1,
-       why:"“This is the Sai adaptation of Bhagavan Sri Ramana Maharshi's Arunachala Padigam” — a triveni sangamam of bhakti, jnana and vairagya, to be read daily with feeling."},
-      {type:"mcq", q:"What does “drawing close to Baba” ultimately mean?",
+      }],
+    inBrief: "The October 13 SaiSEEkers satsang moves into the heart of the teaching: drawing close to Baba means “without ‘me’ remaining, only Baba remains”; forgetting oneself is the by-product, not the goal, like the cinema hall. Birth and death are not in our hands — our activity keeps midwifing our next birth — and the Buddha's questions turn us inward: the problem is not birth but its quality; a thousand joyful births with Baba are welcome. Satyam is the causeless, self-existent; Baba's ananda outlasts the world's fragile “sense of security”; runanubandha is Baba's own word for the predefined bond — He chooses, we must know Him. Grace and effort meet in the mango and the ten blows; prarabdha is natural law, like a thrown object falling, with Baba's catching hand part of the same law. Annamayya's single medicine for the bhavaroga is Sri Sai — “the greatest doctor of all.” The satsang closes with the Sharanam song.",
+    quiz: [{type:"mcq", q:"What does “drawing close to Baba” ultimately mean?",
        options:["Sitting as near His photo as possible", "Without ‘me’ remaining, only Baba remains", "Visiting Shirdi every month", "Chanting louder than everyone else"], answer:1,
        why:"“Drawing close to Baba means: without ‘me’ remaining, only Baba remains.” Not inch-by-inch proximity, but the end of distance and duality."},
-      {type:"mcq", q:"In the cinema-hall analogy, what is the goal and what is the by-product?",
+{type:"mcq", q:"In the cinema-hall analogy, what is the goal and what is the by-product?",
        options:["Goal: forgetting yourself; by-product: enjoying the film", "Goal: experiencing and enjoying Baba; forgetting is the by-product", "Goal: saving the ticket money; by-product: the story", "Goal: crying with the characters; by-product: laughter"], answer:1,
        why:"You forget yourself watching the film — but “our goal is to experience Baba, enjoy Him, be fulfilled — and what needs forgetting gets forgotten on its own.”"},
-      {type:"mcq", q:"The mango fell on the tenth blow. What does this teach about grace and effort?",
+{type:"mcq", q:"The mango fell on the tenth blow. What does this teach about grace and effort?",
        options:["Only the final effort matters", "The tenth blow works only because of the first nine — grace comes once, our efforts are the nine", "Effort is useless; just wait for grace", "Throw all ten stones at once"], answer:1,
        why:"“The tenth worked only because of the first nine.” Baba's grace comes in a single stroke — but without our nine blows of effort, the tenth means nothing."},
-      {type:"mcq", q:"How does Guruji frame prarabdha?",
+{type:"mcq", q:"How does Guruji frame prarabdha?",
        options:["As punishment for past sins", "As what happens if nothing interferes — like a thrown object falling", "As something Baba always cancels", "As pure random chance"], answer:1,
        why:"“Prarabdha is what happens if nothing else stops it” — like a thrown object falling to the ground. And Baba's hand catching it mid-air is also part of the law."},
-      {type:"mcq", q:"What is runanubandha, in Baba's own word?",
+{type:"mcq", q:"What is runanubandha, in Baba's own word?",
        options:["A money debt to be repaid", "Beings God entrusted to Baba — their welfare His responsibility", "A family lineage of priests", "A vow of silence"], answer:1,
        why:"“God has entrusted some beings to Me — their welfare, their upliftment is My responsibility.” The bond is predefined; “My devotee I choose Myself.”"},
-      {type:"mcq", q:"What is satyam?",
+{type:"mcq", q:"What is satyam?",
        options:["Whatever the scriptures declare", "That which is causeless — whose existence is its own cause", "A synonym for ritual correctness", "The sum of all virtues"], answer:1,
        why:"“Satyam is that which has no cause — whose existence is its own cause.” Your name and body have causes; satyam stands on itself alone."},
-      {type:"mcq", q:"What is Annamayya's “single medicine” for the bhavaroga, the disease of worldly existence?",
+{type:"mcq", q:"What is Annamayya's “single medicine” for the bhavaroga, the disease of worldly existence?",
        options:["Fasting on Thursdays", "Sri Sai — the Guru's one medicine", "Pilgrimage to Tirupati", "Daily Veda recitation"], answer:1,
        why:"“My Guru gave me one single medicine for all the diseases that come with birth — and that is enough.” Sri Babuji's Gurudev: “Sri Sai is the greatest doctor of all.”"},
-      {type:"tf", q:"The Buddha conquered death, old age and disease through his enquiry.", answer:false,
+{type:"tf", q:"The Buddha conquered death, old age and disease through his enquiry.", answer:false,
        why:"He set out with the questions but did not conquer death — what he gave was the turn inward: “Don't do metaphysics first; find out what you are, what your suffering is.”"},
-      {type:"tf", q:"Guruji teaches that birth itself is the problem, so birthlessness is the highest goal.", answer:false,
+{type:"tf", q:"Guruji teaches that birth itself is the problem, so birthlessness is the highest goal.", answer:false,
        why:"“The problem is not birth but the quality of birth. If life is full of ananda, what is wrong with a thousand births?” The devotee prays for endless births with Baba, not birthlessness."},
-      {type:"fill", q:"“The tenth blow works only because of the first ____.”", answer:"nine"},
-      {type:"reflect", q:"Guruji says many stop at nine blows, thinking “Baba's grace is not there.”",
-       prompt:"Think of one effort in your own life where you stopped at the ninth blow — a practice, a prayer, a relationship, a question you dropped. What would the tenth blow look like? And if grace came, would you recognize it — or mistake it for your own doing?"}
-    ]
+{type:"fill", q:"“The tenth blow works only because of the first ____.”", answer:"nine"},
+{type:"reflect", q:"Guruji says many stop at nine blows, thinking “Baba's grace is not there.”",
+       prompt:"Think of one effort in your own life where you stopped at the ninth blow — a practice, a prayer, a relationship, a question you dropped. What would the tenth blow look like? And if grace came, would you recognize it — or mistake it for your own doing?"}]
   }
 
 ];
@@ -4662,6 +4541,45 @@ function tocHtml(entries){
 }
 
 /* ---- interactive quiz (weekly satsang template): MCQ, true/false, fill-in-blank, reflection ---- */
+function quizItemHtml(item, typeLabel){
+  var q = esc(item.q);
+  if (item.type === "fill") q = q.split("____").join('<input class="quiz-blank" aria-label="Your answer">');
+  var html = '<li class="quiz-q"><div class="qq"><span class="quiz-tag">' + typeLabel[item.type] + '</span><span>' + q + '</span></div>';
+  if (item.type === "mcq") {
+    html += '<ul class="quiz-opts">';
+    item.options.forEach(function(opt, i){
+      html += '<li><span class="k">' + String.fromCharCode(65 + i) + '.</span>' + esc(opt) + '</li>';
+    });
+    html += '</ul>';
+  }
+  var ans;
+  if (item.type === "mcq") ans = '<span class="ok">' + String.fromCharCode(65 + item.answer) + '.</span> ' + esc(item.options[item.answer]);
+  else if (item.type === "tf") ans = '<span class="ok">' + (item.answer ? "True" : "False") + '.</span>';
+  else if (item.type === "fill") ans = '<span class="ok">' + esc(item.answer) + '</span>';
+  else ans = '<span class="ok">There is no single right answer — sit with it.</span>';
+  html += '<details><summary>Reveal answer</summary><p class="quiz-ans">' + ans + '</p>';
+  if (item.type === "reflect" && item.prompt) html += '<p class="quiz-why">' + esc(item.prompt) + '</p>';
+  else if (item.why) html += '<p class="quiz-why">' + esc(item.why) + '</p>';
+  html += '</details></li>';
+  return html;
+}
+
+/* Render quiz list with first 5 visible and the rest collapsed behind "+ Show N more" */
+function quizListHtml(quiz, typeLabel){
+  var html = '<ol class="quiz-list">';
+  var SHOW = 5;
+  quiz.slice(0, SHOW).forEach(function(item){ html += quizItemHtml(item, typeLabel); });
+  html += '</ol>';
+  if (quiz.length > SHOW) {
+    var rest = quiz.length - SHOW;
+    html += '<div class="quiz-more-wrap"><button class="quiz-more-btn" onclick="this.nextElementSibling.style.display=\'block\';this.style.display=\'none\'">+ Show ' + rest + ' more</button>' +
+      '<ol class="quiz-list quiz-more-list" style="display:none">';
+    quiz.slice(SHOW).forEach(function(item){ html += quizItemHtml(item, typeLabel); });
+    html += '</ol></div>';
+  }
+  return html;
+}
+
 function renderQuiz(quiz){
   var typeLabel = {mcq:"Multiple choice", tf:"True or false", fill:"Fill in the blank", reflect:"Reflection"};
   var html = '<nav class="jump-nav" aria-label="In this digest">' +
@@ -4670,29 +4588,9 @@ function renderQuiz(quiz){
     '<a data-go="dsummary" tabindex="0">Summary</a>' +
     '<a data-go="dkeypoints" tabindex="0">Key Points</a></nav>';
   html += '<section class="quiz" id="dquiz"><div class="deep-head"><h2>Quiz — think before you read</h2>' +
-    '<p>Try these from memory first, then tap <em>Reveal answer</em> to check yourself.</p></div><ol class="quiz-list">';
-  quiz.forEach(function(item){
-    var q = esc(item.q);
-    if (item.type === "fill") q = q.split("____").join('<input class="quiz-blank" aria-label="Your answer">');
-    html += '<li class="quiz-q"><div class="qq"><span class="quiz-tag">' + typeLabel[item.type] + '</span><span>' + q + '</span></div>';
-    if (item.type === "mcq") {
-      html += '<ul class="quiz-opts">';
-      item.options.forEach(function(opt, i){
-        html += '<li><span class="k">' + String.fromCharCode(65 + i) + '.</span>' + esc(opt) + '</li>';
-      });
-      html += '</ul>';
-    }
-    var ans;
-    if (item.type === "mcq") ans = '<span class="ok">' + String.fromCharCode(65 + item.answer) + '.</span> ' + esc(item.options[item.answer]);
-    else if (item.type === "tf") ans = '<span class="ok">' + (item.answer ? "True" : "False") + '.</span>';
-    else if (item.type === "fill") ans = '<span class="ok">' + esc(item.answer) + '</span>';
-    else ans = '<span class="ok">There is no single right answer — sit with it.</span>';
-    html += '<details><summary>Reveal answer</summary><p class="quiz-ans">' + ans + '</p>';
-    if (item.type === "reflect" && item.prompt) html += '<p class="quiz-why">' + esc(item.prompt) + '</p>';
-    else if (item.why) html += '<p class="quiz-why">' + esc(item.why) + '</p>';
-    html += '</details></li>';
-  });
-  html += '</ol></section>';
+    '<p>Try these from memory first, then tap <em>Reveal answer</em> to check yourself.</p></div>';
+  html += quizListHtml(quiz, typeLabel);
+  html += '</section>';
   return html;
 }
 
@@ -4700,29 +4598,9 @@ function renderQuiz(quiz){
 function renderQuizBody(quiz){
   var typeLabel = {mcq:"Multiple choice", tf:"True or false", fill:"Fill in the blank", reflect:"Reflection"};
   var html = '<section class="quiz" id="dquiz"><div class="deep-head"><h2>Quiz — think before you read</h2>' +
-    '<p>Try these from memory first, then tap <em>Reveal answer</em> to check yourself.</p></div><ol class="quiz-list">';
-  quiz.forEach(function(item){
-    var q = esc(item.q);
-    if (item.type === "fill") q = q.split("____").join('<input class="quiz-blank" aria-label="Your answer">');
-    html += '<li class="quiz-q"><div class="qq"><span class="quiz-tag">' + typeLabel[item.type] + '</span><span>' + q + '</span></div>';
-    if (item.type === "mcq") {
-      html += '<ul class="quiz-opts">';
-      item.options.forEach(function(opt, i){
-        html += '<li><span class="k">' + String.fromCharCode(65 + i) + '.</span>' + esc(opt) + '</li>';
-      });
-      html += '</ul>';
-    }
-    var ans;
-    if (item.type === "mcq") ans = '<span class="ok">' + String.fromCharCode(65 + item.answer) + '.</span> ' + esc(item.options[item.answer]);
-    else if (item.type === "tf") ans = '<span class="ok">' + (item.answer ? "True" : "False") + '.</span>';
-    else if (item.type === "fill") ans = '<span class="ok">' + esc(item.answer) + '</span>';
-    else ans = '<span class="ok">There is no single right answer — sit with it.</span>';
-    html += '<details><summary>Reveal answer</summary><p class="quiz-ans">' + ans + '</p>';
-    if (item.type === "reflect" && item.prompt) html += '<p class="quiz-why">' + esc(item.prompt) + '</p>';
-    else if (item.why) html += '<p class="quiz-why">' + esc(item.why) + '</p>';
-    html += '</details></li>';
-  });
-  html += '</ol></section>';
+    '<p>Try these from memory first, then tap <em>Reveal answer</em> to check yourself.</p></div>';
+  html += quizListHtml(quiz, typeLabel);
+  html += '</section>';
   return html;
 }
 
@@ -4776,7 +4654,7 @@ function renderReadalong(d){
       html += '<li data-go="pt-' + (i + 1) + '"><time>' + esc(section.time) + '</time><a data-go="pt-' + (i + 1) + '" tabindex="0">' + esc(section.tocTitle || section.title) + '</a></li>';
     });
     html += '</ol></nav>';
-    html += '<div class="deep-head" id="dtranscript"><h2>Read-along transcript</h2><p>Open a timestamp to hear the passage in the original satsang.</p></div>';
+    html += '<div class="deep-head" id="dtranscript"><h2>Post Satsang review transcript</h2><p>Open a timestamp to hear the passage in the original satsang.</p></div>';
     d.sections.forEach(function(section, i){
       var href = d.video + '&t=' + section.seconds + 's';
       html += '<article class="point transcript-entry" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3>' +
@@ -4812,7 +4690,7 @@ function renderReadalong(d){
     html += '<li data-go="pt-' + (i + 1) + '"><time>' + esc(section.time) + '</time><a data-go="pt-' + (i + 1) + '" tabindex="0">' + esc(section.tocTitle || section.title) + '</a></li>';
   });
   html += '</ol></nav>';
-  html += '<div class="deep-head"><h2>Read-along transcript</h2><p>Open a timestamp to hear the passage in the original satsang.</p></div>';
+  html += '<div class="deep-head"><h2>Post Satsang review transcript</h2><p>Open a timestamp to hear the passage in the original satsang.</p></div>';
   d.sections.forEach(function(section, i){
     var href = d.video + '&t=' + section.seconds + 's';
     html += '<article class="point transcript-entry" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3>' +
@@ -4927,6 +4805,13 @@ function prevNextHtml(cur){
 }
 function route(e, routeKey){
   var h = routeKey !== undefined ? routeKey : (window.location.hash || "#/").replace(/^#\/?/, "");
+  // Section deep-links inside the stories digest (e.g. #storycat-parable):
+  // route to the stories digest first, then scroll to the section after render.
+  var sectionAnchor = null;
+  if (h.indexOf("storycat-") === 0) {
+    sectionAnchor = h;
+    h = "story-stories-parables-told-by-sri-babuji";
+  }
   var vi = document.getElementById("view-index"), vd = document.getElementById("view-digest");
   if (e && e.type === "hashchange" && new URLSearchParams(window.location.search).has("digest") && window.history && window.history.replaceState) {
     var hashParams = new URLSearchParams(window.location.search);
@@ -4955,6 +4840,11 @@ function route(e, routeKey){
     var crumb = document.getElementById("digest-crumb");
     if(crumb) crumb.textContent = r.data.name;
     if (e && e.type === "hashchange") glideTo(vd);
+    else if (sectionAnchor) {
+      var sel = document.getElementById(sectionAnchor);
+      if (sel && sel.scrollIntoView) sel.scrollIntoView();
+      else window.scrollTo(0, 0);
+    }
     else window.scrollTo(0, 0);
   }
 }
