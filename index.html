@@ -3151,6 +3151,9 @@ q.addEventListener("input", function(){
       if(bubble) bubble.classList.remove("is-open");
     });
   }
+  /* Auto-collapse What's New when typing a search */
+  var wn = document.getElementById("whatsNewCallout");
+  if(wn && wn.open && q.value.trim()) wn.open = false;
   deb = setTimeout(runSearch, 220);
 });
 clearSearch.addEventListener("click", function(){
@@ -3174,6 +3177,9 @@ form.addEventListener("submit", function(e){
       if(bubble) bubble.classList.remove("is-open");
     });
   }
+  /* Auto-collapse What's New when searching */
+  var wn = document.getElementById("whatsNewCallout");
+  if(wn && wn.open) wn.open = false;
   runSearch();
   finishSearch();
 });
