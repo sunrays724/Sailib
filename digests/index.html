@@ -294,6 +294,23 @@
     text-decoration:none; cursor:pointer; box-shadow:var(--shadow)}
   .secnav a:hover{background:var(--accent-soft)}
   .tsec{scroll-margin-top:14px}
+  /* ---- collections grid ---- */
+  .collections-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:6px 0 18px}
+  .collection-card{display:flex; flex-direction:column; align-items:flex-start; padding:20px; color:inherit;
+    text-decoration:none; background:linear-gradient(150deg,var(--accent-soft),var(--card) 62%);
+    border:1px solid var(--accent); border-radius:14px; box-shadow:var(--shadow);
+    transition:border-color .15s ease,background .15s ease; cursor:pointer}
+  .collection-card:hover{background:var(--card); border-color:var(--accent-ink)}
+  .collection-card .count{display:inline-block; margin:0 0 14px; padding:3px 10px; border-radius:999px;
+    background:var(--accent-soft); color:var(--accent-ink); font-size:.72rem; letter-spacing:.08em;
+    text-transform:uppercase; font-weight:700}
+  .collection-card h2{margin:0 0 7px; color:var(--heading); font-size:1.35rem; font-weight:600; line-height:1.2}
+  .collection-card p{margin:0; color:var(--muted); font-size:.92rem; line-height:1.45}
+  .collection-card .teaser{margin-top:10px; font-size:.85rem; color:var(--accent-ink); font-weight:600}
+  .collection-card .arrow{margin-top:auto; padding-top:14px; color:var(--accent-ink); font-size:1.2rem; line-height:1}
+  .collection-card:focus-visible{outline:2px solid var(--accent-ink); outline-offset:3px}
+  #search-results{margin:6px 0 18px}
+  #all-digests-list{display:none}
   .archive-link td{padding:10px 16px; text-align:center}
   .archive-link a{color:var(--accent-ink); font-weight:700; text-decoration:none; cursor:pointer}
   .archive-link a:hover{text-decoration:underline}
@@ -382,6 +399,9 @@
     .tindex-table td.name a{overflow-wrap:anywhere}
     .tindex-table td.desc{padding-top:0}
     .featured-history-grid{grid-template-columns:1fr}
+    .collections-grid{grid-template-columns:1fr}
+    .collection-card{min-height:0; padding:17px 18px}
+    .collection-card .count{margin-bottom:12px}
     .featured-history{min-height:0; padding:17px 18px}
     .featured-history .kind{margin-bottom:12px}
     .featured-biography{grid-template-columns:1fr auto; gap:8px 12px; padding:15px 16px}
@@ -6393,11 +6413,135 @@ function digestSearchText(value){
   decoder.innerHTML = parts.join(" ");
   return (decoder.textContent || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
-function tableRow(s, name, fallback, legacyKey, digestData){
-  SEARCH_TEXT_BY_HASH[s] = digestSearchText(digestData || [name, fallback]);
-  return '<tr class="trow" data-name="' + esc(name) + '"><td class="name"><a href="#' + s + '" target="_self">' + esc(name) +
-    '</a></td><td class="desc">' + (ONELINERS[legacyKey || s] || esc(fallback || "")) + "</td></tr>";
+/* ---------- collections ---------- */
+var MAHASAMADHI_NAME = "Baba's Mahasamadhi \u2014 October 15, 1918";
+var COLLECTIONS = [
+  {slug:"satsang", name:"Satsang Reviews",
+   desc:"Weekly post-satsang reviews \u2014 quiz, full transcript, summary and key points.",
+   kinds:["readalong"], collapsed:"satsang"},
+  {slug:"stories", name:"Stories & Parables",
+   desc:"Every story and parable Sri Babuji ever narrated \u2014 the full tellings.",
+   kinds:["story"]},
+  {slug:"saints", name:"Saints & Masters",
+   desc:"Saints Sri Babuji spoke of, plus his own wordplay and laughter.",
+   kinds:["saint","wordplay","laughter"], collapsed:"saints"},
+  {slug:"baba", name:"Sai Baba",
+   desc:"Satcharitra leelas, the Mahasamadhi, and Baba\u2019s life.",
+   kinds:["leela","baba"]},
+  {slug:"teachings", name:"Teachings",
+   desc:"Primers on key themes and analogy clusters.",
+   kinds:["primer","analogy"]}
+];
+function digestsByKind(kind){
+  if (kind === "readalong") return DIGESTS.readalongs || [];
+  if (kind === "story") return DIGESTS.stories || [];
+  if (kind === "primer") return DIGESTS.primers || [];
+  if (kind === "wordplay") return DIGESTS.wordplay || [];
+  if (kind === "laughter") return DIGESTS.laughter || [];
+  if (kind === "saint") return DIGESTS.saints || [];
+  if (kind === "leela") return DIGESTS.leelas || [];
+  if (kind === "baba") return DIGESTS.baba || [];
+  if (kind === "analogy") return DIGESTS.clusters || [];
+  return [];
 }
+function collectionDigests(col){
+  var out = [];
+  col.kinds.forEach(function(kind){
+    digestsByKind(kind).forEach(function(d){
+      /* Mahasamadhi lives in the primers data but belongs to the Sai Baba collection */
+      if (d.name === MAHASAMADHI_NAME && col.slug !== "baba") return;
+      var s = digestHash(kind, d.name);
+      var summary = d.summary || "";
+      if (kind === "analogy" && d.items) summary = d.items.map(function(i){return i.name}).slice(0,4).join(" \u00b7 ");
+      out.push({hash:s, name:d.name, summary:summary, kind:kind});
+      /* register search text (same as the old tableRow did) */
+      SEARCH_TEXT_BY_HASH[s] = digestSearchText(d);
+    });
+  });
+  /* pull Mahasamadhi into the Sai Baba collection */
+  if (col.slug === "baba") {
+    (DIGESTS.primers || []).forEach(function(d){
+      if (d.name === MAHASAMADHI_NAME) {
+        var s = digestHash("baba", d.name);
+        out.push({hash:s, name:d.name, summary:d.summary || "", kind:"baba"});
+        SEARCH_TEXT_BY_HASH[s] = digestSearchText(d);
+      }
+    });
+  }
+  return out;
+}
+function collectionCount(col){
+  var n = 0;
+  col.kinds.forEach(function(kind){
+    digestsByKind(kind).forEach(function(d){
+      if (d.name === MAHASAMADHI_NAME && col.slug !== "baba") return;
+      n++;
+    });
+  });
+  if (col.slug === "baba") {
+    /* Mahasamadhi counted here instead of Teachings */
+    if ((DIGESTS.primers || []).some(function(d){ return d.name === MAHASAMADHI_NAME; })) n++;
+  }
+  return n;
+}
+function collectionTeaser(col){
+  if (col.slug === "satsang") {
+    var rl = DIGESTS.readalongs || [];
+    if (rl.length) return "Latest: " + rl[rl.length - 1].name;
+  }
+  var first = null;
+  col.kinds.some(function(kind){
+    var arr = digestsByKind(kind);
+    if (arr.length) { first = arr[0]; return true; }
+    return false;
+  });
+  return first ? "Featuring: " + first.name : "";
+}
+function renderCollection(col){
+  var title = col.name;
+  var html = '<h1 class="dig-title">' + esc(title) + '</h1>';
+  html += '<p class="group-sub">' + esc(col.desc) + '</p>';
+  /* collapsed collections keep their archive behavior */
+  if (col.collapsed === "satsang") {
+    var rl = (DIGESTS.readalongs || []).slice().reverse(); /* newest first */
+    var latest = rl[0];
+    if (latest) {
+      var s = digestHash("readalong", latest.name);
+      html += '<article class="point archive-card"><h3><a href="#' + s + '" target="_self">' + esc(latest.name) + '</a></h3>' +
+        '<p>' + esc(latest.summary || "") + '</p></article>';
+    }
+    html += '<p class="archive-link" style="text-align:center"><a href="#satsang-archive" target="_self">View all ' + (DIGESTS.readalongs || []).length + ' satsang reviews &rarr;</a></p>';
+    return html;
+  }
+  if (col.collapsed === "saints") {
+    var st = DIGESTS.saints || [];
+    var firstSaint = st[0];
+    if (firstSaint) {
+      var ss = digestHash("saint", firstSaint.name);
+      html += '<article class="point archive-card"><h3><a href="#' + ss + '" target="_self">' + esc(firstSaint.name) + '</a></h3>' +
+        '<p>' + esc(firstSaint.summary || "") + '</p></article>';
+    }
+    html += '<p class="archive-link" style="text-align:center"><a href="#saints-archive" target="_self">View all ' + st.length + ' saints &rarr;</a></p>';
+    /* also list wordplay/laughter directly */
+    ["wordplay","laughter"].forEach(function(kind){
+      digestsByKind(kind).forEach(function(d){
+        var h = digestHash(kind, d.name);
+        html += '<article class="point archive-card"><h3><a href="#' + h + '" target="_self">' + esc(d.name) + '</a></h3>' +
+          '<p>' + esc(d.summary || "") + '</p></article>';
+      });
+    });
+    return html;
+  }
+  var items = collectionDigests(col);
+  /* satsang ordering: newest first */
+  if (col.slug === "satsang") items.reverse();
+  items.forEach(function(it){
+    html += '<article class="point archive-card"><h3><a href="#' + it.hash + '" target="_self">' + esc(it.name) + '</a></h3>' +
+      '<p>' + esc(it.summary || "") + '</p></article>';
+  });
+  return html;
+}
+
 function buildTable(){
   var t = document.getElementById("tindex"), th = "";
   th += '<div class="featured-history-grid" aria-label="Featured history digests">';
@@ -6405,56 +6549,31 @@ function buildTable(){
   th += '<a class="featured-history guruji trow" data-name="Today in Sri Babuji History day by day events 56 dates 61 original PDFs" href="/today-sri-babuji/" target="_blank" rel="noopener"><span class="kind">Featured</span><h2>Today in Sri Babuji&rsquo;s History</h2><p>Day-by-day events from Sri Babuji&rsquo;s life &mdash; 56 dates, 61 original PDFs</p><span class="arrow" aria-hidden="true">Explore &nearr;</span></a>';
   th += '</div>';
   th += '<a class="featured-biography trow" data-name="Sri Babuji In His Own Words biography satsangs books Rose Petals" href="/biography/" target="_blank" rel="noopener"><span class="kind">Featured biography</span><span><h2>Sri Babuji &mdash; In His Own Words</h2><p>A biography woven only from what he himself said &mdash; in satsangs, in his books, and in Rose Petals</p></span><span class="arrow" aria-hidden="true">&nearr;</span></a>';
-  th += '<h2 class="group-title"><span class="dot"></span>All digests at a glance</h2>';
-  th += '<p class="group-sub">Every digest on this page &mdash; tap a name to open it.</p>';
-  th += '<nav class="secnav" aria-label="Digest sections">' +
-    '<a data-go="sec-readalongs" tabindex="0">Weekly Satsang Reviews</a>' +
-    '<a data-go="sec-stories" tabindex="0">Stories &amp; Parables</a>' +
-    '<a data-go="sec-primers" tabindex="0">Primers</a>' +
-    '<a data-go="sec-wordplay" tabindex="0">Sri Babuji</a>' +
-    '<a data-go="sec-saints" tabindex="0">Saints</a>' +
-    '<a data-go="sec-leelas" tabindex="0">Satcharitra Leelas</a>' +
-    '<a data-go="sec-baba" tabindex="0">Sai Baba</a>' +
-    '<a data-go="sec-analogies" tabindex="0">Analogies</a></nav>';
-  th += '<table class="tindex-table"><thead><tr><th>Digest</th><th>What it covers</th></tr></thead><tbody>';
-  if (DIGESTS.readalongs) {
-    th += '<tr class="tsec" id="sec-readalongs"><td colspan="2">Weekly Satsang Summary Reviews</td></tr>';
-    /* Latest only — the rest live on the archive sub-page */
-    var latest = DIGESTS.readalongs[DIGESTS.readalongs.length - 1];
-    th += tableRow(digestHash("readalong", latest.name), latest.name, latest.summary, slug("readalong-" + latest.name), latest);
-    th += '<tr class="archive-link"><td colspan="2"><a href="#satsang-archive" target="_self">View all ' + DIGESTS.readalongs.length + ' satsang reviews &rarr;</a></td></tr>';
-  }
-  if (DIGESTS.stories) {
-    th += '<tr class="tsec" id="sec-stories"><td colspan="2">Stories & Parables</td></tr>';
-    DIGESTS.stories.forEach(function(d){ th += tableRow(digestHash("story", d.name), d.name, d.summary, slug("story-" + d.name), d); });
-  }
-  if (DIGESTS.primers) {
-    th += '<tr class="tsec" id="sec-primers"><td colspan="2">Primers</td></tr>';
-    DIGESTS.primers.forEach(function(d){ th += tableRow(digestHash("primer", d.name), d.name, d.summary, slug("primer-" + d.name), d); });
-  }
-  if (DIGESTS.wordplay || DIGESTS.laughter) {
-    th += '<tr class="tsec" id="sec-wordplay"><td colspan="2">Sri Babuji</td></tr>';
-    if (DIGESTS.wordplay) DIGESTS.wordplay.forEach(function(d){ th += tableRow(digestHash("wordplay", d.name), d.name, d.summary, slug("wordplay-" + d.name), d); });
-    if (DIGESTS.laughter) DIGESTS.laughter.forEach(function(d){ th += tableRow(digestHash("laughter", d.name), d.name, d.summary, slug("laughter-" + d.name), d); });
-  }
-  th += '<tr class="tsec" id="sec-saints"><td colspan="2">Saints</td></tr>';
-  /* First only — the rest live on the archive sub-page */
-  var firstSaint = DIGESTS.saints[0];
-  th += tableRow(digestHash("saint", firstSaint.name), firstSaint.name, firstSaint.summary, slug("saint-" + firstSaint.name), firstSaint);
-  th += '<tr class="archive-link"><td colspan="2"><a href="#saints-archive" target="_self">View all ' + DIGESTS.saints.length + ' saints &rarr;</a></td></tr>';
-  if (DIGESTS.leelas) {
-    th += '<tr class="tsec" id="sec-leelas"><td colspan="2">Satcharitra Leelas</td></tr>';
-    DIGESTS.leelas.forEach(function(d){ th += tableRow(digestHash("leela", d.name), d.name, d.summary, slug("leela-" + d.name), d); });
-  }
-  if (DIGESTS.baba) {
-    th += '<tr class="tsec" id="sec-baba"><td colspan="2">Sai Baba</td></tr>';
-    DIGESTS.baba.forEach(function(d){ th += tableRow(digestHash("baba", d.name), d.name, d.summary, slug("baba-" + d.name), d); });
-  }
-  th += '<tr class="tsec" id="sec-analogies"><td colspan="2">Analogies</td></tr>';
-  DIGESTS.clusters.forEach(function(c){
-    th += tableRow(digestHash("analogy", c.name), c.name, c.items.map(function(i){return i.name}).slice(0,4).join(" · "), slug("analogy-" + c.name), c);
+  th += '<h2 class="group-title"><span class="dot"></span>Browse by collection</h2>';
+  th += '<p class="group-sub">Five collections &mdash; tap one to dive in.</p>';
+  th += '<nav class="secnav" aria-label="Digest collections">' +
+    COLLECTIONS.map(function(c){ return '<a href="#collection-' + c.slug + '" target="_self">' + esc(c.name) + '</a>'; }).join("") +
+    '</nav>';
+  th += '<div class="collections-grid" aria-label="Digest collections">';
+  COLLECTIONS.forEach(function(c){
+    var n = collectionCount(c);
+    th += '<a class="collection-card" href="#collection-' + c.slug + '" target="_self">' +
+      '<span class="count">' + n + ' digest' + (n === 1 ? '' : 's') + '</span>' +
+      '<h2>' + esc(c.name) + '</h2><p>' + esc(c.desc) + '</p>' +
+      '<p class="teaser">' + esc(collectionTeaser(c)) + '</p>' +
+      '<span class="arrow" aria-hidden="true">&rarr;</span></a>';
   });
-  th += "</tbody></table>";
+  th += '</div>';
+  /* search results land here when the filter is active */
+  th += '<div id="search-results" style="display:none"></div>';
+  /* hidden full digest list — powers the search filter (never shown) */
+  th += '<div id="all-digests-list" aria-hidden="true"><table><tbody>';
+  COLLECTIONS.forEach(function(c){
+    collectionDigests(c).forEach(function(it){
+      th += '<tr class="trow" data-name="' + esc(it.name) + '" data-hash="' + it.hash + '"><td>' + esc(it.name) + ' ' + esc(it.summary || "") + '</td></tr>';
+    });
+  });
+  th += '</tbody></table></div>';
   t.innerHTML = th;
 }
 
@@ -6531,19 +6650,45 @@ function filterIndex(input){
   var hasQuery = parsed.phrases.length > 0 || parsed.terms.length > 0;
   var terms = parsed.phrases.concat(parsed.terms);
   updateCrossLinks(input.value);
-  document.querySelectorAll("#tindex .trow").forEach(function(el){
-    var link = el.querySelector('a[href^="#"]');
-    var key = link ? link.getAttribute("href").slice(1) : "";
+  var grid = document.querySelector("#tindex .collections-grid");
+  var results = document.getElementById("search-results");
+  /* toggle collections vs results */
+  if (grid) grid.style.display = hasQuery ? "none" : "";
+  document.querySelectorAll("#tindex .group-title, #tindex .group-sub, #tindex .secnav").forEach(function(el){ el.style.display = hasQuery ? "none" : ""; });
+  if (results) results.style.display = hasQuery ? "" : "none";
+  if (!hasQuery) {
+    if (results) results.innerHTML = "";
+    document.getElementById("no-match").style.display = "none";
+    return null;
+  }
+  /* match against the hidden full digest list */
+  var matches = [];
+  document.querySelectorAll("#all-digests-list .trow").forEach(function(el){
+    var key = el.getAttribute("data-hash") || "";
     var fallback = normalizeSearchValue((el.getAttribute("data-name") || "") + " " + el.textContent);
     var hay = SEARCH_TEXT_BY_HASH[key] || fallback;
-    var hit = !hasQuery || (parsed.phrases.every(function(phrase){ return hay.indexOf(phrase) !== -1; }) &&
-      parsed.terms.every(function(term){ return hay.indexOf(term) !== -1; }));
-    el.style.display = hit ? "" : "none";
-    if(hit && hasQuery){ highlightDigestRow(el, terms); }
-    else if(el.dataset.orig !== undefined){ el.innerHTML = el.dataset.orig; }
-    if (hit) { shown++; if (!first) first = el; }
+    var hit = parsed.phrases.every(function(phrase){ return hay.indexOf(phrase) !== -1; }) &&
+      parsed.terms.every(function(term){ return hay.indexOf(term) !== -1; });
+    if (hit) matches.push({hash:key, name:el.getAttribute("data-name") || ""});
   });
-  document.querySelectorAll("#tindex .group-title, #tindex .group-sub, #tindex .tsec, #tindex thead, #tindex .secnav, #tindex .archive-link").forEach(function(el){ el.style.display = hasQuery ? "none" : ""; });
+  /* render matches as cards */
+  var html = "";
+  /* build a name->summary lookup from all collections */
+  var summaryByHash = {};
+  COLLECTIONS.forEach(function(c){
+    collectionDigests(c).forEach(function(it){ summaryByHash[it.hash] = it.summary || ""; });
+  });
+  matches.forEach(function(m){
+    html += '<article class="point archive-card trow" data-name="' + esc(m.name) + '"><h3><a href="#' + m.hash + '" target="_self">' + esc(m.name) + '</a></h3>' +
+      '<p>' + esc(summaryByHash[m.hash] || "") + '</p></article>';
+  });
+  results.innerHTML = html;
+  shown = matches.length;
+  /* highlight terms in the rendered cards */
+  results.querySelectorAll(".archive-card").forEach(function(card){
+    if (!first) first = card;
+    highlightDigestRow(card, terms);
+  });
   document.getElementById("no-match").style.display = shown ? "none" : "block";
   return first;
 }
@@ -6970,6 +7115,11 @@ function buildRegistry(){
   registry["satsang-archive"] = {type:"archive", data:{name:"All Satsang Reviews"}, canonical:"satsang-archive"};
   /* Archive sub-page: all saints (not in prev/next ORDER chain) */
   registry["saints-archive"] = {type:"archive", data:{name:"All Saints"}, canonical:"saints-archive"};
+  /* Collection sub-pages (not in prev/next ORDER chain) */
+  COLLECTIONS.forEach(function(c){
+    var key = "collection-" + c.slug;
+    registry[key] = {type:"collection", data:{name:c.name, slug:c.slug}, canonical:key};
+  });
 }
 function prevNextHtml(cur){
   var i = -1, k;
@@ -7011,7 +7161,7 @@ function route(e, routeKey){
         window.history.replaceState(null, "", "#" + r.canonical);
       }
     }
-    document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data) : r.type === "story" ? renderStories(r.data) : r.type === "primer" ? renderPrimer(r.data) : r.type === "saint" ? renderSaint(r.data) : r.type === "archive" ? (r.canonical === "satsang-archive" ? renderSatsangArchive() : renderSaintsArchive()) : renderCluster(r.data)) + prevNextHtml(r.canonical);
+    document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data) : r.type === "story" ? renderStories(r.data) : r.type === "primer" ? renderPrimer(r.data) : r.type === "saint" ? renderSaint(r.data) : r.type === "archive" ? (r.canonical === "satsang-archive" ? renderSatsangArchive() : renderSaintsArchive()) : r.type === "collection" ? renderCollection(COLLECTIONS.filter(function(c){ return c.slug === r.data.slug; })[0]) : renderCluster(r.data)) + prevNextHtml(r.canonical);
     vi.classList.remove("on"); vd.classList.add("on");
     document.title = r.data.name + " · Sri Babuji Digests";
     var crumb = document.getElementById("digest-crumb");
