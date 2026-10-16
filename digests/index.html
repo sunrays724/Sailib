@@ -6438,7 +6438,10 @@ function buildTable(){
     if (DIGESTS.laughter) DIGESTS.laughter.forEach(function(d){ th += tableRow(digestHash("laughter", d.name), d.name, d.summary, slug("laughter-" + d.name), d); });
   }
   th += '<tr class="tsec" id="sec-saints"><td colspan="2">Saints</td></tr>';
-  DIGESTS.saints.forEach(function(d){ th += tableRow(digestHash("saint", d.name), d.name, d.summary, slug("saint-" + d.name), d); });
+  /* First only — the rest live on the archive sub-page */
+  var firstSaint = DIGESTS.saints[0];
+  th += tableRow(digestHash("saint", firstSaint.name), firstSaint.name, firstSaint.summary, slug("saint-" + firstSaint.name), firstSaint);
+  th += '<tr class="archive-link"><td colspan="2"><a href="#saints-archive" target="_self">View all ' + DIGESTS.saints.length + ' saints &rarr;</a></td></tr>';
   if (DIGESTS.leelas) {
     th += '<tr class="tsec" id="sec-leelas"><td colspan="2">Satcharitra Leelas</td></tr>';
     DIGESTS.leelas.forEach(function(d){ th += tableRow(digestHash("leela", d.name), d.name, d.summary, slug("leela-" + d.name), d); });
@@ -6693,10 +6696,10 @@ function quizItemHtml(item, typeLabel){
   return html;
 }
 
-/* Render quiz list with first 5 visible and the rest collapsed behind "+ Show N more" */
+/* Render quiz list with first question visible and the rest collapsed behind "+ Show N more" */
 function quizListHtml(quiz, typeLabel){
   var html = '<ol class="quiz-list">';
-  var SHOW = 5;
+  var SHOW = 1;
   quiz.slice(0, SHOW).forEach(function(item){ html += quizItemHtml(item, typeLabel); });
   html += '</ol>';
   if (quiz.length > SHOW) {
@@ -6928,6 +6931,19 @@ function renderSatsangArchive(){
   return html;
 }
 
+/* ---------- saints archive sub-page ---------- */
+function renderSaintsArchive(){
+  var items = DIGESTS.saints.slice();
+  var html = '<h1 class="dig-title">All Saints</h1>';
+  html += '<p class="group-sub">' + items.length + ' saint digests &mdash; tap one to open it.</p>';
+  items.forEach(function(d){
+    var s = digestHash("saint", d.name);
+    html += '<article class="point archive-card"><h3><a href="#' + s + '" target="_self">' + esc(d.name) + '</a></h3>' +
+      '<p>' + esc(d.summary || "") + '</p></article>';
+  });
+  return html;
+}
+
 /* ---------- router ---------- */
 var registry = {};
 var ORDER = [];
@@ -6952,6 +6968,8 @@ function buildRegistry(){
   DIGESTS.clusters.forEach(function(c){ add("analogy", "cluster", c); });
   /* Archive sub-page: all satsang reviews (not in prev/next ORDER chain) */
   registry["satsang-archive"] = {type:"archive", data:{name:"All Satsang Reviews"}, canonical:"satsang-archive"};
+  /* Archive sub-page: all saints (not in prev/next ORDER chain) */
+  registry["saints-archive"] = {type:"archive", data:{name:"All Saints"}, canonical:"saints-archive"};
 }
 function prevNextHtml(cur){
   var i = -1, k;
@@ -6993,7 +7011,7 @@ function route(e, routeKey){
         window.history.replaceState(null, "", "#" + r.canonical);
       }
     }
-    document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data) : r.type === "story" ? renderStories(r.data) : r.type === "primer" ? renderPrimer(r.data) : r.type === "saint" ? renderSaint(r.data) : r.type === "archive" ? renderSatsangArchive() : renderCluster(r.data)) + prevNextHtml(r.canonical);
+    document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data) : r.type === "story" ? renderStories(r.data) : r.type === "primer" ? renderPrimer(r.data) : r.type === "saint" ? renderSaint(r.data) : r.type === "archive" ? (r.canonical === "satsang-archive" ? renderSatsangArchive() : renderSaintsArchive()) : renderCluster(r.data)) + prevNextHtml(r.canonical);
     vi.classList.remove("on"); vd.classList.add("on");
     document.title = r.data.name + " · Sri Babuji Digests";
     var crumb = document.getElementById("digest-crumb");
