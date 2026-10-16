@@ -2,6 +2,24 @@
 window.SAILIB_WHATS_NEW = [
   {
     date: "2026-10-15",
+    title: "All 16 satsang digests now searchable",
+    desc: "The weekly SaiSEEkers satsang digests were invisible to SaiLib search — 95 new index entries added so every digest and its key-point groups surface.",
+    link: "/digests/"
+  },
+  {
+    date: "2026-10-15",
+    title: "Every video link jumps to the exact moment",
+    desc: "All 269 video cross-reference links now carry exact timestamps — no more landing at the start of a video. The 285 videos without groundable transcripts had their links removed per the no-bare-links rule.",
+    link: "/today-sai-baba/"
+  },
+  {
+    date: "2026-10-15",
+    title: "What's New: homepage callout + full list",
+    desc: "An expandable 'What's New' callout on the homepage shows the last 7 days of updates, with a full running list at /whats-new/ linked in every page footer.",
+    link: "/whats-new/"
+  },
+  {
+    date: "2026-10-15",
     title: "Today in History: cross-reference links",
     desc: "Every event now shows related videos (with exact timestamps), Satcharitra chapters, and topic search links — on the homepage and both calendar pages.",
     link: "/today-sai-baba/"
@@ -34,18 +52,6 @@ window.SAILIB_WHATS_NEW = [
     date: "2026-10-14",
     title: "Today in History auto-collapses on search",
     desc: "The history detail panel now collapses automatically when you type in the search box.",
-    link: "/"
-  },
-  {
-    date: "2026-10-12",
-    title: "Photos: GitHub backup thumbnails live",
-    desc: "All 440 photos now serve thumbnails from the GitHub backup — faster loads, no Flickr dependency for images.",
-    link: "/photos/"
-  },
-  {
-    date: "2026-10-12",
-    title: "Cloudflare cache auto-purge",
-    desc: "Every site update now purges the Cloudflare cache automatically — visitors see fresh content immediately.",
     link: "/"
   }
 ];
