@@ -1,6 +1,30 @@
 /* What's New — running list of major feature updates, newest first */
 window.SAILIB_WHATS_NEW = [
   {
+    date: "2026-10-16",
+    title: "Search within a book",
+    desc: "Click any book on the shelf (or the 🔍 on a book card) and the search box fills in for you — just type your keyword. Or type it directly: Book: gurukrupa; blessings. Works for collections like Gurukrupa and Rose Petals too.",
+    link: "/books/"
+  },
+  {
+    date: "2026-10-16",
+    title: "Gurukrupa magazine archive — 119 editions searchable",
+    desc: "The complete Gurukrupa magazine (1997–2026, 176 PDFs) is now part of SaiBooks search, with a cover on the shelf and 📄 Read PDF links on every edition.",
+    link: "/books/#gurukrupa"
+  },
+  {
+    date: "2026-10-16",
+    title: "One result per book, with more on demand",
+    desc: "Homepage book results now show each book once (best passage first) with a 'Show more from this book' expander for the rest — no more scrolling through duplicates.",
+    link: "/"
+  },
+  {
+    date: "2026-10-16",
+    title: "Read the book — now with page numbers",
+    desc: "Book cards show the exact page (p. N) and PDF links jump straight to that page.",
+    link: "/books/"
+  },
+  {
     date: "2026-10-15",
     title: "All 16 satsang digests now searchable",
     desc: "The weekly SaiSEEkers satsang digests were invisible to SaiLib search — 95 new index entries added so every digest and its key-point groups surface.",
