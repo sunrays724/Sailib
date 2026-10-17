@@ -6429,7 +6429,10 @@ var COLLECTIONS = [
    kinds:["leela","baba"]},
   {slug:"teachings", name:"Teachings",
    desc:"Primers on key themes and analogy clusters.",
-   kinds:["primer","analogy"]}
+   kinds:["primer","analogy"]},
+  {slug:"today-in-history", name:"Today in History",
+   desc:"Day-by-day events from Sai Baba\u2019s and Sri Babuji\u2019s lives.",
+   kinds:["history"], collapsed:"history"}
 ];
 function digestsByKind(kind){
   if (kind === "readalong") return DIGESTS.readalongs || [];
@@ -6470,6 +6473,7 @@ function collectionDigests(col){
   return out;
 }
 function collectionCount(col){
+  if (col.slug === "today-in-history") return 2;
   var n = 0;
   col.kinds.forEach(function(kind){
     digestsByKind(kind).forEach(function(d){
@@ -6487,6 +6491,9 @@ function collectionTeaser(col){
   if (col.slug === "satsang") {
     var rl = DIGESTS.readalongs || [];
     if (rl.length) return "Latest: " + rl[rl.length - 1].name;
+  }
+  if (col.slug === "today-in-history") {
+    return "Sai Baba & Sri Babuji — day by day";
   }
   var first = null;
   col.kinds.some(function(kind){
@@ -6531,6 +6538,13 @@ function renderCollection(col){
     });
     return html;
   }
+  if (col.collapsed === "history") {
+    html += '<article class="point archive-card"><h3><a href="/today-sai-baba/" target="_blank" rel="noopener">Today in Sai Baba\u2019s History</a></h3>' +
+      '<p>Day-by-day events from Sai Baba\u2019s life \u2014 128 dates, 146 original PDFs</p></article>';
+    html += '<article class="point archive-card"><h3><a href="/today-sri-babuji/" target="_blank" rel="noopener">Today in Sri Babuji\u2019s History</a></h3>' +
+      '<p>Day-by-day events from Sri Babuji\u2019s life \u2014 56 dates, 61 original PDFs</p></article>';
+    return html;
+  }
   var items = collectionDigests(col);
   /* satsang ordering: newest first */
   if (col.slug === "satsang") items.reverse();
@@ -6543,13 +6557,9 @@ function renderCollection(col){
 
 function buildTable(){
   var t = document.getElementById("tindex"), th = "";
-  th += '<div class="featured-history-grid" aria-label="Featured history digests">';
-  th += '<a class="featured-history baba trow" data-name="Today in Sai Baba History day by day events 128 dates 146 original PDFs" href="/today-sai-baba/" target="_blank" rel="noopener"><span class="kind">Featured</span><h2>Today in Sai Baba&rsquo;s History</h2><p>Day-by-day events from Sai Baba&rsquo;s life &mdash; 128 dates, 146 original PDFs</p><span class="arrow" aria-hidden="true">Explore &nearr;</span></a>';
-  th += '<a class="featured-history guruji trow" data-name="Today in Sri Babuji History day by day events 56 dates 61 original PDFs" href="/today-sri-babuji/" target="_blank" rel="noopener"><span class="kind">Featured</span><h2>Today in Sri Babuji&rsquo;s History</h2><p>Day-by-day events from Sri Babuji&rsquo;s life &mdash; 56 dates, 61 original PDFs</p><span class="arrow" aria-hidden="true">Explore &nearr;</span></a>';
-  th += '</div>';
   th += '<a class="featured-biography trow" data-name="Sri Babuji In His Own Words biography satsangs books Rose Petals" href="/biography/" target="_blank" rel="noopener"><span class="kind">Featured biography</span><span><h2>Sri Babuji &mdash; In His Own Words</h2><p>A biography woven only from what he himself said &mdash; in satsangs, in his books, and in Rose Petals</p></span><span class="arrow" aria-hidden="true">&nearr;</span></a>';
   th += '<h2 class="group-title"><span class="dot"></span>Browse by collection</h2>';
-  th += '<p class="group-sub">Five collections &mdash; tap one to dive in.</p>';
+  th += '<p class="group-sub">Six collections &mdash; tap one to dive in.</p>';
   th += '<nav class="secnav" aria-label="Digest collections">' +
     COLLECTIONS.map(function(c){ return '<a href="#collection-' + c.slug + '" target="_self">' + esc(c.name) + '</a>'; }).join("") +
     '</nav>';
