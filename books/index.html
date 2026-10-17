@@ -1514,11 +1514,14 @@ applyHash();
     var bid = p.book && p.book.id;
     if(bid) counts[bid] = (counts[bid] || 0) + 1;
   });
-  // Group: Rose Petals as one collection, others individual
+  // Group: Rose Petals and Gurukrupa as collections, others individual
   var rpBooks = books.filter(function(b){ return b.kind === 'rose-petals'; });
   var rpCount = 0;
   rpBooks.forEach(function(b){ rpCount += counts[b.id] || 0; });
-  var others = books.filter(function(b){ return b.kind !== 'rose-petals'; });
+  var gkBooks = books.filter(function(b){ return b.kind === 'gurukrupa'; });
+  var gkCount = 0;
+  gkBooks.forEach(function(b){ gkCount += counts[b.id] || 0; });
+  var others = books.filter(function(b){ return b.kind !== 'rose-petals' && b.kind !== 'gurukrupa'; });
   // Sort others by passage count descending
   others.sort(function(a, b){ return (counts[b.id] || 0) - (counts[a.id] || 0); });
   var html = '';
@@ -1527,6 +1530,12 @@ applyHash();
       '<h4>🌹 Rose Petals</h4>' +
       '<p><span class="n">' + rpBooks.length + '</span> editions · <span class="n">' + rpCount.toLocaleString('en-US') + '</span> passages</p>' +
       '<p>Sri Babuji\u2019s monthly words, 2011–2015</p></div>';
+  }
+  if(gkBooks.length){
+    html += '<div class="shelf-card" data-shelf="gurukrupa">' +
+      '<h4>📰 Gurukrupa</h4>' +
+      '<p><span class="n">' + gkBooks.length + '</span> editions · <span class="n">' + gkCount.toLocaleString('en-US') + '</span> passages</p>' +
+      '<p>Quarterly magazine, 1997–2026</p></div>';
   }
   others.forEach(function(b){
     var n = counts[b.id] || 0;
@@ -1558,6 +1567,8 @@ applyHash();
     if(shelfId === 'rose-petals'){
       // Search Rose Petals: use a broad term that matches all RP passages
       if(q){ q.value = 'rose petals'; }
+    } else if(shelfId === 'gurukrupa'){
+      if(q){ q.value = 'gurukrupa'; }
     } else {
       var book = books.filter(function(b){ return b.id === shelfId; })[0];
       if(book && q){
