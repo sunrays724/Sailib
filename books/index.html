@@ -1003,6 +1003,30 @@ function leelaPassage(g){
   return first;
 }
 
+/* Extract the chapter subtitle from a Satcharitra chapter's first passage.
+   Chapters open with a topic list like "Salutations -- The Story of Grinding
+   Wheat and Its Philosophical Significance" before the narrative begins. */
+function satcharitraSubtitle(bookId, chRef){
+  if(typeof PASSAGES === 'undefined') return null;
+  var first = null;
+  for(var i = 0; i < PASSAGES.length; i++){
+    var p = PASSAGES[i];
+    if(p.b === bookId && p.ref === chRef){
+      if(!first || (p.idx || 0) < (first.idx || 0)) first = p;
+    }
+  }
+  if(!first) return null;
+  var text = String(first.t || "");
+  /* Subtitle runs until the narrative starts — cut at the first sentence
+     boundary after a reasonable length, or at ~160 chars. */
+  var cut = -1;
+  var m = /[.?!]\s+[A-Z]/.exec(text.slice(60));
+  if(m) cut = 60 + m.index + 1;
+  var sub = (cut > 0 ? text.slice(0, cut) : text.slice(0, 160)).trim();
+  sub = sub.replace(/\s+/g, " ");
+  return sub.length > 20 ? sub : null;
+}
+
 /* character offset of the first query-term occurrence in a passage, so
    a long passage opens on the matched words instead of its beginning */
 function firstMatchAt(text, tokens){
@@ -1242,7 +1266,9 @@ function groupCardHTML(g, tokens, raw){
        lands on the requested context rather than the chapter opener. */
     var leela = leelaPassage(g);
     var chRef = p.ref.replace(/^Satcharitra\s*/i, "");
-    html += '<p class="covers">' + esc(chRef) + "</p>";
+    var subtitle = satcharitraSubtitle(b.id, p.ref);
+    html += '<p class="covers">' + esc(chRef) +
+            (subtitle ? ' — <em>' + esc(subtitle) + '</em>' : '') + "</p>";
     html += passageHTML(deepHit || leela, tokens, "");
     /* Full chapter expander: show all passages from this chapter in order */
     var chPassages = [];
