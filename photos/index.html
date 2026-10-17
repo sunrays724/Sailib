@@ -731,7 +731,7 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     lightboxTrigger=null;
   }
   search.addEventListener('input',render);
-  document.getElementById('searchForm').addEventListener('submit',function(event){event.preventDefault();render();search.blur();});
+  document.getElementById('searchForm').addEventListener('submit',function(event){event.preventDefault();render();search.blur();var r=document.getElementById('results');if(r && r.children.length) r.scrollIntoView({behavior:'smooth',block:'start'});});
   clearButton.addEventListener('click',function(){clearSearch(true);});
   document.querySelectorAll('.suggestion').forEach(function(button){
     button.addEventListener('click',function(){
@@ -741,6 +741,8 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
       render();
       if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
       search.blur();
+      var r=document.getElementById('results');
+      if(r && r.children.length) r.scrollIntoView({behavior:'smooth',block:'start'});
     });
   });
   yearPills.addEventListener('click',function(event){
