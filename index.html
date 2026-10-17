@@ -3652,7 +3652,7 @@ quizList.addEventListener('click', function(e){
     if(card && items.length) card.classList.add("has-event");
   });
 
-  /* What's New callout — last 7 days */
+  /* What's New callout — last 7 days (always visible) */
   (function(){
     var items = window.SAILIB_WHATS_NEW || [];
     var now = new Date();
@@ -3661,7 +3661,11 @@ quizList.addEventListener('click', function(e){
     var countEl = document.getElementById('whatsNewCount');
     var listEl = document.getElementById('whatsNewList');
     var callout = document.getElementById('whatsNewCallout');
-    if(!recent.length){ if(callout) callout.style.display = 'none'; return; }
+    if(!recent.length){
+      if(countEl) countEl.textContent = '';
+      if(listEl) listEl.innerHTML = '<div class="whatsnew-item">No new updates this week.</div>';
+      return;
+    }
     if(countEl) countEl.textContent = '(' + recent.length + ' this week)';
     if(listEl){
       listEl.innerHTML = recent.map(function(it){
