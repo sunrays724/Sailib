@@ -245,8 +245,10 @@ body::after{
 .shelf-icon{font-size:1.1rem}
 .shelf-count{font-weight:400;color:var(--muted);font-size:.82rem}
 .shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:0 16px 16px}
-.shelf-card{border:1px solid var(--line);border-radius:10px;padding:12px;background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .15s}
+.shelf-card{border:1px solid var(--line);border-radius:10px;padding:12px;background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .15s;display:flex;gap:10px;align-items:flex-start}
 .shelf-card:hover{border-color:var(--accent)}
+.shelf-card img{width:45px;height:auto;border-radius:4px;flex:none}
+.shelf-card .shelf-text{min-width:0}
 .shelf-card h4{margin:0 0 4px;font-size:.9rem;line-height:1.3;font-weight:600;color:var(--ink)}
 .shelf-card p{margin:0;font-size:.78rem;color:var(--muted)}
 .shelf-card .n{color:var(--accent);font-weight:600}
@@ -1518,9 +1520,13 @@ applyHash();
   others.forEach(function(b){
     var n = counts[b.id] || 0;
     var lang = b.lang === 'te' ? ' · Telugu' : '';
-    html += '<div class="shelf-card" data-shelf="' + b.id + '">' +
-      '<h4>' + esc(b.title) + '</h4>' +
-      '<p><span class="n">' + n.toLocaleString('en-US') + '</span> passages' + lang + '</p></div>';
+    var cover = 'assets/covers/' + b.id + '.gif';
+    // Only these books have covers; others fall back to text
+    var hasCover = ['devotees-experiences','shirdi-guide','arati-saibaba','sbsr'].indexOf(b.id) !== -1;
+    var imgHtml = hasCover ? '<img src="' + cover + '" alt="" loading="lazy">' : '';
+    html += '<div class="shelf-card" data-shelf="' + b.id + '">' + imgHtml +
+      '<div class="shelf-text"><h4>' + esc(b.title) + '</h4>' +
+      '<p><span class="n">' + n.toLocaleString('en-US') + '</span> passages' + lang + '</p></div></div>';
   });
   grid.innerHTML = html;
   if(countEl) countEl.textContent = '(' + books.length + ' books)';
