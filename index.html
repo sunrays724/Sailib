@@ -1932,7 +1932,9 @@ function search(rawQuery){
     phrase = " " + sig.join(" ") + " ";
     var sum = 0, i;
     for(i = 0; i < idf.length; i++) sum += idf[i];
-    phraseIdf = sum / idf.length;
+    /* Use SUM (not average) so exact-phrase matches always rank
+       above individual word matches. */
+    phraseIdf = sum;
   }
   /* EVENT RECORDINGS (see the flagging block above): in default
      search an event recording scores only on its timestamped

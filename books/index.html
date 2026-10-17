@@ -831,11 +831,12 @@ function search(rawQuery){
   var parsed = parseQuery(rawQuery), sig = parsed.tokens;
   if(!sig.length && !parsed.phrases.length) return [];
   var idf = sig.map(function(t){ return Math.log(1 + NUM_PASSAGES / tokenDF(t)); });
-  var loosePhrase = null, loosePhraseIdf = 0, i;
+  var loosePhrase = null, loosePhraseIdfSum = 0, i;
   if(!parsed.phrases.length && sig.length > 1){
     loosePhrase = " " + sig.join(" ") + " ";
-    for(i = 0; i < idf.length; i++) loosePhraseIdf += idf[i];
-    loosePhraseIdf /= idf.length;
+    /* Use SUM (not average) of IDFs so the exact-phrase bonus always
+       beats individual word matches — phrase matches rank first. */
+    for(i = 0; i < idf.length; i++) loosePhraseIdfSum += idf[i];
   }
   var phraseWeights = parsed.phrases.map(function(ph){
     var words = wordSplit(ph), sum = 0;
@@ -865,7 +866,7 @@ function search(rawQuery){
     var tWords = wordSplit(p.titleText);
     if(loosePhrase && tWords.length &&
        (" " + tWords.join(" ") + " ").indexOf(loosePhrase) !== -1){
-      score += 10 * 4 * loosePhraseIdf;
+      score += 10 * 4 * loosePhraseIdfSum;
     }
     for(i = 0; i < sig.length; i++){
       var tok = sig[i], found = false, j;
@@ -882,7 +883,7 @@ function search(rawQuery){
     var bWords = wordSplit(p.text);
     if(loosePhrase && bWords.length &&
        (" " + bWords.join(" ") + " ").indexOf(loosePhrase) !== -1){
-      score += 2 * 4 * loosePhraseIdf;
+      score += 2 * 4 * loosePhraseIdfSum;
     }
     for(i = 0; i < sig.length; i++){
       var cnt = 0;
