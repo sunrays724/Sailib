@@ -1261,7 +1261,23 @@ function groupCardHTML(g, tokens, raw){
   if(b.read_url){
     html += '<div class="actions"><a class="btn-read" href="' + esc(b.read_url) +
             '" target="_blank" rel="noopener">' + bookSvg +
-            "<span>Read the book</span>" + arrowSvg + "</a></div>";
+            "<span>Read the book</span>" + arrowSvg + "</a>";
+  }
+  // Gurukrupa PDF link
+  if(b.kind === "gurukrupa"){
+    var gm = /^gurukrupa-(\d{4})-(\d{2})/.exec(b.id);
+    if(gm){
+      var gmonths = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+      var gmon = gmonths[parseInt(gm[2], 10) - 1];
+      if(gmon){
+        var gpdf = "/gurukrupa/" + gm[1] + "/" + gm[1] + " " + gmon + ".pdf";
+        if(!b.read_url) html += '<div class="actions">';
+        html += '<a class="btn-read" href="' + esc(gpdf) + '" target="_blank" rel="noopener">📄 <span>Read PDF</span></a>';
+      }
+    }
+  }
+  if(b.read_url || b.kind === "gurukrupa"){
+    html += "</div>";
   }
   return html + "</article>";
 }

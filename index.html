@@ -2191,6 +2191,19 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
   var deepLink = saiBooksPassageUrl(passage, rawQuery);
   var pageSuffix = pageSuffixHTML(passage.page);
   var lang = book.lang === "te" ? "Telugu" : "English";
+  // Gurukrupa PDF link: gurukrupa/<year>/<year> <MON>.pdf
+  var pdfLink = "";
+  if(book.kind === "gurukrupa"){
+    var m = /^gurukrupa-(\d{4})-(\d{2})/.exec(book.id);
+    if(m){
+      var months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+      var mon = months[parseInt(m[2], 10) - 1];
+      if(mon){
+        var pdfUrl = "/gurukrupa/" + m[1] + "/" + m[1] + " " + mon + ".pdf";
+        pdfLink = '<a class="startlink" href="' + esc(pdfUrl) + '" target="_blank" rel="noopener">📄 Read PDF</a>';
+      }
+    }
+  }
   var html = '<article class="card book-card"><h3>' + esc(bookHeading(group)) + '</h3>' +
     '<div class="meta"><span class="badge ' + (book.lang === "te" ? "te" : "en") + '">' + lang + '</span>' +
     '<span class="book-source">Book passage</span>' +
@@ -2217,6 +2230,7 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
   }
   html += '<div class="book-actions"><a class="book-open" href="' + esc(deepLink) +
     '" target="_blank" rel="noopener">' + bookSvg + '<span>See all context in SaiBooks' + pageSuffix + '</span></a>' +
+    pdfLink +
     '<button type="button" class="book-search-within" data-book-id="' + esc(book.id) + '" data-book-title="' + esc(book.title) + '">🔍 Search within this book</button>';
   if(book.read_url){
     html += '<a class="startlink" href="' + esc(book.read_url) + '" target="_blank" rel="noopener">Read the book' + pageSuffix + '</a>';
