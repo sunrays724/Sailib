@@ -522,6 +522,8 @@ footer.site a:hover{text-decoration:underline}
 .book-more-passage .book-context{margin:0 0 4px}
 .book-ref{font-size:.78rem;color:var(--muted);margin:0 0 6px;font-style:italic}
 .book-more-note{margin:8px 0 4px;font-size:.85rem}
+.book-search-within{background:none;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:.82rem;color:var(--ink);cursor:pointer;margin-left:8px}
+.book-search-within:hover{border-color:var(--accent);color:var(--accent)}
 .book-actions{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
 .page-number{color:var(--muted);font-size:.84em;font-weight:600;white-space:nowrap}
 .book-open{
@@ -2199,7 +2201,8 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
       '</div>';
   }
   html += '<div class="book-actions"><a class="book-open" href="' + esc(deepLink) +
-    '" target="_blank" rel="noopener">' + bookSvg + '<span>See all context in SaiBooks' + pageSuffix + '</span></a>';
+    '" target="_blank" rel="noopener">' + bookSvg + '<span>See all context in SaiBooks' + pageSuffix + '</span></a>' +
+    '<button type="button" class="book-search-within" data-book-title="' + esc(book.title) + '">🔍 Search within this book</button>';
   if(book.read_url){
     html += '<a class="startlink" href="' + esc(book.read_url) + '" target="_blank" rel="noopener">Read the book' + pageSuffix + '</a>';
   }
@@ -3374,6 +3377,20 @@ resultsEl.addEventListener("click", function(e){
     target.hidden = false;
     btn.setAttribute("aria-expanded", "true");
     btn.textContent = "- Show less";
+  }
+});
+
+/* ---------- book card "search within" finder ---------- */
+resultsEl.addEventListener("click", function(e){
+  var btn = e.target.closest(".book-search-within");
+  if(!btn) return;
+  var title = btn.getAttribute("data-book-title") || "";
+  var q = document.getElementById("q");
+  if(q){
+    q.value = "Book: " + title + " ";
+    q.focus();
+    // Scroll to top so user sees the search box
+    window.scrollTo({top: 0, behavior: "smooth"});
   }
 });
 
