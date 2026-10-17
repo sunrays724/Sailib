@@ -515,6 +515,13 @@ footer.site a:hover{text-decoration:underline}
 .book-context{margin:0 0 11px;font-size:.96rem;line-height:1.6}
 .book-context .ellipsis{color:var(--muted)}
 .book-count{color:var(--muted);font-size:.86rem;margin:0 0 10px}
+.book-more-toggle{background:none;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:.82rem;color:var(--accent);cursor:pointer;margin:0 0 10px}
+.book-more-toggle:hover{border-color:var(--accent)}
+.book-more.hidden{display:none}
+.book-more-passage{border-top:1px solid var(--line);padding:10px 0 4px;margin:0 0 6px}
+.book-more-passage .book-context{margin:0 0 4px}
+.book-ref{font-size:.78rem;color:var(--muted);margin:0 0 6px;font-style:italic}
+.book-more-note{margin:8px 0 4px;font-size:.85rem}
 .book-actions{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
 .page-number{color:var(--muted);font-size:.84em;font-weight:600;white-space:nowrap}
 .book-open{
@@ -2045,6 +2052,21 @@ function bookWordCount(passage, token, titleField){
 function searchBooks(rawQuery){
   if(!sourceBooks.checked || /^\s*event\s*:/i.test(rawQuery))
     return { hits: [], groups: [], passages: 0 };
+  // Book: <name> <keyword> syntax — search within a specific book
+  var bookScope = null;
+  var bookMatch = /^\s*book\s*:\s*([^]+?)\s+(.+)$/i.exec(rawQuery);
+  if(bookMatch){
+    var bookName = bookMatch[1].trim().toLowerCase();
+    rawQuery = bookMatch[2];
+    // Find matching book by title (fuzzy: contains)
+    for(var bi = 0; bi < BOOKS.length; bi++){
+      if(BOOKS[bi].title.toLowerCase().indexOf(bookName) !== -1){
+        bookScope = BOOKS[bi].id;
+        break;
+      }
+    }
+    // If no book matched, fall through to normal search (don't filter)
+  }
   var pq = parseQuery(rawQuery);
   var tokens = sigTokensOf(pq.rest);
   var phrases = pq.phrases;
@@ -2068,6 +2090,7 @@ function searchBooks(rawQuery){
   for(var ci = 0; ci < candidates.length; ci++){
     var passage = BOOK_PASSAGES[candidates[ci]];
     if(!bookLanguageMatches(passage.book)) continue;
+    if(bookScope && passage.book.id !== bookScope) continue;
     score = 0;
     if(phrases.length){
       phrases.forEach(function(ph){
@@ -2156,8 +2179,26 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
     '<p class="book-context">' + (excerpt.before ? '<span class="ellipsis">…</span>' : '') +
     highlight(excerpt.text, tokens, phrases) + (excerpt.after ? '<span class="ellipsis">…</span>' : '') + '</p>' +
     '<p class="book-count">' + group.hits.length + (group.hits.length === 1 ? ' matching passage' : ' matching passages') +
-    ' in this ' + (book.kind === "satcharitra" ? 'chapter' : 'book') + '</p>' +
-    '<div class="book-actions"><a class="book-open" href="' + esc(deepLink) +
+    ' in this ' + (book.kind === "satcharitra" ? 'chapter' : 'book') + '</p>';
+  // Inline expander for additional passages from the same book
+  if(group.hits.length > 1){
+    var moreHtml = '';
+    for(var i = 1; i < group.hits.length && i < 6; i++){
+      var hp = group.hits[i].passage;
+      var hex = bookExcerpt(hp.text, tokens, phrases);
+      moreHtml += '<div class="book-more-passage"><p class="book-context">' +
+        (hex.before ? '<span class="ellipsis">…</span>' : '') +
+        highlight(hex.text, tokens, phrases) + (hex.after ? '<span class="ellipsis">…</span>' : '') + '</p>' +
+        (hp.ref && book.kind !== "satcharitra" ? '<p class="book-ref">' + esc(hp.ref) + '</p>' : '') + '</div>';
+    }
+    var remaining = group.hits.length - 1;
+    var shown = Math.min(5, remaining);
+    html += '<button type="button" class="book-more-toggle" data-expanded="false">Show ' + (remaining - shown > 0 ? shown + ' of ' + remaining : remaining) + ' more from this book</button>' +
+      '<div class="book-more hidden">' + moreHtml +
+      (remaining > 5 ? '<p class="book-more-note"><a href="' + esc(deepLink) + '" target="_blank" rel="noopener">See all ' + remaining + ' in SaiBooks →</a></p>' : '') +
+      '</div>';
+  }
+  html += '<div class="book-actions"><a class="book-open" href="' + esc(deepLink) +
     '" target="_blank" rel="noopener">' + bookSvg + '<span>See all context in SaiBooks' + pageSuffix + '</span></a>';
   if(book.read_url){
     html += '<a class="startlink" href="' + esc(book.read_url) + '" target="_blank" rel="noopener">Read the book' + pageSuffix + '</a>';
@@ -3332,6 +3373,26 @@ resultsEl.addEventListener("click", function(e){
   } else {
     target.hidden = false;
     btn.setAttribute("aria-expanded", "true");
+    btn.textContent = "- Show less";
+  }
+});
+
+/* ---------- book card "show more passages" toggle ---------- */
+resultsEl.addEventListener("click", function(e){
+  var btn = e.target.closest(".book-more-toggle");
+  if(!btn) return;
+  var card = btn.closest(".book-card");
+  var more = card ? card.querySelector(".book-more") : null;
+  if(!more) return;
+  var expanded = btn.getAttribute("data-expanded") === "true";
+  if(expanded){
+    more.classList.add("hidden");
+    btn.setAttribute("data-expanded", "false");
+    btn.textContent = btn.getAttribute("data-show-text") || "Show more from this book";
+  } else {
+    more.classList.remove("hidden");
+    btn.setAttribute("data-expanded", "true");
+    if(!btn.getAttribute("data-show-text")) btn.setAttribute("data-show-text", btn.textContent);
     btn.textContent = "- Show less";
   }
 });

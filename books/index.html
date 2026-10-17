@@ -797,6 +797,22 @@ function parseQuery(raw){
 
 function search(rawQuery){
   if(!String(rawQuery || "").trim()) return null;
+  // Book: <name> <keyword> syntax — search within a specific book
+  var bookScope = null;
+  var bm = /^\s*book\s*:\s*([^]+?)\s+(.+)$/i.exec(rawQuery);
+  if(bm){
+    var bn = bm[1].trim().toLowerCase();
+    rawQuery = bm[2];
+    if(typeof BOOKS !== 'undefined'){
+      for(var bsi = 0; bsi < BOOKS.length; bsi++){
+        if(BOOKS[bsi].title.toLowerCase().indexOf(bn) !== -1){ bookScope = BOOKS[bsi].id; break; }
+      }
+    }
+    // Store globally for the filter step
+    window._bookScope = bookScope;
+  } else {
+    window._bookScope = null;
+  }
   var parsed = parseQuery(rawQuery), sig = parsed.tokens;
   if(!sig.length && !parsed.phrases.length) return [];
   var idf = sig.map(function(t){ return Math.log(1 + NUM_PASSAGES / tokenDF(t)); });
