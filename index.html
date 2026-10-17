@@ -2202,7 +2202,8 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
       var mon = months[parseInt(m[2], 10) - 1];
       if(mon){
         var pdfUrl = "/gurukrupa/" + m[1] + "/" + m[1] + " " + mon + ".pdf";
-        pdfLink = '<a class="startlink" href="' + esc(pdfUrl) + '" target="_blank" rel="noopener">📄 Read PDF</a>';
+        if(passage.page) pdfUrl += "#page=" + passage.page;
+        pdfLink = '<a class="startlink" href="' + esc(pdfUrl) + '" target="_blank" rel="noopener">📄 Read PDF' + (passage.page ? " (p. " + passage.page + ")" : "") + '</a>';
       }
     }
   }
