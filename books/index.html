@@ -387,6 +387,7 @@ footer.site a:hover{text-decoration:underline}
     <a href="/books/" class="active" aria-current="page">Books</a>
     <a href="/music/">Music</a>
     <a href="/photos/">Photos</a>
+    <a href="/books/#gurukrupa">Gurukrupa</a>
   </nav>
   <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><span class="breadcrumb-current" aria-current="page">Books</span></nav>
 
@@ -1296,6 +1297,16 @@ function setLangFilter(val){
   });
 }
 function applyHash(){
+  // Special case: #gurukrupa shows all Gurukrupa magazines
+  if((location.hash || '') === '#gurukrupa'){
+    var qEl = document.getElementById('q');
+    if(qEl){
+      qEl.value = 'gurukrupa';
+      var form = document.getElementById('searchForm');
+      if(form) form.dispatchEvent(new Event('submit', {cancelable: true}));
+    }
+    return true;
+  }
   var p = parseHash();
   if(!p) return false;
   activeDeepTarget = deepTargetFromParams(p);
