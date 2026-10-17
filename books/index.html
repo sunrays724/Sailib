@@ -252,6 +252,8 @@ body::after{
 .shelf-card h4{margin:0 0 4px;font-size:.9rem;line-height:1.3;font-weight:600;color:var(--ink)}
 .shelf-card p{margin:0;font-size:.78rem;color:var(--muted)}
 .shelf-card .n{color:var(--accent);font-weight:600}
+.shelf-finder{background:none;border:none;font-size:.85rem;cursor:pointer;padding:0 2px;vertical-align:middle}
+.shelf-finder:hover{transform:scale(1.2)}
 .count{margin:26px 0 10px;color:var(--muted);font-size:.95rem;min-height:1.4em}
 .fnote{margin:-2px 0 12px;color:var(--muted);font-size:.88rem;font-style:italic}
 .results{display:flex;flex-direction:column;gap:14px}
@@ -1364,6 +1366,20 @@ function runSearch(){
   if(raw !== lastBooksQuery){ booksExpanded = false; lastBooksQuery = raw; }
   var target = activeDeepTarget ? PASSAGES[activeDeepTarget.passage] : null;
   var hits = String(raw || "").trim() ? search(raw) : (target ? [] : null);
+  // Apply Book: scope filter if set
+  if(hits && window._bookScope){
+    var scopeId = window._bookScope;
+    hits = hits.filter(function(h){
+      var bid = (h.book && h.book.id) || (h.b && BOOKS_BY_ID[h.b] && BOOKS_BY_ID[h.b].id);
+      // Handle different hit formats
+      if(h.book && h.book.id) return h.book.id === scopeId;
+      if(h.b) {
+        // h.b is book id directly
+        return h.b === scopeId;
+      }
+      return true;
+    });
+  }
   if(!hits){
     resultsEl.innerHTML = "";
     countEl.textContent = "";
@@ -1550,13 +1566,13 @@ applyHash();
   if(rpBooks.length){
     html += '<div class="shelf-card" data-shelf="rose-petals">' +
       '<img src="assets/covers/rose-petals.png" alt="" loading="lazy">' +
-      '<div class="shelf-text"><h4>🌹 Rose Petals</h4>' +
+      '<div class="shelf-text"><h4>🌹 Rose Petals <button type="button" class="shelf-finder" data-book-title="Rose Petals" title="Search within Rose Petals">🔍</button></h4>' +
       '<p><span class="n">' + rpBooks.length + '</span> editions · <span class="n">' + rpCount.toLocaleString('en-US') + '</span> passages</p>' +
       '<p>Sri Babuji\u2019s monthly words, 2011–2015</p></div></div>';
   }
   if(gkBooks.length){
     html += '<div class="shelf-card" data-shelf="gurukrupa">' +
-      '<h4>📰 Gurukrupa</h4>' +
+      '<div class="shelf-text"><h4>📰 Gurukrupa <button type="button" class="shelf-finder" data-book-title="Gurukrupa" title="Search within Gurukrupa">🔍</button></h4>' +
       '<p><span class="n">' + gkBooks.length + '</span> editions · <span class="n">' + gkCount.toLocaleString('en-US') + '</span> passages</p>' +
       '<p>Quarterly magazine, 1997–2026</p></div>';
   }
@@ -1581,13 +1597,26 @@ applyHash();
     var cover = coverMap[b.id];
     var imgHtml = cover ? '<img src="' + cover + '" alt="" loading="lazy">' : '';
     html += '<div class="shelf-card" data-shelf="' + b.id + '">' + imgHtml +
-      '<div class="shelf-text"><h4>' + esc(b.title) + '</h4>' +
+      '<div class="shelf-text"><h4>' + esc(b.title) + ' <button type="button" class="shelf-finder" data-book-title="' + esc(b.title) + '" title="Search within this book">🔍</button></h4>' +
       '<p><span class="n">' + n.toLocaleString('en-US') + '</span> passages' + lang + '</p></div></div>';
   });
   grid.innerHTML = html;
   if(countEl) countEl.textContent = '(' + books.length + ' books)';
   // Click a card to search within that book
   grid.addEventListener('click', function(e){
+    // Finder button: populate Book: syntax, don't trigger card search
+    var finder = e.target.closest('.shelf-finder');
+    if(finder){
+      e.stopPropagation();
+      var title = finder.getAttribute('data-book-title') || '';
+      var qf = document.getElementById('q');
+      if(qf){
+        qf.value = 'Book: ' + title + ' ';
+        qf.focus();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      }
+      return;
+    }
     var card = e.target.closest('.shelf-card');
     if(!card) return;
     var shelfId = card.getAttribute('data-shelf');
