@@ -1537,7 +1537,13 @@ applyHash();
   var gkBooks = books.filter(function(b){ return b.kind === 'gurukrupa'; });
   var gkCount = 0;
   gkBooks.forEach(function(b){ gkCount += counts[b.id] || 0; });
-  var others = books.filter(function(b){ return b.kind !== 'rose-petals' && b.kind !== 'gurukrupa'; });
+  var others = books.filter(function(b){
+    if(b.kind === 'rose-petals' || b.kind === 'gurukrupa') return false;
+    // Hidden from shelf (still searchable): user request 2026-10-16
+    var hidden = ['paripoornatvaaniki-prathiroopam', 'naa-nundi-nannu', 'ram-brown-poondi'];
+    if(hidden.indexOf(b.id) !== -1) return false;
+    return true;
+  });
   // Sort others by passage count descending
   others.sort(function(a, b){ return (counts[b.id] || 0) - (counts[a.id] || 0); });
   var html = '';
