@@ -252,8 +252,7 @@ body::after{
 .shelf-card h4{margin:0 0 4px;font-size:.9rem;line-height:1.3;font-weight:600;color:var(--ink)}
 .shelf-card p{margin:0;font-size:.78rem;color:var(--muted)}
 .shelf-card .n{color:var(--accent);font-weight:600}
-.shelf-finder{background:none;border:none;font-size:.85rem;cursor:pointer;padding:0 2px;vertical-align:middle}
-.shelf-finder:hover{transform:scale(1.2)}
+.shelf-finder{font-size:.85rem;vertical-align:middle;opacity:.7}
 .count{margin:26px 0 10px;color:var(--muted);font-size:.95rem;min-height:1.4em}
 .fnote{margin:-2px 0 12px;color:var(--muted);font-size:.88rem;font-style:italic}
 .results{display:flex;flex-direction:column;gap:14px}
@@ -1564,14 +1563,14 @@ applyHash();
   others.sort(function(a, b){ return (counts[b.id] || 0) - (counts[a.id] || 0); });
   var html = '';
   if(rpBooks.length){
-    html += '<div class="shelf-card" data-shelf="rose-petals">' +
+    html += '<div class="shelf-card" data-shelf="rose-petals" data-book-title="Rose Petals">' +
       '<img src="assets/covers/rose-petals.png" alt="" loading="lazy">' +
-      '<div class="shelf-text"><h4>🌹 Rose Petals <button type="button" class="shelf-finder" data-book-title="Rose Petals" title="Search within Rose Petals">🔍</button></h4>' +
+      '<div class="shelf-text"><h4>🌹 Rose Petals <span class="shelf-finder" title="Search within Rose Petals">🔍</span></h4>' +
       '<p>Sri Babuji\u2019s monthly words, 2011–2015</p></div></div>';
   }
   if(gkBooks.length){
-    html += '<div class="shelf-card" data-shelf="gurukrupa">' +
-      '<div class="shelf-text"><h4>📰 Gurukrupa <button type="button" class="shelf-finder" data-book-title="Gurukrupa" title="Search within Gurukrupa">🔍</button></h4>' +
+    html += '<div class="shelf-card" data-shelf="gurukrupa" data-book-title="Gurukrupa">' +
+      '<div class="shelf-text"><h4>📰 Gurukrupa <span class="shelf-finder" title="Search within Gurukrupa">🔍</span></h4>' +
       '<p>Quarterly magazine, 1997–2026</p></div>';
   }
   others.forEach(function(b){
@@ -1594,53 +1593,24 @@ applyHash();
     };
     var cover = coverMap[b.id];
     var imgHtml = cover ? '<img src="' + cover + '" alt="" loading="lazy">' : '';
-    html += '<div class="shelf-card" data-shelf="' + b.id + '">' + imgHtml +
-      '<div class="shelf-text"><h4>' + esc(b.title) + ' <button type="button" class="shelf-finder" data-book-title="' + esc(b.title) + '" title="Search within this book">🔍</button></h4>' +
+    html += '<div class="shelf-card" data-shelf="' + b.id + '" data-book-title="' + esc(b.title) + '">' + imgHtml +
+      '<div class="shelf-text"><h4>' + esc(b.title) + ' <span class="shelf-finder" title="Search within this book">🔍</span></h4>' +
       (b.lang === 'te' ? '<p>Telugu</p>' : '') + '</div></div>';
   });
   grid.innerHTML = html;
   if(countEl) countEl.textContent = '(' + books.length + ' books)';
   // Click a card to search within that book
   grid.addEventListener('click', function(e){
-    // Finder button: populate Book: syntax, don't trigger card search
-    var finder = e.target.closest('.shelf-finder');
-    if(finder){
-      e.stopPropagation();
-      var title = finder.getAttribute('data-book-title') || '';
-      var qf = document.getElementById('q');
-      if(qf){
-        qf.value = 'Book: ' + title + ' ';
-        qf.focus();
-        window.scrollTo({top: 0, behavior: 'smooth'});
-      }
-      return;
-    }
     var card = e.target.closest('.shelf-card');
     if(!card) return;
-    var shelfId = card.getAttribute('data-shelf');
+    // Clicking a shelf card populates "Book: <title>" so user types their keyword
+    var title = card.getAttribute('data-book-title') || '';
     var q = document.getElementById('q');
-    if(shelfId === 'rose-petals'){
-      // Search Rose Petals: use a broad term that matches all RP passages
-      if(q){ q.value = 'rose petals'; }
-    } else if(shelfId === 'gurukrupa'){
-      if(q){ q.value = 'gurukrupa'; }
-    } else {
-      var book = books.filter(function(b){ return b.id === shelfId; })[0];
-      if(book && q){
-        // Use the book title's distinctive words as search
-        var words = book.title.replace(/[()·—–-]/g, ' ').split(/\s+/)
-          .filter(function(w){ return w.length > 3 && !/^(the|and|with|sri|sai|baba)$/i.test(w); });
-        q.value = words.slice(0, 3).join(' ');
-      }
+    if(q && title){
+      q.value = 'Book: ' + title + ' ';
+      q.focus();
+      window.scrollTo({top: 0, behavior: 'smooth'});
     }
-    var form = document.getElementById('searchForm');
-    if(form) form.dispatchEvent(new Event('submit', {cancelable: true}));
-    // Collapse the shelf after searching
-    var shelf = document.getElementById('bookShelf');
-    if(shelf) shelf.open = false;
-    // Scroll to results
-    var results = document.getElementById('results');
-    if(results) results.scrollIntoView({behavior: 'smooth', block: 'start'});
   });
   // Auto-collapse shelf when user types a search (same as What's New)
   var qInput = document.getElementById('q');
