@@ -1567,13 +1567,11 @@ applyHash();
     html += '<div class="shelf-card" data-shelf="rose-petals">' +
       '<img src="assets/covers/rose-petals.png" alt="" loading="lazy">' +
       '<div class="shelf-text"><h4>🌹 Rose Petals <button type="button" class="shelf-finder" data-book-title="Rose Petals" title="Search within Rose Petals">🔍</button></h4>' +
-      '<p><span class="n">' + rpBooks.length + '</span> editions · <span class="n">' + rpCount.toLocaleString('en-US') + '</span> passages</p>' +
       '<p>Sri Babuji\u2019s monthly words, 2011–2015</p></div></div>';
   }
   if(gkBooks.length){
     html += '<div class="shelf-card" data-shelf="gurukrupa">' +
       '<div class="shelf-text"><h4>📰 Gurukrupa <button type="button" class="shelf-finder" data-book-title="Gurukrupa" title="Search within Gurukrupa">🔍</button></h4>' +
-      '<p><span class="n">' + gkBooks.length + '</span> editions · <span class="n">' + gkCount.toLocaleString('en-US') + '</span> passages</p>' +
       '<p>Quarterly magazine, 1997–2026</p></div>';
   }
   others.forEach(function(b){
@@ -1598,7 +1596,7 @@ applyHash();
     var imgHtml = cover ? '<img src="' + cover + '" alt="" loading="lazy">' : '';
     html += '<div class="shelf-card" data-shelf="' + b.id + '">' + imgHtml +
       '<div class="shelf-text"><h4>' + esc(b.title) + ' <button type="button" class="shelf-finder" data-book-title="' + esc(b.title) + '" title="Search within this book">🔍</button></h4>' +
-      '<p><span class="n">' + n.toLocaleString('en-US') + '</span> passages' + lang + '</p></div></div>';
+      (b.lang === 'te' ? '<p>Telugu</p>' : '') + '</div></div>';
   });
   grid.innerHTML = html;
   if(countEl) countEl.textContent = '(' + books.length + ' books)';
