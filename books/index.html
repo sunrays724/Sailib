@@ -1527,9 +1527,10 @@ applyHash();
   var html = '';
   if(rpBooks.length){
     html += '<div class="shelf-card" data-shelf="rose-petals">' +
-      '<h4>🌹 Rose Petals</h4>' +
+      '<img src="assets/covers/rose-petals.png" alt="" loading="lazy">' +
+      '<div class="shelf-text"><h4>🌹 Rose Petals</h4>' +
       '<p><span class="n">' + rpBooks.length + '</span> editions · <span class="n">' + rpCount.toLocaleString('en-US') + '</span> passages</p>' +
-      '<p>Sri Babuji\u2019s monthly words, 2011–2015</p></div>';
+      '<p>Sri Babuji\u2019s monthly words, 2011–2015</p></div></div>';
   }
   if(gkBooks.length){
     html += '<div class="shelf-card" data-shelf="gurukrupa">' +
@@ -1548,7 +1549,8 @@ applyHash();
       'sbsr': 'assets/covers/sbsr.gif',
       'babuji-book': 'assets/covers/babuji-book.png',
       'bound-to-love': 'assets/covers/bound-to-love.png',
-      'satcharitra': 'assets/covers/satcharitra.png'
+      'satcharitra': 'assets/covers/satcharitra.png',
+      'smriti-sumalu': 'assets/covers/smriti-sumalu.png'
     };
     var cover = coverMap[b.id];
     var imgHtml = cover ? '<img src="' + cover + '" alt="" loading="lazy">' : '';
