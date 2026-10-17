@@ -1520,10 +1520,18 @@ applyHash();
   others.forEach(function(b){
     var n = counts[b.id] || 0;
     var lang = b.lang === 'te' ? ' · Telugu' : '';
-    var cover = 'assets/covers/' + b.id + '.gif';
-    // Only these books have covers; others fall back to text
-    var hasCover = ['devotees-experiences','shirdi-guide','arati-saibaba','sbsr'].indexOf(b.id) !== -1;
-    var imgHtml = hasCover ? '<img src="' + cover + '" alt="" loading="lazy">' : '';
+    // Cover images: GIFs from literature.saibaba.com, PNGs from PDF first pages
+    var coverMap = {
+      'devotees-experiences': 'assets/covers/devotees-experiences.gif',
+      'shirdi-guide': 'assets/covers/shirdi-guide.gif',
+      'arati-saibaba': 'assets/covers/arati-saibaba.gif',
+      'sbsr': 'assets/covers/sbsr.gif',
+      'babuji-book': 'assets/covers/babuji-book.png',
+      'bound-to-love': 'assets/covers/bound-to-love.png',
+      'satcharitra': 'assets/covers/satcharitra.png'
+    };
+    var cover = coverMap[b.id];
+    var imgHtml = cover ? '<img src="' + cover + '" alt="" loading="lazy">' : '';
     html += '<div class="shelf-card" data-shelf="' + b.id + '">' + imgHtml +
       '<div class="shelf-text"><h4>' + esc(b.title) + '</h4>' +
       '<p><span class="n">' + n.toLocaleString('en-US') + '</span> passages' + lang + '</p></div></div>';
