@@ -801,7 +801,7 @@ function search(rawQuery){
   // Book: <name> <keyword> syntax — search within a specific book
   // Matches by book ID or title substring
   var bookScope = null;
-  var bm = /^\s*book\s*:\s*([^]+?)\s+(.+)$/i.exec(rawQuery);
+  var bm = /^\s*book\s*:\s*([^;]+?)\s*;?\s+(.+)$/i.exec(rawQuery);
   if(bm){
     var bn = bm[1].trim().toLowerCase();
     rawQuery = bm[2];
@@ -1616,11 +1616,11 @@ applyHash();
   grid.addEventListener('click', function(e){
     var card = e.target.closest('.shelf-card');
     if(!card) return;
-    // Clicking a shelf card sets up "Book: <id>" so user types their keyword
+    // Clicking a shelf card sets up "Book: <id>;" so user types their keyword
     var bookId = card.getAttribute('data-book-id') || '';
     var q = document.getElementById('q');
     if(q && bookId){
-      q.value = 'Book: ' + bookId + ' ';
+      q.value = 'Book: ' + bookId + '; ';
       q.placeholder = 'Type your keyword to search within this book…';
       q.focus();
       window.scrollTo({top: 0, behavior: 'smooth'});

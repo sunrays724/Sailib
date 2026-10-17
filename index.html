@@ -2058,7 +2058,7 @@ function searchBooks(rawQuery){
   // Matches by book ID or title substring; collections match by prefix
   var bookScope = null;
   var bookIsCollection = false;
-  var bookMatch = /^\s*book\s*:\s*([^]+?)\s+(.+)$/i.exec(rawQuery);
+  var bookMatch = /^\s*book\s*:\s*([^;]+?)\s*;?\s+(.+)$/i.exec(rawQuery);
   if(bookMatch){
     var bookName = bookMatch[1].trim().toLowerCase();
     rawQuery = bookMatch[2];
@@ -3403,7 +3403,7 @@ resultsEl.addEventListener("click", function(e){
   var title = btn.getAttribute("data-book-title") || "";
   var q = document.getElementById("q");
   if(q){
-    q.value = "Book: " + bookId + " ";
+    q.value = "Book: " + bookId + "; ";
     q.placeholder = "Type your keyword to search within " + (title || "this book") + "…";
     q.focus();
     // Scroll to top so user sees the search box
