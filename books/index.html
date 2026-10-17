@@ -805,7 +805,12 @@ function search(rawQuery){
   if(bm){
     var bn = bm[1].trim().toLowerCase();
     rawQuery = bm[2];
-    if(typeof BOOKS !== 'undefined'){
+    // Handle collections by name
+    if(bn === 'gurukrupa' || bn.indexOf('gurukrupa') === 0){
+      bookScope = 'gurukrupa';
+    } else if(bn === 'rose-petals' || bn === 'rosepetals' || bn.indexOf('rose') === 0){
+      bookScope = 'rose-petals';
+    } else if(typeof BOOKS !== 'undefined'){
       for(var bsi = 0; bsi < BOOKS.length; bsi++){
         var bid = BOOKS[bsi].id.toLowerCase();
         var btitle = BOOKS[bsi].title.toLowerCase();
@@ -1374,10 +1379,15 @@ function runSearch(){
   // Apply Book: scope filter if set
   if(hits && window._bookScope){
     var scopeId = window._bookScope;
+    // Collections match by prefix (e.g., "gurukrupa" matches "gurukrupa-1997-01")
+    var isCollection = (scopeId === 'gurukrupa' || scopeId === 'rose-petals');
     hits = hits.filter(function(h){
       // Hit format: {p: passage, score: n} where passage.book.id is the book ID
       var passage = h.p || h;
       var book = passage.book || {};
+      if(isCollection){
+        return book.id && book.id.indexOf(scopeId) === 0;
+      }
       return book.id === scopeId;
     });
   }

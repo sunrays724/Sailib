@@ -2055,19 +2055,29 @@ function searchBooks(rawQuery){
   if(!sourceBooks.checked || /^\s*event\s*:/i.test(rawQuery))
     return { hits: [], groups: [], passages: 0 };
   // Book: <name> <keyword> syntax — search within a specific book
-  // Matches by book ID or title substring
+  // Matches by book ID or title substring; collections match by prefix
   var bookScope = null;
+  var bookIsCollection = false;
   var bookMatch = /^\s*book\s*:\s*([^]+?)\s+(.+)$/i.exec(rawQuery);
   if(bookMatch){
     var bookName = bookMatch[1].trim().toLowerCase();
     rawQuery = bookMatch[2];
-    // Find matching book by ID or title (fuzzy: contains)
-    for(var bi = 0; bi < BOOKS.length; bi++){
-      var bid = BOOKS[bi].id.toLowerCase();
-      var btitle = BOOKS[bi].title.toLowerCase();
-      if(bid === bookName || bid.indexOf(bookName) !== -1 || btitle.indexOf(bookName) !== -1){
-        bookScope = BOOKS[bi].id;
-        break;
+    // Handle collections by name
+    if(bookName === 'gurukrupa' || bookName.indexOf('gurukrupa') === 0){
+      bookScope = 'gurukrupa';
+      bookIsCollection = true;
+    } else if(bookName === 'rose-petals' || bookName === 'rosepetals' || bookName.indexOf('rose') === 0){
+      bookScope = 'rose-petals';
+      bookIsCollection = true;
+    } else {
+      // Find matching book by ID or title (fuzzy: contains)
+      for(var bi = 0; bi < BOOKS.length; bi++){
+        var bid = BOOKS[bi].id.toLowerCase();
+        var btitle = BOOKS[bi].title.toLowerCase();
+        if(bid === bookName || bid.indexOf(bookName) !== -1 || btitle.indexOf(bookName) !== -1){
+          bookScope = BOOKS[bi].id;
+          break;
+        }
       }
     }
     // If no book matched, fall through to normal search (don't filter)
@@ -2095,7 +2105,11 @@ function searchBooks(rawQuery){
   for(var ci = 0; ci < candidates.length; ci++){
     var passage = BOOK_PASSAGES[candidates[ci]];
     if(!bookLanguageMatches(passage.book)) continue;
-    if(bookScope && passage.book.id !== bookScope) continue;
+    if(bookScope){
+      if(bookIsCollection){
+        if(passage.book.id.indexOf(bookScope) !== 0) continue;
+      } else if(passage.book.id !== bookScope) continue;
+    }
     score = 0;
     if(phrases.length){
       phrases.forEach(function(ph){
