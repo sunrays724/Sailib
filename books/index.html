@@ -242,6 +242,8 @@ body::after{
 .shelf{margin:18px 0 0;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:0}
 .shelf summary{padding:12px 16px;cursor:pointer;font-weight:600;font-size:.95rem;list-style:none;display:flex;align-items:center;gap:8px;color:var(--ink)}
 .shelf summary::-webkit-details-marker{display:none}
+.shelf-hint{margin:0 16px 10px;font-size:.85rem;color:var(--muted)}
+.shelf-hint code{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px;font-size:.8rem}
 .shelf-icon{font-size:1.1rem}
 .shelf-count{font-weight:400;color:var(--muted);font-size:.82rem}
 .shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:0 16px 16px}
@@ -408,7 +410,7 @@ footer.site a:hover{text-decoration:underline}
         <line x1="16" y1="16" x2="21.2" y2="21.2"/>
       </svg>
       <input id="q" name="q" type="search"
-             placeholder='Try "anger" or "ఊది"…'
+             placeholder='Try "anger"… or Book: gurukrupa; blessings'
              title="Press / to search"
              aria-label="Search books">
     </div>
@@ -443,6 +445,7 @@ footer.site a:hover{text-decoration:underline}
 
   <details class="shelf" id="bookShelf" open>
     <summary><span class="shelf-icon" aria-hidden="true">📚</span> Browse the shelf <span class="shelf-count" id="shelfCount"></span></summary>
+    <p class="shelf-hint">Search within a book by clicking on it — or type <code>Book: name; keyword</code> in the search box above.</p>
     <div class="shelf-grid" id="shelfGrid"></div>
   </details>
 
