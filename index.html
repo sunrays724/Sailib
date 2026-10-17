@@ -2179,9 +2179,7 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
     '<span class="book-source">Book passage</span>' +
     (passage.ref && book.kind !== "satcharitra" ? '<span>' + esc(passage.ref) + '</span>' : '') + '</div>' +
     '<p class="book-context">' + (excerpt.before ? '<span class="ellipsis">…</span>' : '') +
-    highlight(excerpt.text, tokens, phrases) + (excerpt.after ? '<span class="ellipsis">…</span>' : '') + '</p>' +
-    '<p class="book-count">' + group.hits.length + (group.hits.length === 1 ? ' matching passage' : ' matching passages') +
-    ' in this ' + (book.kind === "satcharitra" ? 'chapter' : 'book') + '</p>';
+    highlight(excerpt.text, tokens, phrases) + (excerpt.after ? '<span class="ellipsis">…</span>' : '') + '</p>';
   // Inline expander for additional passages from the same book
   if(group.hits.length > 1){
     var moreHtml = '';
