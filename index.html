@@ -2055,14 +2055,17 @@ function searchBooks(rawQuery){
   if(!sourceBooks.checked || /^\s*event\s*:/i.test(rawQuery))
     return { hits: [], groups: [], passages: 0 };
   // Book: <name> <keyword> syntax — search within a specific book
+  // Matches by book ID or title substring
   var bookScope = null;
   var bookMatch = /^\s*book\s*:\s*([^]+?)\s+(.+)$/i.exec(rawQuery);
   if(bookMatch){
     var bookName = bookMatch[1].trim().toLowerCase();
     rawQuery = bookMatch[2];
-    // Find matching book by title (fuzzy: contains)
+    // Find matching book by ID or title (fuzzy: contains)
     for(var bi = 0; bi < BOOKS.length; bi++){
-      if(BOOKS[bi].title.toLowerCase().indexOf(bookName) !== -1){
+      var bid = BOOKS[bi].id.toLowerCase();
+      var btitle = BOOKS[bi].title.toLowerCase();
+      if(bid === bookName || bid.indexOf(bookName) !== -1 || btitle.indexOf(bookName) !== -1){
         bookScope = BOOKS[bi].id;
         break;
       }
@@ -2200,7 +2203,7 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
   }
   html += '<div class="book-actions"><a class="book-open" href="' + esc(deepLink) +
     '" target="_blank" rel="noopener">' + bookSvg + '<span>See all context in SaiBooks' + pageSuffix + '</span></a>' +
-    '<button type="button" class="book-search-within" data-book-title="' + esc(book.title) + '">🔍 Search within this book</button>';
+    '<button type="button" class="book-search-within" data-book-id="' + esc(book.id) + '" data-book-title="' + esc(book.title) + '">🔍 Search within this book</button>';
   if(book.read_url){
     html += '<a class="startlink" href="' + esc(book.read_url) + '" target="_blank" rel="noopener">Read the book' + pageSuffix + '</a>';
   }
@@ -3382,10 +3385,12 @@ resultsEl.addEventListener("click", function(e){
 resultsEl.addEventListener("click", function(e){
   var btn = e.target.closest(".book-search-within");
   if(!btn) return;
+  var bookId = btn.getAttribute("data-book-id") || "";
   var title = btn.getAttribute("data-book-title") || "";
   var q = document.getElementById("q");
   if(q){
-    q.value = "Book: " + title + " ";
+    q.value = "Book: " + bookId + " ";
+    q.placeholder = "Type your keyword to search within " + (title || "this book") + "…";
     q.focus();
     // Scroll to top so user sees the search box
     window.scrollTo({top: 0, behavior: "smooth"});
