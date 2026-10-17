@@ -290,6 +290,8 @@ mark{background:var(--mark);border-radius:3px;padding:0 1px;color:inherit}
 .allpass{border-top:1px dashed var(--line);margin-top:8px;padding-top:4px}
 .allpass .pwrap{padding:10px 0;border-bottom:1px dashed var(--line)}
 .allpass .pwrap:last-child{border-bottom:0}
+.allpass .full-ch-passage{padding:10px 0;border-bottom:1px dashed var(--line);line-height:1.6}
+.allpass .full-ch-passage:last-child{border-bottom:0}
 .pwrap.deep-target{
   margin:4px -5px;padding:12px 14px;border-radius:10px;
   background:var(--accent-soft);box-shadow:inset 0 0 0 1.5px var(--accent);
@@ -1239,8 +1241,25 @@ function groupCardHTML(g, tokens, raw){
        deep link promotes its exact passage instead, so the reader
        lands on the requested context rather than the chapter opener. */
     var leela = leelaPassage(g);
-    html += '<p class="covers">The Leela of ' + esc(p.ref.replace(/^Satcharitra\s*/i, "")) + "</p>";
+    var chRef = p.ref.replace(/^Satcharitra\s*/i, "");
+    html += '<p class="covers">' + esc(chRef) + "</p>";
     html += passageHTML(deepHit || leela, tokens, "");
+    /* Full chapter expander: show all passages from this chapter in order */
+    var chPassages = [];
+    for(var cpi = 0; cpi < PASSAGES.length; cpi++){
+      if(PASSAGES[cpi].b === b.id && PASSAGES[cpi].ref === p.ref){
+        chPassages.push(PASSAGES[cpi]);
+      }
+    }
+    chPassages.sort(function(a, b2){ return (a.idx || 0) - (b2.idx || 0); });
+    if(chPassages.length > 1){
+      html += '<button type="button" class="showall" aria-expanded="false">Read full ' + esc(chRef) + ' (' + chPassages.length + ' sections)</button>';
+      html += '<div class="allpass hidden">';
+      for(var ci = 0; ci < chPassages.length; ci++){
+        html += '<div class="full-ch-passage">' + esc(chPassages[ci].t) + '</div>';
+      }
+      html += '</div>';
+    }
   } else {
     html += passageHTML(deepHit || g.best, tokens, "");
   }
