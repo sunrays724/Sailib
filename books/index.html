@@ -239,6 +239,17 @@ body::after{
   border-radius:999px;padding:4px 13px;font-size:.86rem;cursor:pointer;
 }
 .suggest button:hover{border-color:var(--accent)}
+.shelf{margin:18px 0 0;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:0}
+.shelf summary{padding:12px 16px;cursor:pointer;font-weight:600;font-size:.95rem;list-style:none;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.shelf summary::-webkit-details-marker{display:none}
+.shelf-icon{font-size:1.1rem}
+.shelf-count{font-weight:400;color:var(--muted);font-size:.82rem}
+.shelf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:0 16px 16px}
+.shelf-card{border:1px solid var(--line);border-radius:10px;padding:12px;background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .15s}
+.shelf-card:hover{border-color:var(--accent)}
+.shelf-card h4{margin:0 0 4px;font-size:.9rem;line-height:1.3;font-weight:600;color:var(--ink)}
+.shelf-card p{margin:0;font-size:.78rem;color:var(--muted)}
+.shelf-card .n{color:var(--accent);font-weight:600}
 .count{margin:26px 0 10px;color:var(--muted);font-size:.95rem;min-height:1.4em}
 .fnote{margin:-2px 0 12px;color:var(--muted);font-size:.88rem;font-style:italic}
 .results{display:flex;flex-direction:column;gap:14px}
@@ -425,6 +436,11 @@ footer.site a:hover{text-decoration:underline}
     <button type="button">dreams</button>
     <button type="button">parayanam</button>
   </div>
+
+  <details class="shelf" id="bookShelf" open>
+    <summary><span class="shelf-icon" aria-hidden="true">📚</span> Browse the shelf <span class="shelf-count" id="shelfCount"></span></summary>
+    <div class="shelf-grid" id="shelfGrid"></div>
+  </details>
 
   <p class="count" id="count" aria-live="polite"></p>
   <p class="fnote hidden" id="fnote" aria-live="polite"></p>
@@ -1472,6 +1488,78 @@ window.addEventListener("hashchange", function(){
   if(parseHash()) applyHash();
 });
 applyHash();
+
+/* ---------- book shelf ---------- */
+(function(){
+  var grid = document.getElementById('shelfGrid');
+  var countEl = document.getElementById('shelfCount');
+  if(!grid || typeof BOOKS === 'undefined') return;
+  var books = BOOKS || [];
+  // Count passages per book
+  var counts = {};
+  (typeof PASSAGES !== 'undefined' ? PASSAGES : []).forEach(function(p){
+    var bid = p.book && p.book.id;
+    if(bid) counts[bid] = (counts[bid] || 0) + 1;
+  });
+  // Group: Rose Petals as one collection, others individual
+  var rpBooks = books.filter(function(b){ return b.kind === 'rose-petals'; });
+  var rpCount = 0;
+  rpBooks.forEach(function(b){ rpCount += counts[b.id] || 0; });
+  var others = books.filter(function(b){ return b.kind !== 'rose-petals'; });
+  // Sort others by passage count descending
+  others.sort(function(a, b){ return (counts[b.id] || 0) - (counts[a.id] || 0); });
+  var html = '';
+  if(rpBooks.length){
+    html += '<div class="shelf-card" data-shelf="rose-petals">' +
+      '<h4>🌹 Rose Petals</h4>' +
+      '<p><span class="n">' + rpBooks.length + '</span> editions · <span class="n">' + rpCount.toLocaleString('en-US') + '</span> passages</p>' +
+      '<p>Sri Babuji\u2019s monthly words, 2011–2015</p></div>';
+  }
+  others.forEach(function(b){
+    var n = counts[b.id] || 0;
+    var lang = b.lang === 'te' ? ' · Telugu' : '';
+    html += '<div class="shelf-card" data-shelf="' + b.id + '">' +
+      '<h4>' + esc(b.title) + '</h4>' +
+      '<p><span class="n">' + n.toLocaleString('en-US') + '</span> passages' + lang + '</p></div>';
+  });
+  grid.innerHTML = html;
+  if(countEl) countEl.textContent = '(' + books.length + ' books)';
+  // Click a card to search within that book
+  grid.addEventListener('click', function(e){
+    var card = e.target.closest('.shelf-card');
+    if(!card) return;
+    var shelfId = card.getAttribute('data-shelf');
+    var q = document.getElementById('q');
+    if(shelfId === 'rose-petals'){
+      // Search Rose Petals: use a broad term that matches all RP passages
+      if(q){ q.value = 'rose petals'; }
+    } else {
+      var book = books.filter(function(b){ return b.id === shelfId; })[0];
+      if(book && q){
+        // Use the book title's distinctive words as search
+        var words = book.title.replace(/[()·—–-]/g, ' ').split(/\s+/)
+          .filter(function(w){ return w.length > 3 && !/^(the|and|with|sri|sai|baba)$/i.test(w); });
+        q.value = words.slice(0, 3).join(' ');
+      }
+    }
+    var form = document.getElementById('searchForm');
+    if(form) form.dispatchEvent(new Event('submit', {cancelable: true}));
+    // Collapse the shelf after searching
+    var shelf = document.getElementById('bookShelf');
+    if(shelf) shelf.open = false;
+    // Scroll to results
+    var results = document.getElementById('results');
+    if(results) results.scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+  // Auto-collapse shelf when user types a search (same as What's New)
+  var qInput = document.getElementById('q');
+  if(qInput){
+    qInput.addEventListener('input', function(){
+      var shelf = document.getElementById('bookShelf');
+      if(shelf && shelf.open && qInput.value.trim()) shelf.open = false;
+    });
+  }
+})();
 document.addEventListener("keydown", function(e){
   var tag = (document.activeElement && document.activeElement.tagName) || "";
   if(e.key === "/" && tag !== "INPUT" && tag !== "TEXTAREA"){
