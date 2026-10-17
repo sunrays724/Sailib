@@ -799,6 +799,7 @@ function parseQuery(raw){
 function search(rawQuery){
   if(!String(rawQuery || "").trim()) return null;
   // Book: <name> <keyword> syntax — search within a specific book
+  // Matches by book ID or title substring
   var bookScope = null;
   var bm = /^\s*book\s*:\s*([^]+?)\s+(.+)$/i.exec(rawQuery);
   if(bm){
@@ -806,7 +807,12 @@ function search(rawQuery){
     rawQuery = bm[2];
     if(typeof BOOKS !== 'undefined'){
       for(var bsi = 0; bsi < BOOKS.length; bsi++){
-        if(BOOKS[bsi].title.toLowerCase().indexOf(bn) !== -1){ bookScope = BOOKS[bsi].id; break; }
+        var bid = BOOKS[bsi].id.toLowerCase();
+        var btitle = BOOKS[bsi].title.toLowerCase();
+        if(bid === bn || bid.indexOf(bn) !== -1 || btitle.indexOf(bn) !== -1){
+          bookScope = BOOKS[bsi].id;
+          break;
+        }
       }
     }
     // Store globally for the filter step
@@ -1369,14 +1375,10 @@ function runSearch(){
   if(hits && window._bookScope){
     var scopeId = window._bookScope;
     hits = hits.filter(function(h){
-      var bid = (h.book && h.book.id) || (h.b && BOOKS_BY_ID[h.b] && BOOKS_BY_ID[h.b].id);
-      // Handle different hit formats
-      if(h.book && h.book.id) return h.book.id === scopeId;
-      if(h.b) {
-        // h.b is book id directly
-        return h.b === scopeId;
-      }
-      return true;
+      // Hit format: {p: passage, score: n} where passage.book.id is the book ID
+      var passage = h.p || h;
+      var book = passage.book || {};
+      return book.id === scopeId;
     });
   }
   if(!hits){
