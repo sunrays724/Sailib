@@ -2233,7 +2233,16 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
     pdfLink +
     '<button type="button" class="book-search-within" data-book-id="' + esc(book.id) + '" data-book-title="' + esc(book.title) + '">🔍 Search within this book</button>';
   if(book.read_url){
-    html += '<a class="startlink" href="' + esc(book.read_url) + '" target="_blank" rel="noopener">Read the book' + pageSuffix + '</a>';
+    var readUrl = book.read_url;
+    var pageLabel = "";
+    // Add page fragment for PDF links, show page number as text
+    if(/\.pdf/i.test(readUrl) && passage.page){
+      readUrl += "#page=" + passage.page;
+      pageLabel = " (p. " + passage.page + ")";
+    } else if(passage.page){
+      pageLabel = " (p. " + passage.page + ")";
+    }
+    html += '<a class="startlink" href="' + esc(readUrl) + '" target="_blank" rel="noopener">Read the book' + pageLabel + pageSuffix + '</a>';
   }
   html += blessedOnesBookHTML(passage);
   return html + '</div></article>';
