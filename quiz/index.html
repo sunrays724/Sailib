@@ -1,0 +1,1845 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet" />
+    <title>Satsang Quiz</title>
+    <style>
+      :root{
+        --bg:#FFF8EE;
+        --bg2:#FDEEDA;
+        --card:#FFFDF8;
+        --ink:#3A1610;
+        --ink-soft:#6B4034;
+        --maroon:#7C1D1D;
+        --maroon-deep:#5C1212;
+        --maroon-tint:#F7E3D3;
+        --saffron:#D9730D;
+        --saffron-deep:#B85E05;
+        --saffron-tint:#FCE7C8;
+        --line:#EAD3B4;
+        --good:#1E7A3C;
+        --good-bg:#E2F3E4;
+        --bad:#B3232A;
+        --bad-bg:#FBE3E1;
+        --grey:#8A6D3B;
+        --grey-bg:#F5ECD4;
+        --shadow:0 2px 10px rgba(92,18,18,.08), 0 10px 30px rgba(92,18,18,.06);
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#1E120E;
+          --bg2:#281712;
+          --card:#2C1A14;
+          --ink:#F7E9D6;
+          --ink-soft:#D8BBA3;
+          --maroon:#E88B7D;
+          --maroon-deep:#F2B3A6;
+          --maroon-tint:#3D2018;
+          --saffron:#F0A63C;
+          --saffron-deep:#F5BC66;
+          --saffron-tint:#453014;
+          --line:#54382A;
+          --good:#7ED492;
+          --good-bg:#1E3A24;
+          --bad:#FF9D94;
+          --bad-bg:#45201D;
+          --grey:#E3C98A;
+          --grey-bg:#3D3319;
+          --shadow:0 2px 10px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+        }
+      }
+      *{ box-sizing:border-box; }
+      html{ scroll-behavior:smooth; }
+      body{
+        margin:0;
+        background:
+          radial-gradient(1200px 500px at 85% -100px, var(--bg2), transparent 60%),
+          var(--bg);
+        color:var(--ink);
+        font-family: ui-sans-system, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size:20px;
+        line-height:1.5;
+        -webkit-text-size-adjust:100%;
+      }
+      .te{ font-family:"Noto Sans Telugu", ui-sans-system, system-ui, sans-serif; }
+
+      /* ---------- tab bar ---------- */
+      .tabbar{
+        position:sticky; top:0; z-index:60;
+        background:var(--bg);
+        border-bottom:2px solid var(--maroon);
+        padding:10px 12px 8px;
+        display:flex; flex-wrap:wrap; gap:6px;
+        box-shadow:0 4px 14px rgba(92,18,18,.08);
+      }
+      .tab-btn{
+        appearance:none; cursor:pointer;
+        border:1.5px solid var(--line);
+        background:var(--card);
+        color:var(--ink-soft);
+        font:inherit; font-size:15px; font-weight:600;
+        padding:8px 13px; border-radius:999px;
+        transition:background .15s, color .15s, border-color .15s;
+      }
+      .tab-btn:hover{ border-color:var(--saffron); color:var(--maroon); }
+      .tab-btn.active{
+        background:var(--maroon); border-color:var(--maroon);
+        color:#FFF6E8;
+      }
+      @media (prefers-color-scheme: dark){
+        .tab-btn.active{ color:#2A1408; background:var(--saffron); border-color:var(--saffron); }
+      }
+      .tab-btn .n{ opacity:.65; font-weight:700; margin-right:5px; }
+
+      main{ max-width:1180px; margin:0 auto; padding:26px 18px 120px; }
+      section.tab{ display:none; }
+      section.tab.active{ display:block; }
+
+      h1.page-title{
+        font-family: Georgia, "Times New Roman", serif;
+        font-size:clamp(34px, 5.5vw, 58px);
+        line-height:1.08; margin:6px 0 10px;
+        color:var(--maroon-deep);
+        letter-spacing:-.01em;
+      }
+      h2.round-title{
+        font-family: Georgia, "Times New Roman", serif;
+        font-size:clamp(30px, 4.5vw, 44px);
+        line-height:1.12; margin:2px 0 8px; color:var(--maroon-deep);
+      }
+      .subtitle{ font-size:clamp(19px,2.4vw,23px); color:var(--ink-soft); max-width:60ch; margin:0 0 18px; }
+      .round-sub{ font-size:21px; color:var(--ink-soft); margin:0 0 16px; max-width:64ch; }
+      h3.block-title{
+        font-family: Georgia, "Times New Roman", serif;
+        font-size:26px; color:var(--maroon-deep); margin:30px 0 12px;
+      }
+
+      /* ---------- how-to-run box ---------- */
+      .howto{
+        background:var(--maroon-tint);
+        border:1.5px solid var(--line);
+        border-radius:14px;
+        padding:16px 20px 14px;
+        margin:0 0 22px;
+      }
+      .howto .tag{
+        display:inline-block;
+        background:var(--maroon); color:#FFF6E8;
+        font-size:13px; font-weight:800; letter-spacing:.12em;
+        padding:4px 10px; border-radius:6px; margin-bottom:8px;
+      }
+      @media (prefers-color-scheme: dark){ .howto .tag{ background:var(--saffron); color:#2A1408; } }
+      .howto p{ margin:4px 0; font-size:19px; }
+      .howto p b{ color:var(--maroon-deep); }
+
+      /* ---------- cards ---------- */
+      .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(330px, 1fr)); gap:16px; }
+      .grid.wide{ grid-template-columns:repeat(auto-fill, minmax(430px, 1fr)); }
+      @media (max-width:480px){ .grid, .grid.wide{ grid-template-columns:1fr; } }
+      .card{
+        background:var(--card);
+        border:1.5px solid var(--line);
+        border-radius:14px;
+        padding:18px 20px;
+        box-shadow:var(--shadow);
+        position:relative;
+      }
+      .cardnum{
+        position:absolute; top:14px; right:16px;
+        font-family:Georgia, serif; font-weight:700;
+        color:var(--saffron); font-size:22px; opacity:.85;
+      }
+      .q{ font-size:23px; font-weight:600; line-height:1.4; margin:0 34px 12px 0; }
+      .q.small{ font-size:21px; }
+      .big-line{
+        font-size:clamp(24px,3.4vw,32px); font-weight:700; line-height:1.45;
+        margin:0 30px 12px 0;
+      }
+      .answer{
+        display:none;
+        margin-top:12px;
+        background:var(--saffron-tint);
+        border:1.5px dashed var(--saffron);
+        border-radius:10px;
+        padding:12px 14px;
+        font-size:20px;
+      }
+      .answer.open{ display:block; }
+      .answer .rest{ font-size:clamp(22px,3vw,28px); font-weight:700; display:block; margin-bottom:4px; }
+      .answer .essence{ color:var(--ink-soft); font-size:19px; }
+      .ts{
+        display:inline-block; vertical-align:2px;
+        background:var(--maroon); color:#FFF6E8;
+        font-size:14px; font-weight:700;
+        padding:2px 8px; border-radius:999px; margin-left:6px;
+        font-family:ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      @media (prefers-color-scheme: dark){ .ts{ background:var(--saffron); color:#2A1408; } }
+
+      button.reveal-btn, button.action-btn, button.print-btn{
+        appearance:none; cursor:pointer; font:inherit;
+        font-size:17px; font-weight:700;
+        border-radius:10px; padding:10px 16px;
+        border:1.5px solid var(--saffron-deep);
+        background:var(--saffron); color:#fff;
+        transition:filter .15s, background .15s;
+      }
+      button.reveal-btn:hover, button.action-btn:hover{ filter:brightness(1.07); }
+      button.action-btn{ background:var(--maroon); border-color:var(--maroon); color:#FFF6E8; }
+      @media (prefers-color-scheme: dark){
+        button.action-btn{ background:var(--saffron); border-color:var(--saffron); color:#2A1408; }
+      }
+      button.print-btn{ background:var(--card); color:var(--maroon); border-color:var(--maroon); }
+      button.mini-btn{
+        appearance:none; cursor:pointer; font:inherit;
+        font-size:14px; font-weight:700;
+        border-radius:8px; padding:5px 10px;
+        border:1.5px solid var(--line); background:var(--card); color:var(--ink-soft);
+      }
+      button.mini-btn:hover{ border-color:var(--saffron); color:var(--maroon); }
+
+      /* ---------- choice quizzes ---------- */
+      .opts{ display:flex; flex-direction:column; gap:9px; margin-top:6px; }
+      .opts.row{ flex-direction:row; flex-wrap:wrap; }
+      button.opt{
+        appearance:none; cursor:pointer; font:inherit; text-align:left;
+        font-size:20px; font-weight:600;
+        background:var(--card); color:var(--ink);
+        border:2px solid var(--line); border-radius:10px;
+        padding:12px 15px;
+        transition:border-color .15s, background .15s;
+      }
+      .opts.row button.opt{ text-align:center; flex:1 1 120px; font-size:21px; }
+      button.opt:hover{ border-color:var(--saffron); }
+      button.opt.right{ background:var(--good-bg); border-color:var(--good); color:var(--good); }
+      button.opt.wrong{ background:var(--bad-bg); border-color:var(--bad); color:var(--bad); }
+      button.opt:disabled{ cursor:default; opacity:.92; }
+      .explain{
+        display:none; margin-top:12px;
+        background:var(--saffron-tint);
+        border:1.5px dashed var(--saffron);
+        border-radius:10px; padding:12px 14px; font-size:19px;
+      }
+      .explain.open{ display:block; }
+      .explain .verdict{ font-weight:800; display:block; margin-bottom:3px; font-size:20px; }
+      .verdict.true{ color:var(--good); } .verdict.false{ color:var(--bad); } .verdict.grey{ color:var(--grey); }
+      .card .reset-q{ margin-top:12px; }
+
+      /* ---------- scoreboard ---------- */
+      .score-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:14px; margin:14px 0 6px; }
+      .team{
+        background:var(--card); border:1.5px solid var(--line);
+        border-radius:14px; padding:14px 16px; box-shadow:var(--shadow);
+        text-align:center;
+      }
+      .team input{
+        font:inherit; font-size:20px; font-weight:700; text-align:center;
+        width:100%; border:none; background:transparent; color:var(--maroon-deep);
+        border-bottom:2px dashed var(--line); padding:2px 4px 5px;
+      }
+      .team input:focus{ outline:none; border-bottom-color:var(--saffron); }
+      .team .score{
+        font-family:Georgia, serif; font-size:56px; font-weight:700;
+        color:var(--maroon-deep); line-height:1.1; margin:6px 0 8px;
+      }
+      .team .btns{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+      .team .btns button{
+        appearance:none; cursor:pointer; font:inherit; font-size:16px; font-weight:800;
+        min-width:48px; padding:8px 6px; border-radius:9px;
+        border:1.5px solid var(--maroon); background:var(--maroon); color:#FFF6E8;
+      }
+      .team .btns button.neg{ background:var(--card); color:var(--maroon); }
+      @media (prefers-color-scheme: dark){
+        .team .btns button{ background:var(--saffron); border-color:var(--saffron); color:#2A1408; }
+        .team .btns button.neg{ background:var(--card); color:var(--saffron); }
+      }
+
+      /* ---------- plain content blocks ---------- */
+      .flowbox, .plainbox{
+        background:var(--card); border:1.5px solid var(--line);
+        border-radius:14px; padding:16px 20px; box-shadow:var(--shadow);
+        margin:0 0 16px;
+      }
+      .flowbox p, .plainbox p{ margin:6px 0; }
+      ul.tight{ margin:8px 0; padding-left:24px; }
+      ul.tight li{ margin:5px 0; }
+      .checklist{ list-style:none; padding:0; margin:8px 0; }
+      .checklist li{ padding:7px 0 7px 34px; position:relative; border-bottom:1px dashed var(--line); }
+      .checklist li:last-child{ border-bottom:none; }
+      .checklist li::before{
+        content:""; position:absolute; left:2px; top:10px;
+        width:17px; height:17px; border:2px solid var(--saffron-deep); border-radius:5px;
+        background:var(--card);
+      }
+      .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+      @media (max-width:760px){ .two-col{ grid-template-columns:1fr; } }
+
+      /* ---------- bingo ---------- */
+      .bingo-card{
+        background:var(--card); border:2px solid var(--maroon);
+        border-radius:8px; padding:10px; margin:0 0 18px;
+        -webkit-print-color-adjust:exact; print-color-adjust:exact;
+      }
+      .bingo-card h4{
+        margin:2px 0 8px; text-align:center;
+        font-family:Georgia, serif; color:var(--maroon-deep); font-size:19px; letter-spacing:.06em;
+      }
+      .bingo-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:5px; }
+      .mixer-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+      .cell{
+        border:1.5px solid var(--line); border-radius:7px;
+        min-height:64px; padding:6px 5px;
+        display:flex; align-items:center; justify-content:center; text-align:center;
+        font-size:15.5px; font-weight:600; line-height:1.25;
+        cursor:pointer; user-select:none; background:var(--card);
+        -webkit-print-color-adjust:exact; print-color-adjust:exact;
+      }
+      .mixer-grid .cell{ min-height:88px; font-size:15px; cursor:pointer; }
+      .cell.free{ background:var(--saffron-tint); border-color:var(--saffron); font-weight:800; color:var(--saffron-deep); }
+      .cell.daubed{ background:var(--maroon); color:#FFF6E8; border-color:var(--maroon); }
+      .cell.signed{ background:var(--saffron-tint); border-color:var(--saffron-deep); color:var(--saffron-deep); }
+      @media (prefers-color-scheme: dark){
+        .cell.daubed{ background:var(--saffron); color:#2A1408; border-color:var(--saffron); }
+      }
+      .bingo-cards-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+      @media (max-width:820px){ .bingo-cards-wrap{ grid-template-columns:1fr; } }
+
+      /* caller */
+      .spot{
+        background:var(--maroon); color:#FFF6E8;
+        border-radius:16px; padding:22px 24px; text-align:center;
+        margin:0 0 18px; box-shadow:var(--shadow);
+      }
+      @media (prefers-color-scheme: dark){ .spot{ background:#3D2018; color:var(--ink); border:2px solid var(--saffron); } }
+      .spot .spot-kw{ font-family:Georgia, serif; font-size:clamp(34px,5vw,52px); font-weight:700; line-height:1.1; }
+      .spot .spot-clue{ font-size:clamp(19px,2.6vw,24px); margin-top:8px; opacity:.95; }
+      .spot .spot-empty{ font-size:22px; opacity:.85; }
+      .caller-list{ columns:2; column-gap:28px; margin:10px 0; padding-left:22px; }
+      @media (max-width:700px){ .caller-list{ columns:1; } }
+      .caller-list li{ margin:6px 0; break-inside:avoid; font-size:18.5px; }
+      .caller-list li.called{ opacity:.45; text-decoration:line-through; }
+      .caller-list .kw{ font-weight:800; color:var(--maroon-deep); }
+
+      /* ---------- timer (floating) ---------- */
+      .timerbar{
+        position:fixed; right:14px; bottom:14px; z-index:80;
+        background:var(--maroon); color:#FFF6E8;
+        border-radius:16px; padding:10px 14px;
+        display:flex; align-items:center; gap:10px;
+        box-shadow:0 10px 30px rgba(0,0,0,.28);
+        border:2px solid rgba(255,246,232,.25);
+      }
+      @media (prefers-color-scheme: dark){ .timerbar{ background:#2C1A14; border-color:var(--saffron); color:var(--ink); } }
+      .timerbar .tlabel{ font-size:12px; font-weight:800; letter-spacing:.14em; opacity:.85; }
+      .timerbar .tdisp{
+        font-family:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        font-size:34px; font-weight:700; min-width:96px; text-align:center; line-height:1;
+      }
+      .timerbar .tdisp.done{ color:#FFD9A8; animation:blink .5s steps(2) 6; }
+      @keyframes blink{ 50%{ opacity:.35; } }
+      .timerbar button{
+        appearance:none; cursor:pointer; font:inherit; font-size:14px; font-weight:800;
+        border-radius:8px; padding:7px 10px;
+        border:1.5px solid rgba(255,246,232,.5); background:transparent; color:inherit;
+      }
+      .timerbar button.go{ background:#FFF6E8; color:var(--maroon-deep); border-color:#FFF6E8; }
+      @media (prefers-color-scheme: dark){ .timerbar button.go{ background:var(--saffron); border-color:var(--saffron); color:#2A1408; } }
+      .timerbar .presets{ display:flex; gap:5px; }
+      @media (max-width:860px){
+        .timerbar{
+          position:sticky; top:0; left:auto; right:auto; bottom:auto;
+          width:100%; border-radius:0; z-index:55;
+          flex-wrap:wrap; justify-content:center;
+        }
+        .timerbar .tdisp{ font-size:28px; min-width:78px; }
+        .timerbar .tlabel{ display:none; }
+      }
+
+      .kbd-hint{ font-size:15px; color:var(--ink-soft); }
+      .src{ font-size:16.5px; color:var(--ink-soft); font-style:italic; }
+      .closing{
+        text-align:center; font-family:Georgia, serif;
+        font-size:clamp(24px,3.4vw,32px); color:var(--maroon-deep);
+        margin:26px 0 6px;
+      }
+      .chitface{ font-family:Georgia, serif; font-size:26px; color:var(--ink-soft); text-align:center; padding:16px 0 6px; }
+      .footer-note{ margin-top:44px; padding-top:16px; border-top:1.5px solid var(--line); color:var(--ink-soft); font-size:16.5px; }
+
+      /* ---------- kahoot / match pairs / flashcards ---------- */
+      .match-status{ text-align:center; font-size:20px; margin:0 0 14px; }
+      .match-status b{ color:var(--maroon-deep); }
+      .match-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; max-width:900px; margin:0 auto; }
+      @media (max-width:560px){ .match-grid{ gap:7px; } }
+      .match-card{
+        position:relative; min-height:112px; padding:0; cursor:pointer;
+        background:none; border:none; font:inherit;
+        transform-style:preserve-3d; transition:transform .45s;
+      }
+      @media (max-width:560px){ .match-card{ min-height:96px; } }
+      .match-card.flipped{ transform:rotateY(180deg); }
+      .match-face{
+        position:absolute; inset:0;
+        backface-visibility:hidden; -webkit-backface-visibility:hidden;
+        display:flex; align-items:center; justify-content:center; text-align:center;
+        padding:8px; border-radius:12px;
+        font-size:16.5px; font-weight:700; line-height:1.3;
+        box-shadow:var(--shadow);
+      }
+      @media (max-width:560px){ .match-face{ font-size:13.5px; padding:5px; } }
+      .match-face.front{ background:var(--maroon); color:#FFF6E8; font-size:32px; }
+      .match-face.back{
+        transform:rotateY(180deg);
+        background:var(--card); border:2px solid var(--saffron); color:var(--ink);
+        font-family:"Noto Sans Telugu", ui-sans-system, system-ui, sans-serif;
+      }
+      .match-card.matched{ cursor:default; }
+      .match-card.matched .match-face.back{ background:var(--good-bg); border-color:var(--good); color:var(--good); }
+
+      .flash-stage{ perspective:1200px; max-width:660px; margin:0 auto 18px; }
+      .flash-card{
+        position:relative; width:100%; min-height:300px; cursor:pointer;
+        transform-style:preserve-3d; transition:transform .5s;
+      }
+      .flash-card.flipped{ transform:rotateY(180deg); }
+      .flash-face{
+        position:absolute; inset:0;
+        backface-visibility:hidden; -webkit-backface-visibility:hidden;
+        display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+        padding:26px; border-radius:16px;
+        border:2px solid var(--line); background:var(--card); box-shadow:var(--shadow);
+      }
+      .flash-face.back{ transform:rotateY(180deg); background:var(--saffron-tint); border-color:var(--saffron); }
+      .flash-kw{ font-family:Georgia, "Times New Roman", serif; font-size:clamp(32px,5.5vw,48px); font-weight:700; color:var(--maroon-deep); line-height:1.15; }
+      .flash-clue{ font-size:clamp(20px,3vw,25px); line-height:1.45; font-family:"Noto Sans Telugu", ui-sans-system, system-ui, sans-serif; }
+      .flash-hint{ font-size:13px; font-weight:800; letter-spacing:.14em; color:var(--ink-soft); margin-top:16px; }
+      .flash-nav{ display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+      .flash-count{ font-family:ui-monospace, "SF Mono", Menlo, monospace; font-size:22px; font-weight:700; min-width:86px; text-align:center; }
+      @media (prefers-reduced-motion: reduce){
+        .flash-card, .match-card{ transition:none; }
+      }
+
+      /* ---------- print ---------- */
+      @media print{
+        body{ background:#fff; font-size:16px; }
+        .tabbar, .timerbar, .noprint, button{ display:none !important; }
+        main{ padding:0; max-width:none; }
+        section.tab{ display:none !important; }
+        body:not([data-print]) section.tab.active{ display:block !important; }
+        .card, .team, .flowbox, .plainbox{ box-shadow:none; }
+        .answer, .explain{ display:none !important; }
+        .answer.open, .explain.open{ display:block !important; }
+        body[data-print="mixer"] #tab-icebreakers{ display:block !important; }
+        body[data-print="mixer"] #tab-icebreakers .hideprint{ display:none !important; }
+        body[data-print="bingo"] #tab-bingo, body[data-print="caller"] #tab-bingo{ display:block !important; }
+        body[data-print="bingo"] #tab-bingo .hideprint{ display:none !important; }
+        body[data-print="bingo"] #callerWrap{ display:none !important; }
+        body[data-print="caller"] #tab-bingo .hideprint{ display:none !important; }
+        body[data-print="caller"] #cardsWrap{ display:none !important; }
+        body[data-print="cheats"] #tab-cheats{ display:block !important; }
+        .cell{ min-height:52px; font-size:13px; }
+        .mixer-grid .cell{ min-height:74px; font-size:12.5px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="tabbar noprint" role="tablist" aria-label="Quiz rounds">
+      <button class="tab-btn active" data-tab="tab-start"><span class="n">1</span>Start Here</button>
+      <button class="tab-btn" data-tab="tab-icebreakers"><span class="n">2</span>Icebreakers</button>
+      <button class="tab-btn" data-tab="tab-rapid"><span class="n">3</span>Rapid-Fire</button>
+      <button class="tab-btn" data-tab="tab-line"><span class="n">4</span>Finish the Line</button>
+      <button class="tab-btn" data-tab="tab-tf"><span class="n">5</span>True or False</button>
+      <button class="tab-btn" data-tab="tab-charades"><span class="n">6</span>Charades</button>
+      <button class="tab-btn" data-tab="tab-whose"><span class="n">7</span>Whose Words?</button>
+      <button class="tab-btn" data-tab="tab-need"><span class="n">8</span>Need or Desire?</button>
+      <button class="tab-btn" data-tab="tab-wwgs"><span class="n">9</span>What Would Sri Babuji Say?</button>
+      <button class="tab-btn" data-tab="tab-bingo"><span class="n">10</span>Bingo</button>
+      <button class="tab-btn" data-tab="tab-finale"><span class="n">11</span>Teach-Back Finale</button>
+      <button class="tab-btn" data-tab="tab-cheats"><span class="n">12</span>Facilitator Cheats</button>
+      <button class="tab-btn" data-tab="tab-kahoot"><span class="n">13</span>Kahoot Lightning</button>
+      <button class="tab-btn" data-tab="tab-match"><span class="n">14</span>Match Pairs</button>
+      <button class="tab-btn" data-tab="tab-flash"><span class="n">15</span>Flashcards</button>
+    </nav>
+
+    <div class="timerbar noprint" id="timerbar" aria-label="Countdown timer">
+      <span class="tlabel">TIMER</span>
+      <span class="tdisp" id="tdisp">0:30</span>
+      <span class="presets">
+        <button data-preset="10">10s</button>
+        <button data-preset="15">15s</button>
+        <button data-preset="30">30s</button>
+        <button data-preset="60">60s</button>
+        <button data-preset="120">2m</button>
+      </span>
+      <button class="go" id="tgo">Start</button>
+      <button id="treset">Reset</button>
+    </div>
+
+    <main>
+      <!-- ============ TAB 1 : START HERE ============ -->
+      <section class="tab active" id="tab-start">
+        <h1 class="page-title">Think of Sai, Talk of Sai — Quiz Night</h1>
+        <p class="subtitle">An interactive evening across Sri Babuji's satsangs: his analogies, the saints he speaks of, Sai Baba's leelas, the Satcharitra as he teaches it, and the morning's Desire vs Need satsang.</p>
+
+        <div class="score-grid" aria-label="Team scoreboard">
+          <div class="team">
+            <input type="text" value="Team 1" aria-label="Team 1 name" />
+            <div class="score" data-score>0</div>
+            <div class="btns">
+              <button class="neg" data-delta="-5">−5</button>
+              <button class="neg" data-delta="-1">−1</button>
+              <button data-delta="1">+1</button>
+              <button data-delta="5">+5</button>
+              <button data-delta="10">+10</button>
+            </div>
+          </div>
+          <div class="team">
+            <input type="text" value="Team 2" aria-label="Team 2 name" />
+            <div class="score" data-score>0</div>
+            <div class="btns">
+              <button class="neg" data-delta="-5">−5</button>
+              <button class="neg" data-delta="-1">−1</button>
+              <button data-delta="1">+1</button>
+              <button data-delta="5">+5</button>
+              <button data-delta="10">+10</button>
+            </div>
+          </div>
+          <div class="team">
+            <input type="text" value="Team 3" aria-label="Team 3 name" />
+            <div class="score" data-score>0</div>
+            <div class="btns">
+              <button class="neg" data-delta="-5">−5</button>
+              <button class="neg" data-delta="-1">−1</button>
+              <button data-delta="1">+1</button>
+              <button data-delta="5">+5</button>
+              <button data-delta="10">+10</button>
+            </div>
+          </div>
+          <div class="team">
+            <input type="text" value="Team 4" aria-label="Team 4 name" />
+            <div class="score" data-score>0</div>
+            <div class="btns">
+              <button class="neg" data-delta="-5">−5</button>
+              <button class="neg" data-delta="-1">−1</button>
+              <button data-delta="1">+1</button>
+              <button data-delta="5">+5</button>
+              <button data-delta="10">+10</button>
+            </div>
+          </div>
+        </div>
+        <p class="noprint" style="margin:2px 0 20px;"><button class="mini-btn" id="score-reset">Reset all scores</button></p>
+
+        <div class="two-col">
+          <div class="flowbox">
+            <h3 class="block-title" style="margin-top:0;">Suggested 60-minute flow</h3>
+            <ul class="tight">
+              <li><b>Icebreaker</b> — 10 min (Tab 2)</li>
+              <li><b>Rapid-Fire</b> — 15 min (Tab 3)</li>
+              <li><b>Need or Desire?</b> — 15 min (Tab 8)</li>
+              <li><b>Bingo</b> — 15 min (Tab 10)</li>
+              <li><b>Final scores &amp; prizes</b> — 5 min</li>
+            </ul>
+            <p><b>Alternative:</b> swap Bingo for <b>Kahoot-style Lightning</b> (Tab 13) — same keywords, twice the noise.</p>
+          </div>
+          <div class="flowbox">
+            <h3 class="block-title" style="margin-top:0;">Suggested 90-minute flow</h3>
+            <p>The 60-minute flow, <b>plus</b>:</p>
+            <ul class="tight">
+              <li><b>Kahoot-style Lightning</b> — 10 min (Tab 13), straight after Rapid-Fire</li>
+              <li><b>Finish Sri Babuji's Line</b> — 12 min (Tab 4)</li>
+              <li><b>Analogy Charades</b> — 15 min (Tab 6)</li>
+            </ul>
+            <p>…and run <b>Whose Words?</b> (Tab 7, 10 min) as the warm-up instead of one other round.</p>
+            <p><b>Match Pairs</b> (Tab 14) and <b>Flashcards</b> (Tab 15) are the spare parts — use them while teams form, or as a cooldown while the final scores are tallied.</p>
+          </div>
+        </div>
+
+        <div class="flowbox">
+          <h3 class="block-title" style="margin-top:0;">Team setup</h3>
+          <p>3–4 teams, 4–6 people each. Mix veterans and newcomers — the <b>Human Timeline</b> icebreaker (Tab 2) folds the room into balanced teams for you.</p>
+          <p>Each team picks a name — <b>+20 bonus</b> for the best Sai-flavoured name (facilitator judges).</p>
+        </div>
+
+        <div class="two-col">
+          <div class="flowbox">
+            <h3 class="block-title" style="margin-top:0;">Scoring defaults</h3>
+            <ul class="tight">
+              <li>Rapid-Fire: <b>+10 / −5</b></li>
+              <li>Finish the Line: <b>+10</b></li>
+              <li>True / False: <b>+5</b></li>
+              <li>Charades: <b>5 + 5</b> (analogy + teaching)</li>
+              <li>Whose Words?: <b>+10</b></li>
+              <li>Need or Desire?: <b>+5</b> per correct team call</li>
+              <li>Bingo: first full row / column / diagonal wins the round</li>
+              <li>Teach-Back finale: scored by applause</li>
+            </ul>
+            <p><b>Tie-breaker:</b> sudden-death Finish Sri Babuji's Line — one line per tied team; miss and you're out.</p>
+          </div>
+          <div class="flowbox">
+            <h3 class="block-title" style="margin-top:0;">Materials checklist</h3>
+            <ul class="checklist">
+              <li>Printed mixer bingo — one per person (Tab 2)</li>
+              <li>Printed quiz bingo cards — a few of each of the 4 designs (Tab 10)</li>
+              <li>Green / red paper for True–False</li>
+              <li>NEED / DESIRE / GREY cards per team</li>
+              <li>The on-page timer (bottom-right of this page)</li>
+              <li>Small prizes (optional)</li>
+              <li>Object box from the morning — candle, toy scooter, coffee cup, chain, bus ticket, glass — doubles as charades props</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="footer-note">Every answer on this page can be tapped open on the day — nothing here needs hover or a mouse. All quotes and timestamps are from Sri Babuji's satsangs as captioned; the morning's Desire vs Need satsang carries the timestamps shown.</p>
+      </section>
+
+      <!-- ============ TAB 2 : ICEBREAKERS ============ -->
+      <section class="tab" id="tab-icebreakers">
+        <h2 class="round-title">Icebreakers</h2>
+        <p class="round-sub">Warm the room up before a single point is scored. Pick one — or run the Human Timeline last, because it builds your teams.</p>
+
+        <div class="howto hideprint">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>1 · Find Your Satsang Twin (10 min):</b> hand every person a printed mixer sheet (print button below). Mingle — one signature per square from someone it is true of. First completed row, column or diagonal shouts and wins.</p>
+          <p><b>2 · Two Truths and a Leela (5 min per table):</b> each person states two true things about their spiritual journey and one invented "leela that happened to me". The table guesses which one is fiction.</p>
+          <p><b>3 · The Human Timeline (5 min):</b> everyone lines up <b>without talking</b> — fingers and charades only — ordered by years since first hearing of Sai Baba. Then fold the line in half to mix veterans and newcomers into balanced quiz teams.</p>
+        </div>
+
+        <div id="sheet-mixer">
+          <h3 class="block-title">Find Your Satsang Twin — mixer bingo</h3>
+          <p class="hideprint kbd-hint">On screen, tap a square as you collect each signature. Print one sheet per person before the session.</p>
+          <div class="mixer-grid" id="mixerGrid">
+            <div class="cell">attended 10+ satsangs</div>
+            <div class="cell">first satsang was this year</div>
+            <div class="cell">has read the full Satcharitra</div>
+            <div class="cell">can name 3 of Sri Babuji's analogies</div>
+            <div class="cell">travelled 30+ miles to get here today</div>
+            <div class="cell">keeps a daily namasmarana</div>
+            <div class="cell">has visited Shirdi</div>
+            <div class="cell">knows why udi is NOT a vairagya symbol</div>
+            <div class="cell">watched a Telugu satsang without subtitles</div>
+            <div class="cell">brought a friend today</div>
+            <div class="cell">can define need-vs-desire in one line</div>
+            <div class="cell">has a favourite Rose Petals edition</div>
+            <div class="cell">woke up before 5 AM today</div>
+            <div class="cell">keeps the Thursday niyamam</div>
+            <div class="cell">can sing a bhajan from memory</div>
+            <div class="cell">can name all 4 items in Sri Babuji's scooter savings-audit</div>
+          </div>
+          <p class="noprint" style="margin-top:14px;">
+            <button class="mini-btn" id="mixer-clear">Clear signatures</button>
+          </p>
+        </div>
+
+        <div class="hideprint">
+          <h3 class="block-title">Two Truths and a Leela</h3>
+          <div class="plainbox">
+            <p><b>Say this:</b> "Tell us two true things about your spiritual journey — and one leela that never actually happened to you. Make the leela sound real. Table, your job: spot the fiction."</p>
+            <p>Five minutes per table. The best invented leelas usually sound <i>almost</i> too neat — enjoy the detective work.</p>
+          </div>
+          <h3 class="block-title">The Human Timeline</h3>
+          <div class="plainbox">
+            <p><b>Say this:</b> "No talking. Fingers and acting only. Line up by how many years it has been since you first heard of Sai Baba — longest at this end, newest at that end."</p>
+            <p>When the line settles, <b>fold it in half</b>: the veteran end pairs with the newcomer end. Count off into 3–4 teams of 4–6 — every team now has both memory and fresh eyes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TAB 3 : RAPID-FIRE ============ -->
+      <section class="tab" id="tab-rapid">
+        <h2 class="round-title">Rapid-Fire</h2>
+        <p class="round-sub">Twelve questions, fifteen seconds each. Fast hands, faster memories.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Read the question aloud. Start the 15-second timer</b> (bottom-right). First team to call out answers. <b>+10</b> for a correct answer, <b>−5</b> for a wrong one — a pass costs nothing. Tap a card to check the answer; the timestamp points at the exact moment in the morning's satsang.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><span class="cardnum">1</span>
+            <p class="q">In the Desire vs Need satsang, Sri Babuji audits a lifetime of "savings for survival". Name the FOUR things the money became.</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">Houses, jewellery, furniture, scooters.<span class="ts">04:58</span></div>
+          </article>
+          <article class="card"><span class="cardnum">2</span>
+            <p class="q">One metre of cloth makes a shirt; one bus ticket gets you there. What is Sri Babuji's one-line rule?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">Whatever exceeds the requirement's measure is desire. <span class="te">("కావాలి అనుకుంటాడు అంటే రిక్వైర్మెంట్")</span></div>
+          </article>
+          <article class="card"><span class="cardnum">3</span>
+            <p class="q">"From the beginning, provide them with good heroes." If your hero is Amitabh Bachchan or NTR, what can you offer your children?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">Only that — that is all you have to give.<span class="ts">11:25–11:46</span></div>
+          </article>
+          <article class="card"><span class="cardnum">4</span>
+            <p class="q">Ramakrishna offered Goddess Kali his happiness, sorrow, wisdom, ignorance and knowledge — but refused to give ONE thing. What?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">Satyam (truth).<span class="ts">17:03</span></div>
+          </article>
+          <article class="card"><span class="cardnum">5</span>
+            <p class="q">After years of severe tapas, what did Buddha discover?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">Tapas achieves nothing — only jnana.<span class="ts">23:47</span></div>
+          </article>
+          <article class="card"><span class="cardnum">6</span>
+            <p class="q">Ramana said: before a being is born, what is already written down?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">How it will all happen — the whole script.<span class="ts">44:17</span></div>
+          </article>
+          <article class="card"><span class="cardnum">7</span>
+            <p class="q">Sri Babuji's clarification: udi is NOT a symbol of vairagya. What is it really?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">Baba's padadhuli — the dust of His feet; the dhuni is "the factory that produces His feet-dust".</div>
+          </article>
+          <article class="card"><span class="cardnum">8</span>
+            <p class="q">Das Ganu demanded sakshatkara as the fruit of his Bhagavata saptaha. What was Baba's reply?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">"You are seeing me now — that itself is sakshatkara; I myself am God."</div>
+          </article>
+          <article class="card"><span class="cardnum">9</span>
+            <p class="q">A rich Bombay merchant sought Brahma-jnana but couldn't part with Rs. 5 dakshina. Sri Babuji's punch line?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">"Why do you seek for God? Your God is in your pocket."</div>
+          </article>
+          <article class="card"><span class="cardnum">10</span>
+            <p class="q">The TRUE dakshina we give Baba is not $100 or $1000. What is it?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">Our peace, our joy, and our time.</div>
+          </article>
+          <article class="card"><span class="cardnum">11</span>
+            <p class="q">What was Ramana's "brahmastra" — the weapon he used to silence pestering questioners?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">"Who am I?"</div>
+          </article>
+          <article class="card"><span class="cardnum">12</span>
+            <p class="q">A woman told Ramana she had no desires and wanted only mukti. He laughed — why?</p>
+            <button class="reveal-btn">Show answer</button>
+            <div class="answer">Wanting nothing IS mukti; what is left to give?</div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 4 : FINISH GURUJI'S LINE ============ -->
+      <section class="tab" id="tab-line">
+        <h2 class="round-title">Finish Sri Babuji's Line</h2>
+        <p class="round-sub">All eight lines are from the morning's Desire vs Need satsang, shown exactly as captioned — Telugu first, English essence underneath.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Show the first half big. Teams shout the completion</b> — in Telugu or in sense. Tap to reveal the rest, with the timestamp. <b>+10</b> per line. This round is also your sudden-death tie-breaker: one line per tied team, miss and you're out.</p>
+        </div>
+        <div class="grid wide">
+          <article class="card"><span class="cardnum">1</span>
+            <p class="big-line te">బస్సులో పోకుంటే ఒక టికెట్ తాలి…</p>
+            <button class="reveal-btn">Finish the line</button>
+            <div class="answer"><span class="rest te">…రెండు గంటలు కొనుకొని పోతావా</span><span class="essence">One ticket gets you there — would you buy two?<span class="ts">01:11</span></span></div>
+          </article>
+          <article class="card"><span class="cardnum">2</span>
+            <p class="big-line te">డబ్బులంతా ఇల్లు కట్టించారు నగలు కొన్నారు ఫర్నిచర్లు కొన్నారు…</p>
+            <button class="reveal-btn">Finish the line</button>
+            <div class="answer"><span class="rest te">…స్కూటర్లు కొన్నారు</span><span class="essence">houses, jewellery, furniture, scooters.<span class="ts">04:58</span></span></div>
+          </article>
+          <article class="card"><span class="cardnum">3</span>
+            <p class="big-line te">పిల్లల పంపకంలో మాత్రం ద బిగినింగ్…</p>
+            <button class="reveal-btn">Finish the line</button>
+            <div class="answer"><span class="rest te">…హవ టు ప్రొవైడ్ ద విత్ గుడ్ హీరోస్</span><span class="essence">from the beginning, provide them with good heroes.<span class="ts">11:25</span></span></div>
+          </article>
+          <article class="card"><span class="cardnum">4</span>
+            <p class="big-line te">ఏదన్నా వదులుకో డబ్బు వదులుకో నీ సుఖం వదులుకో…</p>
+            <button class="reveal-btn">Finish the line</button>
+            <div class="answer"><span class="rest te">…సత్యాన్ని మాత్రం వదులుకోకు</span><span class="essence">give up anything, but never give up satyam.<span class="ts">16:33</span></span></div>
+          </article>
+          <article class="card"><span class="cardnum">5</span>
+            <p class="big-line te">నా యొక్క సుఖము దుఃఖం నా యొక్క వివేకం అజ్ఞానం జ్ఞానం అన్ని నీకు ఇచ్చేసా…</p>
+            <button class="reveal-btn">Finish the line</button>
+            <div class="answer"><span class="rest te">…సత్యం అది మాత్రం ఇవ్వను</span><span class="essence">take them all; satyam alone I will never give.<span class="essence" style="display:block;">(Ramakrishna to Kali)<span class="ts">17:21</span></span></span></div>
+          </article>
+          <article class="card"><span class="cardnum">6</span>
+            <p class="big-line te">కాఫీ చూస్తూనే…</p>
+            <button class="reveal-btn">Finish the line</button>
+            <div class="answer"><span class="rest te">…కోరిక పుట్టావు</span><span class="essence">the moment you see coffee, desire arises — from the samskaras already inside you.<span class="ts">57:16</span></span></div>
+          </article>
+          <article class="card"><span class="cardnum">7</span>
+            <p class="big-line te">నీకు అదే కరెక్ట్ కనిపిస్తే అడుగు…</p>
+            <button class="reveal-btn">Finish the line</button>
+            <div class="answer"><span class="rest te">…నాకే కోరికలు లేకుండా చేయమని</span><span class="essence">the one prayer worth praying: "make me desireless."<span class="ts">40:13</span></span></div>
+          </article>
+          <article class="card"><span class="cardnum">8</span>
+            <p class="big-line te">చిన్న విషయాలు…</p>
+            <button class="reveal-btn">Finish the line</button>
+            <div class="answer"><span class="rest te">…జాగ్రత్తగా ఉండండి</span><span class="essence">guard the small things carefully; big things take care of themselves.<span class="ts">36:02</span></span></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 5 : TRUE OR FALSE ============ -->
+      <section class="tab" id="tab-tf">
+        <h2 class="round-title">True or False</h2>
+        <p class="round-sub">Eight statements. Some of them sound exactly like things Sri Babuji would say — that's the trap.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Read the statement. On three, every team holds up green (true) or red (false).</b> Tap the card to reveal the verdict and the one-line why. <b>+5</b> per correct call. Wrong-colour waving is part of the fun — keep the pace brisk.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><span class="cardnum">1</span>
+            <p class="q small">Sri Babuji says udi is a symbol of vairagya and Vedanta.</p>
+            <button class="reveal-btn">Reveal verdict</button>
+            <div class="answer"><b style="color:var(--bad);">FALSE</b> — udi is Baba's padadhuli, the dust of His feet; "there is no vairagya in it, no Vedanta."</div>
+          </article>
+          <article class="card"><span class="cardnum">2</span>
+            <p class="q small">True parayana means finishing a fixed number of Satcharitra pages every day.</p>
+            <button class="reveal-btn">Reveal verdict</button>
+            <div class="answer"><b style="color:var(--bad);">FALSE</b> — marking pages ("today 12 pages") is not parayana; true parayana is tattva-enquiry: take ONE leela and ask it 100 questions with real jijnasa, until "we disappear".</div>
+          </article>
+          <article class="card"><span class="cardnum">3</span>
+            <p class="q small">Baba sometimes withholds a prayer on purpose, because granting it would make us suffer.</p>
+            <button class="reveal-btn">Reveal verdict</button>
+            <div class="answer"><b style="color:var(--good);">TRUE</b> — He knows better than the wish itself.<span class="ts">43:27</span></div>
+          </article>
+          <article class="card"><span class="cardnum">4</span>
+            <p class="q small">A woman in a ₹5000 Kanchi pattu saree walks happily.</p>
+            <button class="reveal-btn">Reveal verdict</button>
+            <div class="answer"><b style="color:var(--bad);">FALSE</b> — the saree is a heavy burden, borne for nothing but one word of praise: "how beautiful".</div>
+          </article>
+          <article class="card"><span class="cardnum">5</span>
+            <p class="q small">Ramana's "Who am I?" was his brahmastra for silencing pestering questioners.</p>
+            <button class="reveal-btn">Reveal verdict</button>
+            <div class="answer"><b style="color:var(--good);">TRUE.</b></div>
+          </article>
+          <article class="card"><span class="cardnum">6</span>
+            <p class="q small">When the lights went out, the disciple was praised for lighting a different candle than asked.</p>
+            <button class="reveal-btn">Reveal verdict</button>
+            <div class="answer"><b style="color:var(--bad);">FALSE</b> — he was scolded for days: exact obedience to the guru's word, not creative substitution.<span class="ts">46:41</span></div>
+          </article>
+          <article class="card"><span class="cardnum">7</span>
+            <p class="q small">Jesus said "whoever has seen me has seen the Father" — and Sri Babuji links it to Baba's reply to Das Ganu.</p>
+            <button class="reveal-btn">Reveal verdict</button>
+            <div class="answer"><b style="color:var(--good);">TRUE</b> — Philip's question and Das Ganu's demand for sakshatkara got the same answer.</div>
+          </article>
+          <article class="card"><span class="cardnum">8</span>
+            <p class="q small">Baba kept the dhuni lit because He performed the Vedic fire ritual (agnihotra).</p>
+            <button class="reveal-btn">Reveal verdict</button>
+            <div class="answer"><b style="color:var(--bad);">FALSE</b> — Baba never did Vedic fire ritual; the dhuni burns "to burn our sins".</div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 6 : ANALOGY CHARADES ============ -->
+      <section class="tab" id="tab-charades">
+        <h2 class="round-title">Analogy Charades</h2>
+        <p class="round-sub">Sri Babuji teaches through pictures. Now the pictures have to survive being acted out.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>One player acts or draws — no speaking, no writing letters in the air.</b> Props from the morning's object box are allowed. Their team guesses <b>the analogy (5 pts)</b> and then <b>the teaching it illustrates (5 pts)</b>. The actor peeks at a card here; everyone else, eyes on the actor. 60-second timer per card.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><span class="cardnum">1</span>
+            <p class="chitface">Card 1 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">Magnet and iron</span>Contact with the Sadguru reorders our clashing, disordered desires like iron rubbed against a magnet: nothing added, nothing lost — only the order changes.</div>
+          </article>
+          <article class="card"><span class="cardnum">2</span>
+            <p class="chitface">Card 2 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The upside-down vessel</span>We are pots pushed upside-down into the ocean of grace; one degree of tilt — namaskar, bending the ego — lets the water flood in.</div>
+          </article>
+          <article class="card"><span class="cardnum">3</span>
+            <p class="chitface">Card 3 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The umbrella in the rain</span>The Sadguru doesn't stop prarabdha's rain, but under his shelter it cannot touch you — and we often push the umbrella aside ourselves, then blame him.</div>
+          </article>
+          <article class="card"><span class="cardnum">4</span>
+            <p class="chitface">Card 4 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The train engine</span>Don't drop your attachments — couple them all to Baba like compartments to an engine; only the engine matters.</div>
+          </article>
+          <article class="card"><span class="cardnum">5</span>
+            <p class="chitface">Card 5 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The suitcase on the Superfast Express</span>You board Baba's train but keep your problem-suitcase on your head inside it — put it down; the train carries you, it can carry the suitcase too.</div>
+          </article>
+          <article class="card"><span class="cardnum">6</span>
+            <p class="chitface">Card 6 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The swimming pool</span>Before Baba we drowned in the ocean; after, we're in a swimming pool: the water (job, house, quarrels) remains, but the fear of drowning is gone.</div>
+          </article>
+          <article class="card"><span class="cardnum">7</span>
+            <p class="chitface">Card 7 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The cinema ticket queue</span>Nobody holds a teamwork workshop at a ticket counter — each buys a ticket, all enjoy the film. Drop the <i>concept</i> of teamwork and teamwork happens.</div>
+          </article>
+          <article class="card"><span class="cardnum">8</span>
+            <p class="chitface">Card 8 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The clock's two hands</span>Outer activity is the fast, visible long hand; inner transformation is the slow short hand — but the short hand tells the real hour.</div>
+          </article>
+          <article class="card"><span class="cardnum">9</span>
+            <p class="chitface">Card 9 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The hospital</span>Who qualifies to enter a hospital? The sick. Unworthiness is the qualification for coming to Baba.</div>
+          </article>
+          <article class="card"><span class="cardnum">10</span>
+            <p class="chitface">Card 10 — actor, peek here</p>
+            <button class="reveal-btn">Actor peeks</button>
+            <div class="answer"><span class="rest">The honest mechanic</span>Where experts with instruments failed, a simple hand-test fixed it: small, honest, obedient methods beat grand sadhana apparatus.<span class="ts">50:08</span></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 7 : WHOSE WORDS? ============ -->
+      <section class="tab" id="tab-whose">
+        <h2 class="round-title">Whose Words?</h2>
+        <p class="round-sub">Eight quotations. Three possible speakers. Only one puckered the lips.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Read the quote aloud. Each team commits: BABA, SRI BABUJI, or THE SAINT.</b> Tap a choice to check it — <b>+10</b> for the right speaker — then read the source line so everyone hears where it came from.</p>
+        </div>
+        <div class="grid">
+          <article class="card" data-quiz><span class="cardnum">1</span>
+            <p class="q small">"You are seeing me now — that itself is sakshatkara; I myself am God."</p>
+            <div class="opts row">
+              <button class="opt" data-correct="1">BABA</button>
+              <button class="opt">SRI BABUJI</button>
+              <button class="opt">THE SAINT</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">BABA</span>— to Das Ganu (Satcharitra Ch. 26).</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">2</span>
+            <p class="q small">"Why do you seek for God? Your God is in your pocket."</p>
+            <div class="opts row">
+              <button class="opt">BABA</button>
+              <button class="opt" data-correct="1">SRI BABUJI</button>
+              <button class="opt">THE SAINT</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">SRI BABUJI</span>— his clarification on the Bombay merchant leela.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">3</span>
+            <p class="q small">"Whoever has seen me has seen the Father."</p>
+            <div class="opts row">
+              <button class="opt">BABA</button>
+              <button class="opt">SRI BABUJI</button>
+              <button class="opt" data-correct="1">THE SAINT</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">THE SAINT</span>— Jesus, answering Philip (Sri Babuji's parallel to Das Ganu).</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">4</span>
+            <p class="q small">"Who am I?" — wielded as a brahmastra against pestering questioners.</p>
+            <div class="opts row">
+              <button class="opt">BABA</button>
+              <button class="opt">SRI BABUJI</button>
+              <button class="opt" data-correct="1">THE SAINT</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">THE SAINT</span>— Ramana Maharshi.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">5</span>
+            <p class="q small">"My happiness, my sorrow, my wisdom, my ignorance, my knowledge — take them all; satyam alone I will never give."</p>
+            <div class="opts row">
+              <button class="opt">BABA</button>
+              <button class="opt">SRI BABUJI</button>
+              <button class="opt" data-correct="1">THE SAINT</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">THE SAINT</span>— Ramakrishna to Goddess Kali.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">6</span>
+            <p class="q small">"There is no vairagya in it, no Vedanta." <span class="src">(about udi)</span></p>
+            <div class="opts row">
+              <button class="opt">BABA</button>
+              <button class="opt" data-correct="1">SRI BABUJI</button>
+              <button class="opt">THE SAINT</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">SRI BABUJI.</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">7</span>
+            <p class="q small">"To burn our sins." <span class="src">(why the dhuni is kept lit)</span></p>
+            <div class="opts row">
+              <button class="opt" data-correct="1">BABA</button>
+              <button class="opt">SRI BABUJI</button>
+              <button class="opt">THE SAINT</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">BABA</span>— His own answer.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">8</span>
+            <p class="q small">"Don't call me perfect — nobody is perfect except the Father in heaven."</p>
+            <div class="opts row">
+              <button class="opt">BABA</button>
+              <button class="opt">SRI BABUJI</button>
+              <button class="opt" data-correct="1">THE SAINT</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">THE SAINT</span>— Jesus; Sri Babuji: owning a mistake dissolves half the ego.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 8 : NEED OR DESIRE? ============ -->
+      <section class="tab" id="tab-need">
+        <h2 class="round-title">Need or Desire?</h2>
+        <p class="round-sub">The morning's satsang, turned into a game the room plays with its own life.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Read an item. Every team holds up NEED, DESIRE or GREY.</b> <b>+5</b> per correct team call. GREY items get a <b>30-second debate</b> (timer, bottom-right), then read Sri Babuji's test aloud. Tap an item to check the call — and reward the best reasoning, not just the right card.</p>
+        </div>
+        <div class="plainbox">
+          <h3 class="block-title" style="margin-top:0;">Sri Babuji's three tests — keep these in view</h3>
+          <p><b>1 · THE MEASURE</b> — one metre makes a shirt, one ticket rides the bus; whatever exceeds the requirement's measure is desire.</p>
+          <p><b>2 · THE SAVINGS AUDIT</b> — <span class="te">"ఇవంతా బతకడానికి చేశారా"</span> — did you do all this for mere survival?</p>
+          <p><b>3 · THE PRAISE TEST</b> — would you still want it if no one would praise you for it?</p>
+        </div>
+        <h3 class="block-title">From the morning satsang</h3>
+        <div class="grid">
+          <article class="card" data-quiz><span class="cardnum">1</span>
+            <p class="q small">A second bus ticket for the same journey</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt" data-correct="1">DESIRE</button>
+              <button class="opt">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict false">DESIRE</span>One does the job.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">2</span>
+            <p class="q small">A scooter bought out of "survival savings"</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt" data-correct="1">DESIRE</button>
+              <button class="opt">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict false">DESIRE</span>The audit's exhibit #4.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">3</span>
+            <p class="q small">A ₹5000 Kanchi pattu saree, worn for others' praise</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt" data-correct="1">DESIRE</button>
+              <button class="opt">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict false">DESIRE</span>Run the praise test on it.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">4</span>
+            <p class="q small">One metre of cloth for a shirt</p>
+            <div class="opts row">
+              <button class="opt" data-correct="1">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict true">NEED</span>Exactly the requirement's measure.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">5</span>
+            <p class="q small">Money parked in the bank, living on the interest, feet up</p>
+            <div class="opts row">
+              <button class="opt" data-correct="1">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict true">NEED, done right</span>Then money works like a dog for you.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">6</span>
+            <p class="q small">A gold chain for a child — gift it if you have it; never borrow or do wrong to get it</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt" data-correct="1">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict grey">GREY</span>Measure it against capacity.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+        </div>
+        <h3 class="block-title">Everyday debatables — 30 seconds each, then the test</h3>
+        <div class="grid">
+          <article class="card" data-quiz><span class="cardnum">7</span>
+            <p class="q small">A second phone "for work"</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt" data-correct="1">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict grey">GREY — debate</span>Then run the measure: what does the first phone not already do?</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">8</span>
+            <p class="q small">Children's education</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt" data-correct="1">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict grey">GREY — debate</span>And recall: the one gift Sri Babuji names is good heroes.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">9</span>
+            <p class="q small">Air-conditioning in every room</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt" data-correct="1">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict grey">GREY — debate</span>Where does comfort end and the measure get crossed?</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">10</span>
+            <p class="q small">A bigger house "for guests who visit twice a year"</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt" data-correct="1">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict grey">GREY — debate</span>Ten months of measure, for two weekends?</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">11</span>
+            <p class="q small">Daily coffee</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt" data-correct="1">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict grey">GREY — debate</span>Samskara check: would the sight move you if the habit weren't inside?<span class="ts">57:16</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">12</span>
+            <p class="q small">Saving for the children's future</p>
+            <div class="opts row">
+              <button class="opt">NEED</button>
+              <button class="opt">DESIRE</button>
+              <button class="opt" data-correct="1">GREY</button>
+            </div>
+            <div class="explain"><span class="verdict grey">GREY — debate</span>Run the savings-audit question on it.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 9 : WHAT WOULD SRI BABUJI SAY? ============ -->
+      <section class="tab" id="tab-wwgs">
+        <h2 class="round-title">What Would Sri Babuji Say?</h2>
+        <p class="round-sub">Real sadhana questions, the kind people actually ask after satsang. Three plausible answers — one is his.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Read the scenario and the three options. Teams pick a, b or c.</b> Tap the choice to reveal Sri Babuji's guidance. <b>+10</b> per correct pick — then let the room sit with the guidance for a breath before moving on.</p>
+        </div>
+        <div class="grid wide">
+          <article class="card" data-quiz><span class="cardnum">1</span>
+            <p class="q small">A newcomer asks: "How do I talk to Baba? I don't feel any connection."</p>
+            <div class="opts">
+              <button class="opt">a) Wait for a sign or a dream first.</button>
+              <button class="opt" data-correct="1">b) The phone line is never dead — just pick up and talk; the connection with Baba is unbreakable, it is our holding that drops.</button>
+              <button class="opt">c) Connection comes only after years of ritual.</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">b</span>Sri Babuji's phone analogy: talk to Baba like picking up the phone; Thursday niyamam keeps the line warm.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">2</span>
+            <p class="q small">"I finished 11 Satcharitra parayanas but feel nothing changed."</p>
+            <div class="opts">
+              <button class="opt">a) Do 11 more, faster.</button>
+              <button class="opt">b) Count pages strictly — "today 12 pages".</button>
+              <button class="opt" data-correct="1">c) Stop counting: take ONE leela and ask it 100 questions with real jijnasa until "we disappear" — that enquiry IS parayana.</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">c</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">3</span>
+            <p class="q small">"I'm too full of mistakes to come to Baba — I'm not worthy."</p>
+            <div class="opts">
+              <button class="opt">a) Clean yourself up first, then come.</button>
+              <button class="opt" data-correct="1">b) The hospital takes the sick — unworthiness is the qualification for coming to Baba.</button>
+              <button class="opt">c) Worthiness is earned by donations.</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">b</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">4</span>
+            <p class="q small">"Should I quit my job and drop all desires to be spiritual?"</p>
+            <div class="opts">
+              <button class="opt">a) Yes — spirituality means dropping everything.</button>
+              <button class="opt" data-correct="1">b) Couple every attachment to Baba like compartments to a train engine — only the engine matters; and pray the one prayer: "make me desireless."</button>
+              <button class="opt">c) Desires are fine, just hide them.</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">b</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">5</span>
+            <p class="q small">"Troubles keep hitting me — is Baba's grace failing?"</p>
+            <div class="opts">
+              <button class="opt">a) Yes, grace has limits.</button>
+              <button class="opt" data-correct="1">b) The surgeon operates under anaesthesia — difficulty is the sign of the operation, not its failure.</button>
+              <button class="opt">c) Switch to a stricter ritual.</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">b</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">6</span>
+            <p class="q small">"I apply udi daily for protection and spiritual power."</p>
+            <div class="opts">
+              <button class="opt">a) Right — udi is a vairagya and shakti symbol.</button>
+              <button class="opt" data-correct="1">b) Sri Babuji corrects: udi is Baba's padadhuli, dust of His feet — "there is no vairagya in it, no Vedanta"; applying it means stop brooding, let go — "what remains for you is ash" — and your work will be done.</button>
+              <button class="opt">c) Udi works only if applied at dawn.</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">b</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">7</span>
+            <p class="q small">"Are the Satcharitra's details exact? Should I analyse every word?"</p>
+            <div class="opts">
+              <button class="opt">a) Yes — word-by-word commentary ("which corner was Baba's bicycle in?").</button>
+              <button class="opt" data-correct="1">b) Grasp the spirit, not the letter: the records were written 30–40 years later from memory; put yourself in the devotee's place in each story.</button>
+              <button class="opt">c) Skip the stories, read only the morals.</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">b</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">8</span>
+            <p class="q small">"Someone called me a perfect devotee — and I enjoyed it."</p>
+            <div class="opts">
+              <button class="opt">a) Enjoy it, you've earned it.</button>
+              <button class="opt">b) Correct them loudly.</button>
+              <button class="opt" data-correct="1">c) Remember Jesus: "Don't call me perfect" — owning a mistake dissolves half the ego.</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">c</span></div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 10 : BINGO ============ -->
+      <section class="tab" id="tab-bingo">
+        <h2 class="round-title">Satsang Bingo</h2>
+        <p class="round-sub">Thirty keywords from Sri Babuji's satsangs. You call the clue; the room hunts the word.</p>
+        <div class="howto hideprint">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Hand out printed cards (a few of each of the 4 designs). Press "Draw next clue"</b> — a keyword is picked at random and its clue appears big; read the clue aloud, teams find and mark the keyword. On screen, tap a square to daub it. <b>First full row, column or diagonal wins the round.</b> Print the caller sheet if you'd rather call from paper.</p>
+        </div>
+
+        <div class="plainbox hideprint">
+          <h3 class="block-title" style="margin-top:0;">The keyword pool (30)</h3>
+          <p style="font-size:19px;">scooter · bus ticket · Kanchi pattu saree · gold chain · Maruti car · coffee · candle · glass · mechanic · dog · satyam · Ramakrishna · Ramana · Buddha · tapas · need · desire · savings · heroes · Amitabh · NTR · udi · dakshina · sakshatkara · magnet · umbrella · train · swimming pool · hospital · clock</p>
+        </div>
+
+        <div id="callerWrap">
+          <div class="spot hideprint" id="callerSpot">
+            <div class="spot-empty" id="spotText">Press "Draw next clue" to begin — <span id="spotLeft">30</span> keywords in the drum.</div>
+            <div class="spot-kw" id="spotKw" style="display:none;"></div>
+            <div class="spot-clue" id="spotClue" style="display:none;"></div>
+          </div>
+          <p class="noprint hideprint" style="margin:0 0 18px;">
+            <button class="action-btn" id="drawBtn">Draw next clue</button>
+            <button class="mini-btn" id="callerReset">Reset caller</button>
+          </p>
+          <h3 class="block-title">Caller sheet — clue for every keyword</h3>
+          <ol class="caller-list" id="callerList">
+            <li data-kw="scooter"><span class="kw">scooter:</span> "Exhibit #4 in the savings audit — houses, jewellery, furniture, and these."</li>
+            <li data-kw="bus ticket"><span class="kw">bus ticket:</span> "One gets you there — would you buy two? (01:11)"</li>
+            <li data-kw="Kanchi pattu saree"><span class="kw">Kanchi pattu saree:</span> "₹5000 of heavy silk, endured for one word of praise."</li>
+            <li data-kw="gold chain"><span class="kw">gold chain:</span> "A child's 'small' desire — gift it if you have it, never borrow to get it."</li>
+            <li data-kw="Maruti car"><span class="kw">Maruti car:</span> "The 'minimum requirement' that is already beyond the minimum."</li>
+            <li data-kw="coffee"><span class="kw">coffee:</span> "See it and desire arises — proof desires come from samskaras within. (57:16)"</li>
+            <li data-kw="candle"><span class="kw">candle:</span> "The lights went out; he asked for the corner one — exact obedience. (46:41)"</li>
+            <li data-kw="glass"><span class="kw">glass:</span> "'Bring that big glass here' — not the other one. (46:17)"</li>
+            <li data-kw="mechanic"><span class="kw">mechanic:</span> "Experts with instruments failed; his simple hand-test fixed it. (50:08)"</li>
+            <li data-kw="dog"><span class="kw">dog:</span> "Money that works for you faithfully — like this animal. (01:51)"</li>
+            <li data-kw="satyam"><span class="kw">satyam:</span> "The one thing Ramakrishna would never give Kali."</li>
+            <li data-kw="Ramakrishna"><span class="kw">Ramakrishna:</span> "Offered Kali everything — except satyam."</li>
+            <li data-kw="Ramana"><span class="kw">Ramana:</span> "His brahmastra for pestering questioners: 'Who am I?'"</li>
+            <li data-kw="Buddha"><span class="kw">Buddha:</span> "Discovered tapas achieves nothing — only jnana."</li>
+            <li data-kw="tapas"><span class="kw">tapas:</span> "What Buddha abandoned before the knowing came."</li>
+            <li data-kw="need"><span class="kw">need:</span> <span class="te">"కావాలి అనుకుంటాడు అంటే రిక్వైర్మెంట్"</span> — wanting is requirement.</li>
+            <li data-kw="desire"><span class="kw">desire:</span> "Whatever exceeds the requirement's measure."</li>
+            <li data-kw="savings"><span class="kw">savings:</span> "'For survival' — till the audit asks: did you do all this for mere survival?"</li>
+            <li data-kw="heroes"><span class="kw">heroes:</span> "The one gift to children, from the beginning. (11:25)"</li>
+            <li data-kw="Amitabh"><span class="kw">Amitabh:</span> "If he's your hero, that's all you can offer your children."</li>
+            <li data-kw="NTR"><span class="kw">NTR:</span> "If he's your hero — same lesson."</li>
+            <li data-kw="udi"><span class="kw">udi:</span> "Not vairagya — Baba's padadhuli, dust of His feet."</li>
+            <li data-kw="dakshina"><span class="kw">dakshina:</span> "The true one isn't $100 — it's your peace, joy, and time."</li>
+            <li data-kw="sakshatkara"><span class="kw">sakshatkara:</span> "'You are seeing me now — that itself is sakshatkara.' (Das Ganu)"</li>
+            <li data-kw="magnet"><span class="kw">magnet:</span> "Rubbed on iron, it reorders clashing desires — nothing added, nothing lost."</li>
+            <li data-kw="umbrella"><span class="kw">umbrella:</span> "Doesn't stop prarabdha's rain — but under it, the rain can't touch you."</li>
+            <li data-kw="train"><span class="kw">train:</span> "Couple all attachments to Baba like compartments to this."</li>
+            <li data-kw="swimming pool"><span class="kw">swimming pool:</span> "Same water as the ocean — but no fear of drowning."</li>
+            <li data-kw="hospital"><span class="kw">hospital:</span> "Who qualifies to enter? The sick."</li>
+            <li data-kw="clock"><span class="kw">clock:</span> "The slow short hand tells the real hour."</li>
+          </ol>
+        </div>
+
+        <div id="cardsWrap">
+          <h3 class="block-title">The four cards</h3>
+          <p class="noprint hideprint" style="margin:0 0 14px;">
+            <button class="mini-btn" id="cardsClear">Clear all daubs</button>
+          </p>
+          <div class="bingo-cards-wrap">
+            <div class="bingo-card"><h4>CARD 1</h4><div class="bingo-grid">
+              <div class="cell">scooter</div><div class="cell">udi</div><div class="cell">Ramana</div><div class="cell">bus ticket</div><div class="cell">magnet</div>
+              <div class="cell">candle</div><div class="cell">need</div><div class="cell">Buddha</div><div class="cell">train</div><div class="cell">gold chain</div>
+              <div class="cell">coffee</div><div class="cell">glass</div><div class="cell free daubed">FREE</div><div class="cell">dakshina</div><div class="cell">heroes</div>
+              <div class="cell">Maruti car</div><div class="cell">satyam</div><div class="cell">umbrella</div><div class="cell">desire</div><div class="cell">NTR</div>
+              <div class="cell">sakshatkara</div><div class="cell">dog</div><div class="cell">clock</div><div class="cell">Kanchi pattu saree</div><div class="cell">swimming pool</div>
+            </div></div>
+            <div class="bingo-card"><h4>CARD 2</h4><div class="bingo-grid">
+              <div class="cell">tapas</div><div class="cell">mechanic</div><div class="cell">desire</div><div class="cell">Ramakrishna</div><div class="cell">bus ticket</div>
+              <div class="cell">udi</div><div class="cell">swimming pool</div><div class="cell">coffee</div><div class="cell">NTR</div><div class="cell">need</div>
+              <div class="cell">train</div><div class="cell">Amitabh</div><div class="cell free daubed">FREE</div><div class="cell">scooter</div><div class="cell">glass</div>
+              <div class="cell">dog</div><div class="cell">heroes</div><div class="cell">candle</div><div class="cell">sakshatkara</div><div class="cell">Maruti car</div>
+              <div class="cell">magnet</div><div class="cell">Kanchi pattu saree</div><div class="cell">clock</div><div class="cell">dakshina</div><div class="cell">savings</div>
+            </div></div>
+            <div class="bingo-card"><h4>CARD 3</h4><div class="bingo-grid">
+              <div class="cell">hospital</div><div class="cell">gold chain</div><div class="cell">Ramana</div><div class="cell">desire</div><div class="cell">candle</div>
+              <div class="cell">savings</div><div class="cell">train</div><div class="cell">udi</div><div class="cell">Buddha</div><div class="cell">scooter</div>
+              <div class="cell">NTR</div><div class="cell">coffee</div><div class="cell free daubed">FREE</div><div class="cell">magnet</div><div class="cell">need</div>
+              <div class="cell">glass</div><div class="cell">dakshina</div><div class="cell">dog</div><div class="cell">tapas</div><div class="cell">Kanchi pattu saree</div>
+              <div class="cell">heroes</div><div class="cell">Maruti car</div><div class="cell">sakshatkara</div><div class="cell">clock</div><div class="cell">mechanic</div>
+            </div></div>
+            <div class="bingo-card"><h4>CARD 4</h4><div class="bingo-grid">
+              <div class="cell">Ramakrishna</div><div class="cell">swimming pool</div><div class="cell">savings</div><div class="cell">bus ticket</div><div class="cell">candle</div>
+              <div class="cell">hospital</div><div class="cell">need</div><div class="cell">magnet</div><div class="cell">gold chain</div><div class="cell">coffee</div>
+              <div class="cell">umbrella</div><div class="cell">train</div><div class="cell free daubed">FREE</div><div class="cell">udi</div><div class="cell">satyam</div>
+              <div class="cell">Buddha</div><div class="cell">glass</div><div class="cell">desire</div><div class="cell">dog</div><div class="cell">Amitabh</div>
+              <div class="cell">clock</div><div class="cell">heroes</div><div class="cell">Maruti car</div><div class="cell">tapas</div><div class="cell">scooter</div>
+            </div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TAB 11 : TEACH-BACK FINALE ============ -->
+      <section class="tab" id="tab-finale">
+        <h2 class="round-title">Finale: Teach-Back</h2>
+        <p class="round-sub">The last round isn't answered — it's performed.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Each team draws one chit</b> (tap "Draw a chit", or tap a face-down chit below). <b>5 minutes to prepare, 2 minutes to perform</b> — a skit or a told story. The room scores by applause; loudest wins. If a team is far behind, remember: <b>this finale is worth double</b> — anyone can still take the night.</p>
+        </div>
+        <div class="spot" id="chitSpot">
+          <div class="spot-empty" id="chitSpotText">No chit drawn yet — whose story will your team tell?</div>
+          <div class="spot-kw" id="chitSpotKw" style="display:none;"></div>
+        </div>
+        <p class="noprint" style="margin:0 0 18px;">
+          <button class="action-btn" id="chitDraw">Draw a chit</button>
+          <button class="mini-btn" id="chitReset">Put chits back</button>
+        </p>
+        <div class="grid" id="chitGrid">
+          <article class="card"><p class="chitface">Chit 1</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The scooter audit</span>Perform it as a skit.</div></article>
+          <article class="card"><p class="chitface">Chit 2</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The upside-down vessel</span></div></article>
+          <article class="card"><p class="chitface">Chit 3</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">Das Ganu's sakshatkara</span></div></article>
+          <article class="card"><p class="chitface">Chit 4</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The Kanchi pattu saree</span>The praise test.</div></article>
+          <article class="card"><p class="chitface">Chit 5</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The honest mechanic</span></div></article>
+          <article class="card"><p class="chitface">Chit 6</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The Bombay merchant</span>"Your God is in your pocket."</div></article>
+          <article class="card"><p class="chitface">Chit 7</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The suitcase on the Superfast Express</span></div></article>
+          <article class="card"><p class="chitface">Chit 8</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">Ramana and the woman who wanted nothing</span></div></article>
+          <article class="card"><p class="chitface">Chit 9</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The coffee glass</span>Vasana.</div></article>
+          <article class="card"><p class="chitface">Chit 10</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">Udi — padadhuli, not vairagya</span></div></article>
+          <article class="card"><p class="chitface">Chit 11</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The two bus tickets</span></div></article>
+          <article class="card"><p class="chitface">Chit 12</p><button class="reveal-btn">Reveal chit</button><div class="answer"><span class="rest">The hospital</span>Unworthiness as qualification.</div></article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 12 : FACILITATOR CHEATS ============ -->
+      <section class="tab" id="tab-cheats">
+        <h2 class="round-title">Facilitator Cheats</h2>
+        <p class="round-sub">A compact reference to keep handy through the evening.</p>
+        <div class="plainbox">
+          <ul class="tight" style="font-size:20px;">
+            <li><b>Time-boxing:</b> never let a debate pass 2 minutes; park long debates for the tea break.</li>
+            <li><b>Scoring rhythm:</b> update the scoreboard after every round — visible scores keep energy up.</li>
+            <li><b>Grey cards</b> in Need-or-Desire are the point: reward the best reasoning, not just the "right" answer.</li>
+            <li><b>Charades:</b> no speaking, no writing letters in the air; props from the object box allowed.</li>
+            <li><b>If a team is far behind:</b> the Teach-Back finale is worth double — anyone can still win.</li>
+            <li><b>Tie-breaker:</b> sudden-death Finish Sri Babuji's Line.</li>
+            <li><b>Print before you start:</b> mixer bingo (Tab 2), bingo cards + caller sheet (Tab 10), this cheat sheet.</li>
+          </ul>
+        </div>
+        <p class="closing">"Think of Sai, talk of Sai — take one line from tonight home with you."</p>
+      </section>
+
+      <!-- ============ TAB 13 : KAHOOT-STYLE LIGHTNING ============ -->
+      <section class="tab" id="tab-kahoot">
+        <h2 class="round-title">Kahoot-style Lightning</h2>
+        <p class="round-sub">Ten questions, four options each, everybody answers at once. Speed counts — but accuracy pays more.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Read the question and the four options aloud. Start the 10-second timer</b> (bottom-right). All teams answer <b>simultaneously</b> — mini-whiteboards, paper, or a shout on the count of three. Then tap the correct option here to prove it. <b>+10</b> for a correct answer, plus a <b>+5 speed bonus</b> to the fastest correct team — facilitator judges the speed.</p>
+        </div>
+        <div class="grid">
+          <article class="card" data-quiz><span class="cardnum">1</span>
+            <p class="q small">In Sri Babuji's savings audit, which did he NOT name?</p>
+            <div class="opts">
+              <button class="opt">a) Houses</button>
+              <button class="opt">b) Jewellery</button>
+              <button class="opt">c) Furniture</button>
+              <button class="opt" data-correct="1">d) Gold coins</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: d</span>The four were houses, jewellery, furniture, scooters.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">2</span>
+            <p class="q small">What is udi, per Sri Babuji?</p>
+            <div class="opts">
+              <button class="opt">a) A vairagya symbol</button>
+              <button class="opt" data-correct="1">b) Baba's padadhuli — dust of His feet</button>
+              <button class="opt">c) Medicinal ash</button>
+              <button class="opt">d) A Vedantic metaphor</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: b</span>Baba's padadhuli — dust of His feet.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">3</span>
+            <p class="q small">Ramana's "brahmastra" was…</p>
+            <div class="opts">
+              <button class="opt">a) Silence</button>
+              <button class="opt" data-correct="1">b) "Who am I?"</button>
+              <button class="opt">c) Fasting</button>
+              <button class="opt">d) Pilgrimage</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: b</span>"Who am I?"</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">4</span>
+            <p class="q small">The one prayer Sri Babuji says is worth praying:</p>
+            <div class="opts">
+              <button class="opt">a) For wealth</button>
+              <button class="opt">b) For health</button>
+              <button class="opt" data-correct="1">c) "Make me desireless"</button>
+              <button class="opt">d) For a good guru</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: c</span>"Make me desireless."</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">5</span>
+            <p class="q small">Das Ganu wanted sakshatkara as the fruit of…</p>
+            <div class="opts">
+              <button class="opt" data-correct="1">a) A saptaha of the Bhagavata</button>
+              <button class="opt">b) A trip to Pandharpur</button>
+              <button class="opt">c) Building a temple</button>
+              <button class="opt">d) Feeding a thousand people</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: a</span>A saptaha of the Bhagavata.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">6</span>
+            <p class="q small">True parayana, per Sri Babuji, is…</p>
+            <div class="opts">
+              <button class="opt">a) 12 pages a day</button>
+              <button class="opt">b) 1008 repetitions</button>
+              <button class="opt" data-correct="1">c) Taking ONE leela and asking it 100 questions</button>
+              <button class="opt">d) Reading aloud in a group</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: c</span>Taking ONE leela and asking it 100 questions.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">7</span>
+            <p class="q small">The Bombay merchant couldn't part with…</p>
+            <div class="opts">
+              <button class="opt" data-correct="1">a) Rs. 5</button>
+              <button class="opt">b) Rs. 500</button>
+              <button class="opt">c) His gold chain</button>
+              <button class="opt">d) His house</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: a</span>Rs. 5.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">8</span>
+            <p class="q small">"Your God is in your pocket" was said about…</p>
+            <div class="opts">
+              <button class="opt">a) A miser</button>
+              <button class="opt" data-correct="1">b) The Bombay merchant</button>
+              <button class="opt">c) Das Ganu</button>
+              <button class="opt">d) A tax collector</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: b</span>The Bombay merchant.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">9</span>
+            <p class="q small">Buddha abandoned…</p>
+            <div class="opts">
+              <button class="opt">a) His kingdom</button>
+              <button class="opt" data-correct="1">b) Tapas, after discovering it achieves nothing</button>
+              <button class="opt">c) His disciples</button>
+              <button class="opt">d) Meditation</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: b</span>Tapas, after discovering it achieves nothing.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+          <article class="card" data-quiz><span class="cardnum">10</span>
+            <p class="q small">The TRUE dakshina is…</p>
+            <div class="opts">
+              <button class="opt">a) $100</button>
+              <button class="opt">b) Gold</button>
+              <button class="opt" data-correct="1">c) Our peace, our joy, and our time</button>
+              <button class="opt">d) A silk cloth</button>
+            </div>
+            <div class="explain"><span class="verdict" style="color:var(--maroon-deep);">Answer: c</span>Our peace, our joy, and our time.</div>
+            <button class="mini-btn reset-q noprint">Reset card</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ TAB 14 : MATCH PAIRS ============ -->
+      <section class="tab" id="tab-match">
+        <h2 class="round-title">Match Pairs</h2>
+        <p class="round-sub">Sixteen cards face down. Eight of Sri Babuji's teachings are hiding in pairs — find them.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>One player (or one team) at a time: tap two cards to flip them.</b> A matched pair stays open; a mismatch flips back — so the whole room's memory is in play. Fewest moves wins, or race the 2-minute timer. Run it while teams form, or pass one phone around a table.</p>
+        </div>
+        <p class="match-status" id="matchStatus">Pairs found: <b>0 / 8</b> · Moves: <b>0</b></p>
+        <div class="match-grid" id="matchGrid"></div>
+        <p style="text-align:center; margin-top:18px;">
+          <button class="action-btn" id="matchReshuffle">Shuffle &amp; restart</button>
+        </p>
+      </section>
+
+      <!-- ============ TAB 15 : FLASHCARDS ============ -->
+      <section class="tab" id="tab-flash">
+        <h2 class="round-title">Flashcards</h2>
+        <p class="round-sub">All thirty bingo keywords, one at a time. See the word — say what it means in Sri Babuji's satsangs — then flip.</p>
+        <div class="howto">
+          <span class="tag">HOW TO RUN</span>
+          <p><b>Show the keyword big. The room calls out the context</b> — which story, which teaching, which moment. <b>Tap the card to flip</b> and check against the caller clue. Next / Prev to move through the deck; Shuffle when the order gets too familiar. Perfect while teams form, or as a cooldown at the end of the night.</p>
+        </div>
+        <div class="flash-stage">
+          <div class="flash-card" id="flashCard" role="button" tabindex="0" aria-label="Flashcard — tap to flip">
+            <div class="flash-face front"><div>
+              <div class="flash-kw" id="flashFront">scooter</div>
+              <div class="flash-hint">TAP TO FLIP</div>
+            </div></div>
+            <div class="flash-face back"><div>
+              <div class="flash-clue" id="flashBack"></div>
+              <div class="flash-hint">TAP TO FLIP BACK</div>
+            </div></div>
+          </div>
+        </div>
+        <div class="flash-nav">
+          <button class="mini-btn" id="flashPrev">← Prev</button>
+          <span class="flash-count" id="flashCount">1 / 30</span>
+          <button class="mini-btn" id="flashNext">Next →</button>
+          <button class="action-btn" id="flashShuffle">Shuffle deck</button>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      /* ---------- tabs ---------- */
+      var tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          tabBtns.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          document.querySelectorAll('section.tab').forEach(function (s) { s.classList.remove('active'); });
+          var target = document.getElementById(btn.getAttribute('data-tab'));
+          if (target) target.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+
+      /* ---------- tap-to-reveal ---------- */
+      document.querySelectorAll('.reveal-btn').forEach(function (btn) {
+        btn.setAttribute('data-show', btn.textContent);
+        btn.addEventListener('click', function () {
+          var card = btn.closest('.card') || btn.parentElement;
+          var ans = card.querySelector('.answer');
+          if (!ans) return;
+          var open = ans.classList.toggle('open');
+          btn.textContent = open ? 'Hide' : btn.getAttribute('data-show');
+        });
+      });
+
+      /* ---------- choice quizzes ---------- */
+      document.querySelectorAll('[data-quiz]').forEach(function (card) {
+        var opts = card.querySelectorAll('.opt');
+        var explain = card.querySelector('.explain');
+        var locked = false;
+        opts.forEach(function (opt) {
+          opt.addEventListener('click', function () {
+            if (locked) return;
+            locked = true;
+            var correct = opt.hasAttribute('data-correct');
+            opts.forEach(function (o) {
+              o.disabled = true;
+              if (o.hasAttribute('data-correct')) o.classList.add('right');
+            });
+            if (!correct) opt.classList.add('wrong');
+            if (explain) explain.classList.add('open');
+          });
+        });
+        var reset = card.querySelector('.reset-q');
+        if (reset) reset.addEventListener('click', function () {
+          locked = false;
+          opts.forEach(function (o) { o.disabled = false; o.classList.remove('right'); o.classList.remove('wrong'); });
+          if (explain) explain.classList.remove('open');
+        });
+      });
+
+      /* ---------- scoreboard ---------- */
+      document.querySelectorAll('.team').forEach(function (team) {
+        var scoreEl = team.querySelector('[data-score]');
+        var val = 0;
+        team.querySelectorAll('button[data-delta]').forEach(function (b) {
+          b.addEventListener('click', function () {
+            val += parseInt(b.getAttribute('data-delta'), 10);
+            scoreEl.textContent = val;
+          });
+        });
+        team._resetScore = function () { val = 0; scoreEl.textContent = '0'; };
+      });
+      document.getElementById('score-reset').addEventListener('click', function () {
+        document.querySelectorAll('.team').forEach(function (t) { if (t._resetScore) t._resetScore(); });
+      });
+
+      /* ---------- countdown timer ---------- */
+      var tTotal = 30, tLeft = 30, tInt = null, audioCtx = null;
+      var tdisp = document.getElementById('tdisp'), tgo = document.getElementById('tgo');
+      function tFmt(s) { return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+      function tShow() { tdisp.textContent = tFmt(Math.max(tLeft, 0)); tdisp.classList.toggle('done', tLeft <= 0); }
+      function tStop() { if (tInt) { clearInterval(tInt); tInt = null; } tgo.textContent = 'Start'; }
+      function tBeep() {
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+          o.connect(g); g.connect(audioCtx.destination);
+          o.frequency.value = 880;
+          g.gain.setValueAtTime(0.25, audioCtx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.7);
+          o.start(); o.stop(audioCtx.currentTime + 0.7);
+        } catch (e) {}
+      }
+      tgo.addEventListener('click', function () {
+        if (tInt) { tStop(); return; }
+        if (tLeft <= 0) tLeft = tTotal;
+        tgo.textContent = 'Pause';
+        tInt = setInterval(function () {
+          tLeft--; tShow();
+          if (tLeft <= 0) { tStop(); tBeep(); }
+        }, 1000);
+      });
+      document.querySelectorAll('[data-preset]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          tTotal = tLeft = parseInt(b.getAttribute('data-preset'), 10);
+          tStop(); tShow();
+        });
+      });
+      document.getElementById('treset').addEventListener('click', function () { tLeft = tTotal; tStop(); tShow(); });
+      tShow();
+
+      /* ---------- mixer bingo ---------- */
+      document.querySelectorAll('#mixerGrid .cell').forEach(function (c) {
+        c.addEventListener('click', function () { c.classList.toggle('signed'); });
+      });
+      document.getElementById('mixer-clear').addEventListener('click', function () {
+        document.querySelectorAll('#mixerGrid .cell').forEach(function (c) { c.classList.remove('signed'); });
+      });
+
+      /* ---------- quiz bingo cards ---------- */
+      document.querySelectorAll('.bingo-grid .cell').forEach(function (c) {
+        c.addEventListener('click', function () { c.classList.toggle('daubed'); });
+      });
+      document.getElementById('cardsClear').addEventListener('click', function () {
+        document.querySelectorAll('.bingo-grid .cell').forEach(function (c) {
+          if (!c.classList.contains('free')) c.classList.remove('daubed');
+        });
+      });
+
+      /* ---------- bingo caller ---------- */
+      var callerItems = Array.prototype.slice.call(document.querySelectorAll('#callerList li'));
+      var spotText = document.getElementById('spotText'), spotKw = document.getElementById('spotKw'), spotClue = document.getElementById('spotClue');
+      function callerRemaining() { return callerItems.filter(function (li) { return !li.classList.contains('called'); }); }
+      function spotLeftUpdate() { document.getElementById('spotLeft').textContent = callerRemaining().length; }
+      document.getElementById('drawBtn').addEventListener('click', function () {
+        var rem = callerRemaining();
+        if (!rem.length) {
+          spotKw.style.display = 'none'; spotClue.style.display = 'none';
+          spotText.style.display = 'block';
+          spotText.textContent = 'All 30 keywords called — check those cards for a full line!';
+          return;
+        }
+        var li = rem[Math.floor(Math.random() * rem.length)];
+        li.classList.add('called');
+        spotText.style.display = 'none';
+        spotKw.style.display = 'block'; spotClue.style.display = 'block';
+        spotKw.textContent = li.getAttribute('data-kw');
+        spotClue.textContent = li.textContent.replace(/^\s*[^:]+:\s*/, '');
+        spotLeftUpdate();
+      });
+      document.getElementById('callerReset').addEventListener('click', function () {
+        callerItems.forEach(function (li) { li.classList.remove('called'); });
+        spotKw.style.display = 'none'; spotClue.style.display = 'none';
+        spotText.style.display = 'block';
+        spotText.innerHTML = 'Press "Draw next clue" to begin — <span id="spotLeft">30</span> keywords in the drum.';
+        spotLeftUpdate();
+      });
+
+      /* ---------- teach-back chits ---------- */
+      var chitCards = Array.prototype.slice.call(document.querySelectorAll('#chitGrid .card'));
+      var chitSpotText = document.getElementById('chitSpotText'), chitSpotKw = document.getElementById('chitSpotKw');
+      document.getElementById('chitDraw').addEventListener('click', function () {
+        var pool = chitCards.filter(function (c) { return !c.querySelector('.answer').classList.contains('open'); });
+        if (!pool.length) {
+          chitSpotKw.style.display = 'none';
+          chitSpotText.style.display = 'block';
+          chitSpotText.textContent = 'All 12 chits are out — break a leg, teams.';
+          return;
+        }
+        var card = pool[Math.floor(Math.random() * pool.length)];
+        var ans = card.querySelector('.answer');
+        ans.classList.add('open');
+        var btn = card.querySelector('.reveal-btn');
+        if (btn) btn.textContent = 'Hide';
+        var rest = ans.querySelector('.rest');
+        chitSpotText.style.display = 'none';
+        chitSpotKw.style.display = 'block';
+        chitSpotKw.textContent = rest ? rest.textContent : 'A chit';
+      });
+      document.getElementById('chitReset').addEventListener('click', function () {
+        chitCards.forEach(function (c) {
+          c.querySelector('.answer').classList.remove('open');
+          var btn = c.querySelector('.reveal-btn');
+          if (btn) btn.textContent = btn.getAttribute('data-show') || 'Reveal chit';
+        });
+        chitSpotKw.style.display = 'none';
+        chitSpotText.style.display = 'block';
+        chitSpotText.textContent = 'No chit drawn yet — whose story will your team tell?';
+      });
+
+      /* ---------- match pairs ---------- */
+      var MATCH_PAIRS = [
+        ["Magnet & iron", "Reorders desires, nothing added or lost"],
+        ["Upside-down vessel", "One tilt of the ego lets grace flood in"],
+        ["Umbrella", "Prarabdha\u2019s rain can\u2019t touch you under it"],
+        ["Train engine", "Couple attachments to Baba"],
+        ["\u201CWho am I?\u201D", "Ramana\u2019s brahmastra"],
+        ["\u201CYour God is in your pocket\u201D", "The Bombay merchant"],
+        ["Padadhuli", "What udi really is"],
+        ["\u201CMake me desireless\u201D", "The one prayer worth praying"]
+      ];
+      var matchGrid = document.getElementById('matchGrid');
+      var matchStatus = document.getElementById('matchStatus');
+      var mFirst = null, mLock = false, mMoves = 0, mFound = 0;
+      function shuffleArr(a) {
+        for (var i = a.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        return a;
+      }
+      function updateMatchStatus() {
+        matchStatus.innerHTML = mFound === 8
+          ? 'All 8 pairs found in <b>' + mMoves + ' moves</b> — beautifully done.'
+          : 'Pairs found: <b>' + mFound + ' / 8</b> · Moves: <b>' + mMoves + '</b>';
+      }
+      function flipMatch(card) {
+        if (mLock || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+        card.classList.add('flipped');
+        if (!mFirst) { mFirst = card; return; }
+        mMoves++;
+        if (mFirst.getAttribute('data-pair') === card.getAttribute('data-pair')) {
+          mFirst.classList.add('matched'); card.classList.add('matched');
+          mFirst = null; mFound++;
+        } else {
+          mLock = true;
+          var a = mFirst; mFirst = null;
+          setTimeout(function () {
+            a.classList.remove('flipped'); card.classList.remove('flipped');
+            mLock = false;
+          }, 950);
+        }
+        updateMatchStatus();
+      }
+      function buildMatch() {
+        var cards = [];
+        MATCH_PAIRS.forEach(function (p, i) {
+          cards.push({ pair: i, text: p[0] });
+          cards.push({ pair: i, text: p[1] });
+        });
+        shuffleArr(cards);
+        matchGrid.innerHTML = '';
+        mFirst = null; mLock = false; mMoves = 0; mFound = 0;
+        cards.forEach(function (c) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'match-card';
+          b.setAttribute('data-pair', c.pair);
+          var front = document.createElement('span');
+          front.className = 'match-face front'; front.textContent = '?';
+          var back = document.createElement('span');
+          back.className = 'match-face back'; back.textContent = c.text;
+          b.appendChild(front); b.appendChild(back);
+          b.addEventListener('click', function () { flipMatch(b); });
+          matchGrid.appendChild(b);
+        });
+        updateMatchStatus();
+      }
+      document.getElementById('matchReshuffle').addEventListener('click', buildMatch);
+      buildMatch();
+
+      /* ---------- flashcards ---------- */
+      var DECK = [
+        ["scooter", "\u201CExhibit #4 in the savings audit \u2014 houses, jewellery, furniture, and these.\u201D"],
+        ["bus ticket", "\u201COne gets you there \u2014 would you buy two? (01:11)\u201D"],
+        ["Kanchi pattu saree", "\u201C\u20B95000 of heavy silk, endured for one word of praise.\u201D"],
+        ["gold chain", "\u201CA child\u2019s \u2018small\u2019 desire \u2014 gift it if you have it, never borrow to get it.\u201D"],
+        ["Maruti car", "\u201CThe \u2018minimum requirement\u2019 that is already beyond the minimum.\u201D"],
+        ["coffee", "\u201CSee it and desire arises \u2014 proof desires come from samskaras within. (57:16)\u201D"],
+        ["candle", "\u201CThe lights went out; he asked for the corner one \u2014 exact obedience. (46:41)\u201D"],
+        ["glass", "\u201C\u2018Bring that big glass here\u2019 \u2014 not the other one. (46:17)\u201D"],
+        ["mechanic", "\u201CExperts with instruments failed; his simple hand-test fixed it. (50:08)\u201D"],
+        ["dog", "\u201CMoney that works for you faithfully \u2014 like this animal. (01:51)\u201D"],
+        ["satyam", "\u201CThe one thing Ramakrishna would never give Kali.\u201D"],
+        ["Ramakrishna", "\u201COffered Kali everything \u2014 except satyam.\u201D"],
+        ["Ramana", "\u201CHis brahmastra for pestering questioners: \u2018Who am I?\u2019\u201D"],
+        ["Buddha", "\u201CDiscovered tapas achieves nothing \u2014 only jnana.\u201D"],
+        ["tapas", "\u201CWhat Buddha abandoned before the knowing came.\u201D"],
+        ["need", "\u201C\u0C15\u0C3E\u0C35\u0C3E\u0C32\u0C3F \u0C05\u0C28\u0C41\u0C15\u0C41\u0C02\u0C1F\u0C3E\u0C21\u0C41 \u0C05\u0C02\u0C1F\u0C47 \u0C30\u0C3F\u0C15\u0C4D\u0C35\u0C48\u0C30\u0C4D\u0C2E\u0C46\u0C02\u0C1F\u0C4D\u201D \u2014 wanting is requirement."],
+        ["desire", "\u201CWhatever exceeds the requirement\u2019s measure.\u201D"],
+        ["savings", "\u201C\u2018For survival\u2019 \u2014 till the audit asks: did you do all this for mere survival?\u201D"],
+        ["heroes", "\u201CThe one gift to children, from the beginning. (11:25)\u201D"],
+        ["Amitabh", "\u201CIf he\u2019s your hero, that\u2019s all you can offer your children.\u201D"],
+        ["NTR", "\u201CIf he\u2019s your hero \u2014 same lesson.\u201D"],
+        ["udi", "\u201CNot vairagya \u2014 Baba\u2019s padadhuli, dust of His feet.\u201D"],
+        ["dakshina", "\u201CThe true one isn\u2019t $100 \u2014 it\u2019s your peace, joy, and time.\u201D"],
+        ["sakshatkara", "\u201C\u2018You are seeing me now \u2014 that itself is sakshatkara.\u2019 (Das Ganu)\u201D"],
+        ["magnet", "\u201CRubbed on iron, it reorders clashing desires \u2014 nothing added, nothing lost.\u201D"],
+        ["umbrella", "\u201CDoesn\u2019t stop prarabdha\u2019s rain \u2014 but under it, the rain can\u2019t touch you.\u201D"],
+        ["train", "\u201CCouple all attachments to Baba like compartments to this.\u201D"],
+        ["swimming pool", "\u201CSame water as the ocean \u2014 but no fear of drowning.\u201D"],
+        ["hospital", "\u201CWho qualifies to enter? The sick.\u201D"],
+        ["clock", "\u201CThe slow short hand tells the real hour.\u201D"]
+      ];
+      var fOrder = DECK.map(function (_, i) { return i; });
+      var fPos = 0;
+      var flashCard = document.getElementById('flashCard');
+      var flashFront = document.getElementById('flashFront');
+      var flashBack = document.getElementById('flashBack');
+      var flashCount = document.getElementById('flashCount');
+      function fRender() {
+        var item = DECK[fOrder[fPos]];
+        flashFront.textContent = item[0];
+        flashBack.textContent = item[1];
+        flashCount.textContent = (fPos + 1) + ' / ' + DECK.length;
+        flashCard.classList.remove('flipped');
+      }
+      flashCard.addEventListener('click', function () { flashCard.classList.toggle('flipped'); });
+      flashCard.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flashCard.classList.toggle('flipped'); }
+      });
+      document.getElementById('flashNext').addEventListener('click', function () {
+        fPos = (fPos + 1) % DECK.length; fRender();
+      });
+      document.getElementById('flashPrev').addEventListener('click', function () {
+        fPos = (fPos - 1 + DECK.length) % DECK.length; fRender();
+      });
+      document.getElementById('flashShuffle').addEventListener('click', function () {
+        shuffleArr(fOrder); fPos = 0; fRender();
+      });
+      fRender();
+
+    </script>
+  </body>
+</html>
