@@ -3457,7 +3457,7 @@ resultsEl.addEventListener("click", function(e){
 });
 
 /* ---------- five-question quiz ----------
-   Curated, grounded bank: 764 questions (294 from human-transcribed event discourses, 470 from books and video captions). Each five-card hand includes all
+   Curated, grounded bank: 475 questions from books and video captions. Each five-card hand includes all
    three interaction kinds, avoids every question from the previous hand,
    and reveals its learning source with the answer. */
 var QUIZ_BANK = window.SAILIB_QUIZ_BANK || null;
@@ -3593,10 +3593,10 @@ function renderQuizCard(item, index){
     '<p class="quiz-question">' + esc(item.question) + '</p>' + controls + '</article>';
 }
 function loadQuizBank(){
-  if(Array.isArray(QUIZ_BANK) && QUIZ_BANK.length === 764) return Promise.resolve(QUIZ_BANK);
+  if(Array.isArray(QUIZ_BANK) && QUIZ_BANK.length >= 100) return Promise.resolve(QUIZ_BANK);
   return loadAssetScript("assets/sailib-quiz-bank.js").then(function(){
     QUIZ_BANK = window.SAILIB_QUIZ_BANK || null;
-    if(!Array.isArray(QUIZ_BANK) || QUIZ_BANK.length !== 764)
+    if(!Array.isArray(QUIZ_BANK) || QUIZ_BANK.length < 100)
       throw new Error("quiz bank is incomplete");
     return QUIZ_BANK;
   });
