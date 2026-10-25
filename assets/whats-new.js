@@ -1,6 +1,12 @@
 /* What's New — running list of major feature updates, newest first */
 window.SAILIB_WHATS_NEW = [
   {
+    date: "2026-10-24",
+    title: "Satsang about Caste — new digest",
+    desc: "Guruji on caste in his own words: a reading of Chapter 14 of Sai Bhakti Sadhana Rahasyam plus the discussion — “our religion is Sai religion, our caste is Sai caste,” the school land, what selfishness truly is, and Das Ganu Maharaj.",
+    link: "/digests/#readalong-october-24-2026-shs-satsang-about-caste-post-satsang-review"
+  },
+  {
     date: "2026-10-16",
     title: "Search within a book",
     desc: "Click any book on the shelf (or the 🔍 on a book card) and the search box fills in for you — just type your keyword. Or type it directly: Book: gurukrupa; blessings. Works for collections like Gurukrupa and Rose Petals too.",
