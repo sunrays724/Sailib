@@ -1147,7 +1147,7 @@ function prepareBookIndex(){
 function ensureBookIndex(){
   if(bookIndexPrepared) return Promise.resolve(BOOK_INDEX);
   return Promise.all([
-    loadAssetScript("assets/sailib-book-index.js?v=202610162309"),
+    loadAssetScript("assets/sailib-book-index.js?v202610251816"),
     loadAssetScript("assets/book-pages.js")
   ]).then(function(){
     BOOK_INDEX = window.SAILIB_BOOK_INDEX || null;
