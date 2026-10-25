@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redirecting to SaiLib…</title>
+<style>
+  body { font-family: Georgia, serif; background: #FFFEF9; color: #3E2723; display: flex; min-height: 100vh; margin: 0; align-items: center; justify-content: center; text-align: center; }
+  main { max-width: 32em; padding: 1.5em; }
+  a { color: #8a6d1a; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Taking you to the fresh home page…</h1>
+  <p>If you are not redirected, <a id="fallback" href="/?fresh=1792896763505">click here</a>.</p>
+</main>
+<script>
+  (function () {
+    var fresh = "/?fresh=" + Date.now();
+    var link = document.getElementById("fallback");
+    if (link) link.href = fresh;
+    window.location.replace(fresh);
+  })();
+</script>
+</body>
+</html>
