@@ -707,8 +707,10 @@ mark{padding:.02em .12em;border-radius:3px;background:var(--mark);color:inherit}
     var el=document.getElementById('crossLinks');
     var q=String(search.value||'').trim();
     if(!q){el.hidden=true;el.innerHTML='';return;}
+    /* Land on home with EVERY collection checked: a scoped src= silently
+       drops Books/Music/Photos from home results (e.g. Rigopoulos). */
     var links=CROSS_TYPES.map(function(t){
-      return '<a href="/?q='+encodeURIComponent(q)+'&src='+t[0]+'">'+t[1]+'</a>';
+      return '<a href="/?q='+encodeURIComponent(q)+'&src=videos,digests,books,photos,music">'+t[1]+'</a>';
     }).join(' · ');
     el.innerHTML='Search &ldquo;'+escapeHTML(q)+'&rdquo; across SaiLib: '+links;
     el.hidden=false;

@@ -7750,8 +7750,10 @@ function updateCrossLinks(raw){
   var q = String(raw || "").trim();
   if(!q){ el.hidden = true; el.innerHTML = ""; return; }
   var types = [["videos","Videos"],["books","Books"],["music","Music"],["photos","Photos"]];
+  /* Land on home with EVERY collection checked: a scoped src= silently
+     drops Books/Music/Photos from home results (e.g. Rigopoulos). */
   var links = types.map(function(t){
-    return '<a href="/?q=' + encodeURIComponent(q) + '&src=' + t[0] + '">' + t[1] + "</a>";
+    return '<a href="/?q=' + encodeURIComponent(q) + '&src=videos,digests,books,photos,music">' + t[1] + "</a>";
   }).join(" · ");
   el.innerHTML = "Search &ldquo;" + esc(q) + "&rdquo; across SaiLib: " + links;
   el.hidden = false;

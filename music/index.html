@@ -853,8 +853,10 @@
     function updateCrossLinks(raw) {
       var q = String(raw || '').trim();
       if (!q) { crossLinksNode.hidden = true; crossLinksNode.innerHTML = ''; return; }
+        /* Land on home with EVERY collection checked: a scoped src= silently
+         drops Books/Music/Photos from home results (e.g. Rigopoulos). */
       var links = CROSS_TYPES.map(function (t) {
-        return '<a href="/?q=' + encodeURIComponent(q) + '&src=' + t[0] + '">' + t[1] + '</a>';
+        return '<a href="/?q=' + encodeURIComponent(q) + '&src=videos,digests,books,photos,music">' + t[1] + '</a>';
       }).join(' · ');
       crossLinksNode.innerHTML = 'Search &ldquo;' + escapeHtml(q) + '&rdquo; across SaiLib: ' + links;
       crossLinksNode.hidden = false;
