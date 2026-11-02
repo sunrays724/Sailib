@@ -365,6 +365,8 @@
   .transcript-head h3{margin:0}
   .section-time{flex:none; font-variant-numeric:tabular-nums; font-size:.86rem; font-weight:700; text-decoration:none;
     color:var(--accent-ink); background:var(--accent-soft); border-radius:7px; padding:3px 9px}
+  .transcript-head{flex-wrap:wrap}
+  .section-links{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-left:auto}
   .transcript-entry .body p{margin:0 0 10px}
   .transcript-entry .body p:last-child{margin-bottom:0}
   .speaker{color:var(--accent-ink)}
@@ -8457,7 +8459,43 @@ function renderQuizBody(quiz){
   return html;
 }
 
-function renderStories(d){
+/* Per-section share link: absolute URL of the section's router anchor.
+   The anchor is a real link (long-press copy works); a tap copies it. */
+function shareLinkHtml(canonical, sectionId){
+  if (!canonical) return '';
+  var url = 'https://pathofsai.com/digests/#' + canonical + '/' + sectionId;
+  return '<a class="section-time section-share" href="' + esc(url) + '" target="_self" onclick="return copyDigestShare(this, event);">Copy link</a>';
+}
+function copyDigestShare(a, e){
+  if (e) e.preventDefault();
+  var url = a.getAttribute('href');
+  var copied = function(){
+    a.textContent = 'Copied';
+    setTimeout(function(){ a.textContent = 'Copy link'; }, 1800);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(copied, function(){ fallbackDigestCopy(url); copied(); });
+  } else { fallbackDigestCopy(url); copied(); }
+  return false;
+}
+function fallbackDigestCopy(text){
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+  } catch (err) { /* href stays usable for long-press copy */ }
+}
+/* Tab-view digests keep the Telugu pane hidden until its tab is chosen;
+   a shared Telugu-section link must open that pane before scrolling. */
+function activateTeTab(){
+  document.querySelectorAll("#digest .lang-tab").forEach(function(t){ var on = t.getAttribute("data-lang-tab") === "te"; t.classList.toggle("on", on); t.setAttribute("aria-selected", on ? "true" : "false"); });
+  document.querySelectorAll("#digest .lang-pane").forEach(function(p){ p.classList.toggle("on", p.getAttribute("data-lang-pane") === "te"); });
+}
+function needsTeTab(sectionAnchor){
+  return sectionAnchor === "dsummary-te" || (sectionAnchor && sectionAnchor.indexOf("pt-te-") === 0);
+}
+function renderStories(d, canonical){
   var html = '<h1 class="dig-title">' + esc(d.name) + "</h1>";
   html += '<article class="point in-brief"><h3>About this collection</h3><p>' + esc(d.intro) + '</p>' +
     '<p><em>' + esc(d.captionNote) + '</em></p></article>';
@@ -8471,8 +8509,8 @@ function renderStories(d){
     html += '<div class="deep-head" id="storycat-' + c.id + '"><h2>' + esc(c.title) + '</h2><p>' + c.stories.length + ' stories</p></div>';
     c.stories.forEach(function(s, i){
       html += '<article class="point transcript-entry" id="story-' + c.id + '-' + (i + 1) + '">';
-      html += '<div class="transcript-head"><h3>' + esc(s.title) + '</h3>' +
-        '<span class="section-time">' + esc(s.language) + '</span></div>';
+      html += '<div class="transcript-head"><h3>' + esc(s.title) + '</h3><span class="section-links">' +
+        '<span class="section-time">' + esc(s.language) + '</span>' + shareLinkHtml(canonical, 'story-' + c.id + '-' + (i + 1)) + '</span></div>';
       html += '<p><em>' + esc(s.gist) + '</em></p>';
       s.occurrences.forEach(function(o, j){
         var label = s.occurrences.length > 1 ? "Watch telling " + (j + 1) : "Watch the telling";
@@ -8498,14 +8536,14 @@ function renderStories(d){
     });
   });
   html += '<div class="deep-head" id="storycat-pending"><h2>Awaiting transcription</h2><p>These story videos have no captions yet — their narrations will be added once transcribed.</p></div>';
-  d.noCaptionVideos.forEach(function(v){
-    html += '<article class="point transcript-entry"><div class="transcript-head"><h3>' + esc(v.title) + '</h3></div>' +
+  d.noCaptionVideos.forEach(function(v, j){
+    html += '<article class="point transcript-entry" id="story-pending-' + (j + 1) + '"><div class="transcript-head"><h3>' + esc(v.title) + '</h3><span class="section-links">' + shareLinkHtml(canonical, 'story-pending-' + (j + 1)) + '</span></div>' +
       '<p><a href="' + esc(v.url) + '" target="_blank" rel="noopener"><strong>Watch the video</strong></a></p>' +
       '<p><em>' + esc(v.note) + '</em></p></article>';
   });
   return html;
 }
-function renderTeluguPane(d){
+function renderTeluguPane(d, canonical){
   var t = d.telugu;
   var html = '<div class="lang-pane" data-lang-pane="te">';
   html += '<article class="point in-brief" id="dsummary-te"><h3>సారాంశం</h3><p>' + esc(t.inBrief) + '</p></article>';
@@ -8524,8 +8562,8 @@ function renderTeluguPane(d){
   html += '<div class="deep-head"><h2>పూర్తి ప్రతిలిపి (ఆంగ్లంలో)</h2><p>' + esc(t.note) + '</p></div>';
   t.sections.forEach(function(section, i){
     var href = d.video + '&t=' + section.seconds + 's';
-    html += '<article class="point transcript-entry" id="pt-te-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3>' +
-      '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a></div>' +
+    html += '<article class="point transcript-entry" id="pt-te-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3><span class="section-links">' +
+      '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a>' + shareLinkHtml(canonical, 'pt-te-' + (i + 1)) + '</span></div>' +
       '<div class="body">' + section.html + '</div></article>';
   });
   html += '<p class="section-note"><em>సంభాషణ ముగిసింది.</em></p>';
@@ -8567,8 +8605,8 @@ function renderReadalong(d, canonical){
     html += '<div class="deep-head" id="dtranscript"><h2>Post Satsang review transcript</h2><p>Open a timestamp to hear the passage in the original satsang.</p></div>';
     d.sections.forEach(function(section, i){
       var href = d.video + '&t=' + section.seconds + 's';
-      html += '<article class="point transcript-entry" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3>' +
-        '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a></div>' +
+      html += '<article class="point transcript-entry" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3><span class="section-links">' +
+        '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a>' + shareLinkHtml(canonical, 'pt-' + (i + 1)) + '</span></div>' +
         '<div class="body">' + section.html + '</div></article>';
     });
     html += '<p class="section-note"><em>End of satsang discourse. The stream continues silently after about 1:35:00.</em></p>';
@@ -8587,8 +8625,8 @@ function renderReadalong(d, canonical){
       html += '<div class="deep-head" id="telugu-version"><h2>తెలుగులో సత్సంగం</h2><p>తెలుగు అనువాదం — అదే విభాగాలు, అదే సమయాలు.</p></div>';
       d.teluguSections.forEach(function(section){
         var href = d.video + '&t=' + section.seconds + 's';
-        html += '<article class="point transcript-entry" id="pt-te-' + section.n + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3>' +
-          '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a></div>' +
+        html += '<article class="point transcript-entry" id="pt-te-' + section.n + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3><span class="section-links">' +
+          '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a>' + shareLinkHtml(canonical, 'pt-te-' + section.n) + '</span></div>' +
           '<div class="body">' + section.html + '</div></article>';
       });
     }
@@ -8616,17 +8654,17 @@ function renderReadalong(d, canonical){
   html += '<div class="deep-head"><h2>' + esc(d.transcriptHeading || 'Post Satsang review transcript') + '</h2><p>' + esc(d.transcriptSub || 'Open a timestamp to hear the passage in the original satsang.') + '</p></div>';
   d.sections.forEach(function(section, i){
     var href = d.video + '&t=' + section.seconds + 's';
-    html += '<article class="point transcript-entry" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3>' +
-      '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a></div>' +
+    html += '<article class="point transcript-entry" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3><span class="section-links">' +
+      '<a class="section-time" href="' + esc(href) + '" target="_blank" rel="noopener">Watch at ' + esc(section.time) + '</a>' + shareLinkHtml(canonical, 'pt-' + (i + 1)) + '</span></div>' +
       '<div class="body">' + section.html + '</div></article>';
   });
   if (d.endNote) html += '<p class="section-note"><em>' + esc(d.endNote) + '</em></p>';
   else html += '<p class="section-note"><em>End of satsang discourse. The stream continues silently after about 1:35:00.</em></p>';
-  if (d.telugu) html += '</div>' + renderTeluguPane(d);
+  if (d.telugu) html += '</div>' + renderTeluguPane(d, canonical);
   return html;
 }
 
-function renderPrimer(d){
+function renderPrimer(d, canonical){
   var html = '<h1 class="dig-title">' + esc(d.name) + "</h1>";
   if (d.lead) html += '<div class="primer-lead">' + d.lead + "</div>";
   if (d.quiz) {
@@ -8645,7 +8683,7 @@ function renderPrimer(d){
   html += tocHtml(entries);
   html += '<div class="primer-body">';
   d.sections.forEach(function(section, i){
-    html += '<article class="point" id="pt-' + (i + 1) + '"><h3>' + esc(section.title) + '</h3><div class="body">' + section.html + "</div></article>";
+    html += '<article class="point" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3><span class="section-links">' + shareLinkHtml(canonical, 'pt-' + (i + 1)) + '</span></div><div class="body">' + section.html + "</div></article>";
   });
   if (d.readMore) html += '<div class="deep-head"><h2>Read more</h2></div>' + d.readMore;
   if (d.quiz) html += '</div>';  /* close dteachings */
@@ -8660,7 +8698,7 @@ function renderPrimer(d){
   return html;
 }
 
-function renderSaint(d){
+function renderSaint(d, canonical){
   var html = '<h1 class="dig-title">' + esc(d.name) + "</h1>";
   html += '<p class="dig-intro">' + d.intro + "</p>";
   html += '<p class="dig-sub" style="color:var(--muted);font-size:.93rem;margin:0 0 4px">What Guruji says &mdash; each point carries the exact video moment:</p>';
@@ -8669,7 +8707,7 @@ function renderSaint(d){
   html += tocHtml(entries);
   d.points.forEach(function(p, i){
     html += '<article class="point" id="pt-' + (i + 1) + '">';
-    if (p.title) html += "<h3>" + esc(p.title) + "</h3>";
+    html += '<div class="transcript-head">' + (p.title ? "<h3>" + esc(p.title) + "</h3>" : "") + '<span class="section-links">' + shareLinkHtml(canonical, 'pt-' + (i + 1)) + '</span></div>';
     html += '<div class="body">' + p.html + "</div>";
     p.links.forEach(function(l){ html += watchRow(l); });
     html += "</article>";
@@ -8678,14 +8716,14 @@ function renderSaint(d){
   return html;
 }
 
-function renderCluster(c){
+function renderCluster(c, canonical){
   var html = '<h1 class="dig-title">' + esc(c.name) + "</h1>";
   html += '<p class="dig-intro">' + c.items.length + " of Guruji's examples from this theme &mdash; each with the exact moment on video.</p>";
   var entries = [];
   c.items.forEach(function(it, i){ entries.push({id: "pt-" + (i + 1), label: trimLabel(it.name, 72)}); });
   html += tocHtml(entries);
   c.items.forEach(function(it, i){
-    html += '<article class="point" id="pt-' + (i + 1) + '"><h3>' + esc(it.name) + "</h3>";
+    html += '<article class="point" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(it.name) + '</h3><span class="section-links">' + shareLinkHtml(canonical, 'pt-' + (i + 1)) + '</span></div>';
     html += '<p class="teaching">' + it.teaching + "</p>";
     html += '<p class="analogy-text">' + it.analogy + "</p>";
     html += '<p class="punch"><b>Guruji&rsquo;s point:</b> ' + it.point + "</p>";
@@ -8778,7 +8816,7 @@ function route(e, routeKey){
   var slash = h.indexOf("/");
   if (slash > 0) {
     var base = h.slice(0, slash), sec = h.slice(slash + 1);
-    if (registry[base] && /^(pt-\d+|pt-te-\d+|dsummary|dsummary-te|dkeypoints|telugu-version)$/.test(sec)) {
+    if (registry[base] && /^(pt-\d+|pt-te-\d+|dsummary|dsummary-te|dkeypoints|telugu-version|story-[a-z0-9-]+-\d+|story-pending-\d+)$/.test(sec)) {
       sectionAnchor = sec;
       h = base;
     }
@@ -8798,6 +8836,7 @@ function route(e, routeKey){
   } else {
     var r = registry[h];
     if (sectionAnchor && window.currentDigestKey === r.canonical && vd.classList.contains("on")) {
+      if (needsTeTab(sectionAnchor)) activateTeTab();
       var el = document.getElementById(sectionAnchor);
       if (el && el.scrollIntoView) { el.scrollIntoView({behavior: reducedMotion() ? "auto" : "smooth", block: "start"}); return; }
     }
@@ -8810,13 +8849,14 @@ function route(e, routeKey){
         window.history.replaceState(null, "", "#" + r.canonical + (sectionAnchor ? "/" + sectionAnchor : ""));
       }
     }
-    document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data, r.canonical) : r.type === "story" ? renderStories(r.data) : r.type === "primer" ? renderPrimer(r.data) : r.type === "saint" ? renderSaint(r.data) : r.type === "archive" ? (r.canonical === "satsang-archive" ? renderSatsangArchive() : renderSaintsArchive()) : r.type === "collection" ? renderCollection(COLLECTIONS.filter(function(c){ return c.slug === r.data.slug; })[0]) : renderCluster(r.data)) + prevNextHtml(r.canonical);
+    document.getElementById("digest").innerHTML = (r.type === "readalong" ? renderReadalong(r.data, r.canonical) : r.type === "story" ? renderStories(r.data, r.canonical) : r.type === "primer" ? renderPrimer(r.data, r.canonical) : r.type === "saint" ? renderSaint(r.data, r.canonical) : r.type === "archive" ? (r.canonical === "satsang-archive" ? renderSatsangArchive() : renderSaintsArchive()) : r.type === "collection" ? renderCollection(COLLECTIONS.filter(function(c){ return c.slug === r.data.slug; })[0]) : renderCluster(r.data, r.canonical)) + prevNextHtml(r.canonical);
     vi.classList.remove("on"); vd.classList.add("on");
     window.currentDigestKey = r.canonical;
     document.title = r.data.name + " · Sri Babuji Digests";
     var crumb = document.getElementById("digest-crumb");
     if(crumb) crumb.textContent = r.data.name;
     if (sectionAnchor) {
+      if (needsTeTab(sectionAnchor)) activateTeTab();
       var sel = document.getElementById(sectionAnchor);
       if (sel && sel.scrollIntoView) sel.scrollIntoView();
       else window.scrollTo(0, 0);
