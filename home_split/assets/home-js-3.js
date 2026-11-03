@@ -551,6 +551,9 @@ function digestItemsFor(rawQuery){
     if(!item || !item.t) continue;
     var titleWords = {}, words = wordSplit(item.t), score = 0;
     for(var wi = 0; wi < words.length; wi++) titleWords[words[wi]] = 1;
+    /* Alias words (item.a): alternate spellings of a name in the title.
+       They match like title words but never change the displayed title. */
+    if(item.a){ var aw = wordSplit(item.a); for(var ai = 0; ai < aw.length; ai++) titleWords[aw[ai]] = 1; }
     for(var qi = 0; qi < queryTokens.length; qi++){
       if(titleWords[queryTokens[qi]]) score++;
     }

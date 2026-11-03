@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 <script src="assets/sailib-search-index.js?v202610302317"></script>
-<script src="assets/sailib-digest-items.js?v202611020828"></script>
+<script src="assets/sailib-digest-items.js?v202611022342"></script>
 <script src="assets/today-history-data.js?v202611020719"></script>
 <script src="assets/whats-new.js?v20261015"></script>
 <style>
@@ -2379,11 +2379,16 @@ function digestItemsFor(rawQuery){
     var words = wordSplit(item.t), titleWords = {}, wi, pi, qi;
     for(wi = 0; wi < words.length; wi++) titleWords[words[wi]] = 1;
     var titlePadded = " " + words.join(" ") + " ";
+    /* Alias words (item.a): alternate spellings of a name in the title
+       (e.g. Nanavalli / Nanavali / Nana Wali). They match like title
+       words but never change the displayed title. */
+    var aliasPadded = "";
+    if(item.a){ var aw = wordSplit(item.a); for(wi = 0; wi < aw.length; wi++) titleWords[aw[wi]] = 1; aliasPadded = " " + aw.join(" ") + " "; }
     /* The searched phrase is the primary index: phrase matches rank first,
        word-breakdown matches follow. */
     var hasPhrase = false, score = 0;
     for(pi = 0; pi < phrases.length; pi++){
-      if(phrases[pi].str && titlePadded.indexOf(phrases[pi].str) !== -1){ hasPhrase = true; score += 100; }
+      if(phrases[pi].str && (titlePadded.indexOf(phrases[pi].str) !== -1 || (aliasPadded && aliasPadded.indexOf(phrases[pi].str) !== -1))){ hasPhrase = true; score += 100; }
     }
     for(qi = 0; qi < tokens.length; qi++){
       if(titleWords[tokens[qi]]) score++;
