@@ -1966,11 +1966,16 @@ function search(rawQuery){
       if(eventMode) titleText = titleText.replace(/sai\s*quiz/ig, " quiz ");
       r = fieldScore(titleText, sig, idf, 10, phrase, phraseIdf, qphrases);   /* title > */
       score += r.s; any = any || r.any; titleAny = r.any;
-      /* Music entries are intentionally title-only: pure song videos
-         carry little or no searchable transcript metadata. */
+      /* Music entries match on title + keywords (curated metadata:
+         album, singer, ragam) -- never on summary, topics, or spoken
+         lyrics, so a lyric word cannot surface a song. */
       if(isMusic){
+        if(v.keywords){
+          r = fieldScore(v.keywords.join(" "), sig, idf, 5, phrase, phraseIdf, qphrases); /* keyword > */
+          score += r.s; any = any || r.any; kwAny = r.any;
+        }
         if(any) out.push({ v: v, score: score, topic: null, tIdx: -1,
-                           titleAny: titleAny, kwAny: false, sumAny: false,
+                           titleAny: titleAny, kwAny: kwAny, sumAny: false,
                            spokenMatch: null });
         continue;
       }
