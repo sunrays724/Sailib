@@ -1,6 +1,12 @@
 /* What's New — running list of major feature updates, newest first */
 window.SAILIB_WHATS_NEW = [
   {
+    date: "2026-11-09",
+    title: "Sri Babuji's Aradhana — Festival of Grace, Nov 10–17",
+    desc: "Join the celebrations at Saipatham, Shirdi or on the Sri Babuji channel on YouTube.",
+    link: "https://www.youtube.com/@SriSainathuniSarathBabuji"
+  },
+  {
     date: "2026-10-24",
     title: "Satsang about Caste — new digest",
     desc: "Guruji on caste in his own words: a reading of Chapter 14 of Sai Bhakti Sadhana Rahasyam plus the discussion — “our religion is Sai religion, our caste is Sai caste,” the school land, what selfishness truly is, and Das Ganu Maharaj.",
