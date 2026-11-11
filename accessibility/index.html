@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="SaiLib, made for listening. The teachings of Sri Babuji and Sai Baba, read aloud, in one simple page with no pictures, no pop-ups, and nothing that needs a mouse.">
+<title>SaiLib Listen — Made for ears, not eyes</title>
+<style>
+  :root { --bg:#fffdf7; --ink:#1a1a1a; --muted:#3d3d3d; --line:#8a8a8a; --accent:#0b5e57; --accent-ink:#ffffff; --focus:#b45309; --card:#f5efe3; }
+  * { box-sizing:border-box; }
+  html { font-size:100%; scroll-behavior:auto; }
+  html.text-large { font-size:118%; }
+  html.text-xlarge { font-size:140%; }
+  html.high-contrast { --bg:#ffffff; --ink:#000000; --muted:#000000; --line:#000000; --accent:#000000; --accent-ink:#ffffff; --focus:#000000; --card:#ffffff; }
+  html.high-contrast a { text-decoration:underline; }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior:auto !important; } }
+  html.reduce-motion { scroll-behavior:auto; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:Georgia, "Times New Roman", serif; line-height:1.7; }
+  p, li { font-size:1.15rem; }
+  a { color:var(--accent); }
+  a:visited { color:#5b2d8e; }
+  html.high-contrast a:visited { color:#000000; }
+  :focus-visible { outline:4px solid var(--focus); outline-offset:3px; }
+  .skip { position:absolute; left:-9999px; top:0; background:var(--accent); color:var(--accent-ink); padding:0.8rem 1.2rem; font-weight:bold; z-index:10; }
+  .skip:focus { position:static; left:auto; display:block; }
+  .wrap { max-width:44rem; margin:0 auto; padding:1rem 1.25rem 3rem; }
+  header, section, footer { margin-bottom:2.25rem; }
+  h1 { font-size:2rem; line-height:1.25; margin:0.5rem 0; }
+  h2 { font-size:1.55rem; line-height:1.3; margin:0 0 0.5rem; border-top:3px solid var(--ink); padding-top:1rem; }
+  h3 { font-size:1.25rem; margin:1.25rem 0 0.25rem; }
+  .lede { font-size:1.25rem; }
+  .card { background:var(--card); border:2px solid var(--line); border-radius:0.5rem; padding:1rem 1.25rem; margin:1rem 0; }
+  .announce { background:#fff3cd; border:3px solid #8a6d00; }
+  html.high-contrast .announce { background:#ffffff; }
+  blockquote { margin:1rem 0; padding:0.5rem 0 0.5rem 1rem; border-left:5px solid var(--accent); font-size:1.3rem; }
+  blockquote p { font-size:1.3rem; }
+  ul, ol { padding-left:1.5rem; }
+  li { margin-bottom:0.6rem; }
+  .linkdesc { display:block; color:var(--muted); font-size:1rem; }
+  button, input[type="search"], select { font:inherit; font-size:1.15rem; }
+  button { background:var(--accent); color:var(--accent-ink); border:2px solid var(--accent); border-radius:0.5rem; padding:0.7rem 1.2rem; margin:0.25rem 0.25rem 0.25rem 0; cursor:pointer; min-height:3rem; }
+  button.secondary { background:var(--bg); color:var(--accent); }
+  button[aria-pressed="true"] { outline:4px solid var(--focus); outline-offset:2px; font-weight:bold; }
+  label { font-weight:bold; display:block; margin-bottom:0.3rem; font-size:1.15rem; }
+  input[type="search"] { width:100%; padding:0.8rem; border:2px solid var(--ink); border-radius:0.5rem; background:var(--bg); color:var(--ink); }
+  .controls { display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; }
+  .controls label { display:inline; font-weight:normal; margin:0 0.2rem 0 0.5rem; }
+  .controls select, .controls input[type="range"] { min-height:3rem; }
+  .status { font-weight:bold; }
+  .visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  .num { font-weight:bold; }
+  footer { border-top:3px solid var(--ink); padding-top:1rem; }
+  .small { font-size:1rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<a class="skip" href="#search">Skip to search</a>
+<a class="skip" href="#listen-controls">Skip to listen controls</a>
+
+<div class="wrap">
+
+<header>
+  <p class="small">SaiLib &mdash; pathofsai.com &mdash; Listen version</p>
+  <h1>SaiLib Listen. Made for ears, not eyes.</h1>
+  <p class="lede">This page holds the same teachings as the main SaiLib site. It is built for a person who cannot see the screen. There are no pictures here. Nothing moves on its own. Nothing opens without you asking. Everything can be heard, and everything works with a keyboard alone.</p>
+
+  <h2>How this page works</h2>
+  <ol>
+    <li><span class="num">Six sections, in order.</span> Reflection, latest satsang, digests, books, songs, and today in history. Nothing else competes for attention.</li>
+    <li><span class="num">Listen buttons.</span> Every section has a &ldquo;Listen to this section&rdquo; button. It reads that section aloud in your device&rsquo;s voice. Nothing plays by itself, so it never talks over your screen reader.</li>
+    <li><span class="num">Keyboard.</span> Press keys 1 to 6 to jump to a section. Press slash (/) to jump to search. Tab moves forward, one thing at a time, in reading order.</li>
+    <li><span class="num">Links say where they go.</span> Every link names its destination and its length, for example &ldquo;Watch on YouTube, 2 hours 8 minutes, opens YouTube.&rdquo; There is no &ldquo;click here.&rdquo;</li>
+    <li><span class="num">Your settings stay.</span> Text size, contrast, and reading speed are remembered on your device.</li>
+  </ol>
+</header>
+
+<nav aria-label="Sections on this page">
+  <h2>Sections on this page</h2>
+  <ol>
+    <li><a href="#reflection">1. Today&rsquo;s reflection</a></li>
+    <li><a href="#satsang">2. Latest satsang, November 7</a></li>
+    <li><a href="#digests">3. Digests to listen to and read</a></li>
+    <li><a href="#books">4. Books to read</a></li>
+    <li><a href="#songs">5. Songs to listen to</a></li>
+    <li><a href="#today">6. Today in history</a></li>
+  </ol>
+  <p><a href="#settings">Settings: text size, contrast, and reading speed</a> &middot; <a href="#feedback">Tell us how this page felt</a> &middot; <a href="/">Back to the main SaiLib home page (visual site)</a></p>
+</nav>
+
+<div class="card announce" role="note" aria-label="Announcement">
+  <h2>Festival of Grace, November 10 to 17</h2>
+  <p>Sri Babuji&rsquo;s Aradhana, the Festival of Grace, is happening now, November 10 to 17, 2026, at Saipatham and Shirdi, and on the Sri Babuji channel on YouTube.</p>
+  <p><a href="https://www.youtube.com/@SriSainathuniSarathBabuji">Watch the Sri Babuji channel on YouTube, opens YouTube</a></p>
+</div>
+
+<section id="listen-controls" aria-labelledby="listen-heading">
+  <h2 id="listen-heading">Listen controls</h2>
+  <p>These controls read the page aloud. They use the voice built into your phone or computer. Start and stop them whenever you like. They never start on their own.</p>
+  <div class="controls" role="group" aria-label="Read aloud controls">
+    <button type="button" id="read-page">Listen to this whole page</button>
+    <button type="button" id="pause-read" class="secondary">Pause</button>
+    <button type="button" id="resume-read" class="secondary">Resume</button>
+    <button type="button" id="stop-read" class="secondary">Stop reading</button>
+  </div>
+  <div class="controls">
+    <label for="rate">Reading speed</label>
+    <input type="range" id="rate" min="0.7" max="1.3" step="0.1" value="1">
+    <span id="rate-value" aria-live="off">Normal speed</span>
+    <label for="voice">Voice</label>
+    <select id="voice"><option value="">Device default voice</option></select>
+  </div>
+  <p class="status" id="read-status" role="status" aria-live="polite">Reading is stopped.</p>
+  <p class="small">Tip for screen reader users: your screen reader already reads this page. Use these Listen buttons only when you want the page read in a different voice, or when you want to listen without moving through the page yourself. If both speak at once, press Stop reading.</p>
+</section>
+
+<section id="search" aria-labelledby="search-heading">
+  <h2 id="search-heading">Search the teachings</h2>
+  <p>Type a word or a name. For example: Nanavali, saburi, Ramana, Satcharitra, or grace. Results appear below and are announced.</p>
+  <form id="search-form" role="search" action="#search-results">
+    <label for="q">Search words</label>
+    <input type="search" id="q" name="q" autocomplete="off" placeholder="For example: saburi">
+    <p><button type="submit">Search</button>
+    <button type="button" id="clear-search" class="secondary">Clear search</button></p>
+  </form>
+  <p class="status" id="search-status" role="status" aria-live="polite">No search yet. Type a word and press Search.</p>
+  <div id="search-results" aria-label="Search results"></div>
+  <p class="small">This search covers the digests, the songs, and the books listed on this page. To search all 774 videos word by word, use the <a href="/?q=saburi">full SaiLib search on the main home page</a>.</p>
+</section>
+
+<main id="main">
+
+<section id="reflection" aria-labelledby="reflection-heading" data-speak="true">
+  <h2 id="reflection-heading">1. Today&rsquo;s reflection &mdash; November 10, 2026</h2>
+  <p>One short passage from Sri Babuji, to sit with today. Read word for word from Rose Petals.</p>
+  <blockquote>
+    <p>&ldquo;You all yearn for love. You give it different names: freedom, the unconditioned, liberation, mukti, nirvana, all these things.&rdquo;</p>
+  </blockquote>
+  <p>Source: Rose Petals, November 2011, Expression of Love. Spoken by Sri Babuji.</p>
+  <p><button type="button" class="read-section" data-target="reflection">Listen to this reflection</button></p>
+  <p><a href="/">More daily reflections on the main SaiLib home page</a></p>
+</section>
+
+<section id="satsang" aria-labelledby="satsang-heading" data-speak="true">
+  <h2 id="satsang-heading">2. Latest satsang &mdash; November 7, 2026</h2>
+  <p>Saturday satsang with Sri Babuji, 2 hours 8 minutes. In his own words, on handing the reins of life to the Guru, sitting still as the highest yoga, helplessness rather than ignorance as our basic problem, and nishta and saburi as the two coins of dakshina.</p>
+  <h3>What he spoke about</h3>
+  <ul>
+    <li>First get the reins in your own hands.</li>
+    <li>Sitting still is the highest yoga.</li>
+    <li>Our basic problem is helplessness.</li>
+    <li>Once the reins are given, He is responsible.</li>
+    <li>Baba gives an unmistakable experience.</li>
+    <li>Experiencing the love itself is thanking.</li>
+  </ul>
+  <p><button type="button" class="read-section" data-target="satsang">Listen to this section</button></p>
+  <ul>
+    <li><a href="/digests/#readalong-november-7-2026-saiseekers-satsang-post-satsang-review">Read the full November 7 satsang digest, with transcript, summary, and key points, on the Digests page</a></li>
+    <li><a href="https://www.youtube.com/watch?v=OpO9BmjuEXA">Watch the November 7 satsang on YouTube, 2 hours 8 minutes, opens YouTube</a></li>
+    <li><a href="/digests/#readalong-november-5-2026-saiseekers-satsang">Read the November 5 satsang digest, on the Digests page</a></li>
+  </ul>
+</section>
+
+<section id="digests" aria-labelledby="digests-heading" data-speak="true">
+  <h2 id="digests-heading">3. Digests to listen to and read</h2>
+  <p>Each digest gathers everything Sri Babuji said on one topic, in his own words, with the exact video moment for every passage. Newest first. Each link opens the Digests page at that digest.</p>
+  <p><button type="button" class="read-section" data-target="digests">Listen to this section</button></p>
+  <h3>Recent satsangs</h3>
+  <ul>
+    <li><a href="/digests/#readalong-november-7-2026-saiseekers-satsang-post-satsang-review">November 7, 2026, Saturday satsang</a><span class="linkdesc">Handing the reins to the Guru. Sitting still. Nishta and saburi.</span></li>
+    <li><a href="/digests/#readalong-november-5-2026-saiseekers-satsang">November 5, 2026, SaiSEEkers satsang</a><span class="linkdesc">Dung cakes, the corpse is burnt, and the love of the Sadguru. Corrected from the slides shown on screen.</span></li>
+    <li><a href="/digests/#readalong-october-31-2026-saiseekers-satsang-post-satsang-review">October 31, 2026, Saturday satsang</a><span class="linkdesc">Nanavali, a fanatic lover of Baba. The Sadguru as a window. In English and Telugu.</span></li>
+    <li><a href="/digests/#readalong-october-31-2026-conversation-with-dr-antonio-rigopoulos">October 31, 2026, Conversation with Dr Antonio Rigopoulos</a><span class="linkdesc">One hour 25 minutes. No quiz. English first, then Telugu.</span></li>
+    <li><a href="/digests/#readalong-october-24-2026-shs-satsang-about-caste-post-satsang-review">October 24, 2026, Satsang about Caste</a><span class="linkdesc">Our religion is Sai religion. Our caste is Sai caste.</span></li>
+    <li><a href="/digests/#readalong-october-29-2026-saiseekers-satsang-post-satsang-review">October 29, 2026, Saturday satsang</a><span class="linkdesc">Weekly satsang digest, in his own words.</span></li>
+  </ul>
+  <h3>By topic</h3>
+  <ul>
+    <li><a href="/digests/#who-is-sri-babuji">Who is Sri Babuji?</a><span class="linkdesc">In his own words.</span></li>
+    <li><a href="/digests/#who-is-sai-baba">Who is Sai Baba?</a><span class="linkdesc">In his own words.</span></li>
+    <li><a href="/digests/#saint-ramana-maharshi">Ramana Maharshi</a><span class="linkdesc">Who am I? Be a first-class passenger.</span></li>
+    <li><a href="/digests/#saint-buddha">Buddha</a><span class="linkdesc">Spirituality is not for those who fail in the world.</span></li>
+    <li><a href="/digests/#saint-master-bharadwaja">Master Bharadwaja</a><span class="linkdesc">Sri Babuji&rsquo;s guru.</span></li>
+    <li><a href="/digests/#primer-tatya-kote-patil-baba-s-closest-devotee">Tatya Kote Patil, Baba&rsquo;s closest devotee</a><span class="linkdesc">Baba&rsquo;s devotee, in Guruji&rsquo;s telling.</span></li>
+    <li><a href="/digests/#sai-satcharitra-leelas">Sai Satcharitra Leelas</a><span class="linkdesc">Stories from the Satcharitra, as Guruji told them.</span></li>
+    <li><a href="/digests/#story-stories-parables-told-by-sri-babuji">Stories and parables told by Sri Babuji</a><span class="linkdesc">Full narrations, in English and Telugu.</span></li>
+    <li><a href="/digests/#what-is-satsang">What is Satsang?</a><span class="linkdesc">Sitting together. The fencing that protects the harvest.</span></li>
+    <li><a href="/digests/#everything-about-sai-baba">Everything about Sai Baba</a><span class="linkdesc">The full collection.</span></li>
+  </ul>
+  <p><a href="/digests/">Open the full Digests page, all topics</a></p>
+</section>
+
+<section id="books" aria-labelledby="books-heading" data-speak="true">
+  <h2 id="books-heading">4. Books to read</h2>
+  <p>Books you can read or have read aloud. Each link says what it opens. PDF links open the book file; your reader can read it aloud.</p>
+  <p><button type="button" class="read-section" data-target="books">Listen to this section</button></p>
+  <ul>
+    <li><a href="/books/">SaiBooks, the full shelf: 198 books, 9,397 passages, searchable</a><span class="linkdesc">Search within any book. Results give the exact page.</span></li>
+    <li><a href="https://drive.google.com/file/d/1zLNbPcKv2jIVrfGK-MYV7lNzrUdleISj/view">Sri Sai Satcharitra, English, opens a PDF</a><span class="linkdesc">The life and leelas of Sai Baba of Shirdi, 51 chapters.</span></li>
+    <li><a href="/books/">Sri Sai Satcharitra in Telugu, 330 passages, all 51 chapters, on SaiBooks</a><span class="linkdesc">Search the Telugu Satcharitra passage by passage.</span></li>
+    <li><a href="https://downloads.saibaba.com/rosepetals">Rose Petals, monthly selections from satsangs with Sri Babuji, opens a download page</a><span class="linkdesc">Short passages, one a day. This page&rsquo;s daily reflection comes from Rose Petals.</span></li>
+    <li><a href="/books/">Gurukrupa magazine archive, 1997 to 2026, 119 editions, on SaiBooks</a><span class="linkdesc">Searchable, with a Read PDF link on every edition.</span></li>
+    <li><a href="/books/">Bound to Love, and the Sai Leela magazine collection, on SaiBooks</a><span class="linkdesc">Devotees&rsquo; experiences of Baba.</span></li>
+  </ul>
+</section>
+
+<section id="songs" aria-labelledby="songs-heading" data-speak="true">
+  <h2 id="songs-heading">5. Songs to listen to</h2>
+  <p>Seven songs sung inside satsangs and events, each starting at the exact moment the song begins. Each link opens YouTube at that moment. Lengths are the song only, not the whole satsang.</p>
+  <p><button type="button" class="read-section" data-target="songs">Listen to this section</button></p>
+  <ol>
+    <li><a href="https://www.youtube.com/watch?v=NppOocSE1TA&amp;t=1468s">Ek Nazar Dekha Tujhe, also called Teri Ek Jhalak, Hindi, 5 minutes 27 seconds, opens YouTube at 24 minutes 28 seconds</a><span class="linkdesc">Guru Purnima 2024, Day 2. One glance at you, and I knew you.</span></li>
+    <li><a href="https://www.youtube.com/watch?v=KeeFHr4QgnA&amp;t=1428s">Sharadguruvai Nadichenu, Telugu, 4 minutes 57 seconds, opens YouTube at 23 minutes 48 seconds</a><span class="linkdesc">Festival of Grace 2025, Day 2 evening satsang. The light of Sai&rsquo;s sun-like wisdom dawned as Sharath Guru.</span></li>
+    <li><a href="https://www.youtube.com/watch?v=LCYveSIUSI4&amp;t=2045s">Endukayya Neekinta Daya, Telugu, 3 minutes 43 seconds, opens YouTube at 34 minutes 5 seconds</a><span class="linkdesc">Vijayadasami 2025, Day 2 evening satsang. Why such grace, that you walked our streets?</span></li>
+    <li><a href="https://www.youtube.com/watch?v=TLhHDchfE6Q&amp;t=2048s">Daya Sindhuvu, Telugu, 5 minutes 11 seconds, opens YouTube at 34 minutes 8 seconds</a><span class="linkdesc">Festival of Grace 2025, Day 3 evening satsang. Ocean of compassion, dear relative, Gurudeva.</span></li>
+    <li><a href="https://www.youtube.com/watch?v=6i-PZVw_nbQ&amp;t=2183s">Enni Janmala Bandhamadi, Telugu, 4 minutes 41 seconds, opens YouTube at 36 minutes 23 seconds</a><span class="linkdesc">Festival of Grace 2025, Day 4 evening satsang. A bond of how many births, an endless affection.</span></li>
+    <li><a href="https://www.youtube.com/watch?v=PBvGWwx2Tqw&amp;t=4456s">Saibhanuni Jnana Tejammu, Telugu, 4 minutes 33 seconds, opens YouTube at 1 hour 14 minutes 16 seconds</a><span class="linkdesc">October 13, 2026 satsang. The same song as Sharadguruvai Nadichenu, sung again.</span></li>
+    <li><a href="https://www.youtube.com/watch?v=OpO9BmjuEXA&amp;t=5959s">Enni Janmala Bandhamadi, Telugu, 4 minutes 46 seconds, opens YouTube at 1 hour 39 minutes 19 seconds</a><span class="linkdesc">November 7, 2026 Saturday satsang. Sung again in the latest satsang.</span></li>
+  </ol>
+  <p><a href="/music/">Open the full Music page, 140 devotional music videos plus these 7 songs</a></p>
+</section>
+
+<section id="today" aria-labelledby="today-heading" data-speak="true">
+  <h2 id="today-heading">6. Today in history</h2>
+  <p id="today-date">What happened on this date in Baba&rsquo;s life and in Sri Babuji&rsquo;s life.</p>
+  <div id="today-entries">
+    <p>Loading today&rsquo;s entries. If nothing appears, the full timelines are linked below.</p>
+  </div>
+  <p><button type="button" class="read-section" data-target="today">Listen to this section</button></p>
+  <div class="card">
+    <h3>This week to remember</h3>
+    <p>November 13, 2010: Sri Babuji takes Mahasamadhi in Murnau, Germany. November 15, 2010: the Samadhi construction begins at Saipatham. November 17, 2010: his sacred body is entombed at Saipatham. The Festival of Grace, November 10 to 17, marks these days.</p>
+  </div>
+  <ul>
+    <li><a href="/today-sai-baba/">Baba, full timeline, on the Today in History page</a></li>
+    <li><a href="/today-sri-babuji/">Sri Babuji, full timeline, on the Today in History page</a></li>
+  </ul>
+</section>
+
+</main>
+
+<section id="settings" aria-labelledby="settings-heading">
+  <h2 id="settings-heading">Settings</h2>
+  <p>These help people with low vision, and anyone who wants bigger text or stronger contrast. A blind listener using a screen reader can ignore this section. Your choices are remembered on this device.</p>
+  <div class="controls" role="group" aria-label="Text size">
+    <button type="button" id="text-normal" aria-pressed="true">Normal text</button>
+    <button type="button" id="text-large" aria-pressed="false">Large text</button>
+    <button type="button" id="text-xlarge" aria-pressed="false">Extra large text</button>
+  </div>
+  <div class="controls" role="group" aria-label="Contrast and motion">
+    <button type="button" id="contrast-toggle" aria-pressed="false">High contrast</button>
+    <button type="button" id="motion-toggle" aria-pressed="false">Reduce motion</button>
+  </div>
+  <p class="small">Reading speed is set in the Listen controls above.</p>
+</section>
+
+<section id="feedback" aria-labelledby="feedback-heading">
+  <h2 id="feedback-heading">Tell us how this page felt</h2>
+  <p>This page was built for a blind listener, and it is being tested by one. Your honest answer matters more than praise. What worked? What got in the way? What was missing?</p>
+  <p><a href="https://forms.gle/uCoxQvhRrBDGJJmBA">Send feedback on the SaiLib feedback form, opens Google Forms</a></p>
+  <h3>If you are testing this page, please try these 5 things</h3>
+  <ol>
+    <li>Find today&rsquo;s reflection without using a mouse. How many steps did it take?</li>
+    <li>Press the Listen button on the latest satsang section. Could you hear it clearly? Did it talk over your screen reader?</li>
+    <li>Search for the word saburi. Did the results make sense when announced?</li>
+    <li>Open one song. Did YouTube start at the song, or at the beginning of the video?</li>
+    <li>Find what happened on November 13, 2010. Was it easy to find?</li>
+  </ol>
+  <p>Then tell Sai: what should change first?</p>
+</section>
+
+<footer>
+  <h2>About this page</h2>
+  <p>SaiLib Listen lives at pathofsai.com/accessibility. Its short, easy-to-say address is pathofsai.com/listen. Both open this same page.</p>
+  <p>It is the listening version of SaiLib, the library of Sri Babuji&rsquo;s teachings at pathofsai.com. The main site has pictures, themes, and visual search. This page has the same teachings, in words and sound.</p>
+  <p>No pictures are used on this page, so nothing here depends on seeing. No sound plays by itself. No information is asked from you. Links to YouTube and to PDF files open those services, which have their own accessibility.</p>
+  <ul>
+    <li><a href="/">SaiLib home, visual site</a></li>
+    <li><a href="/digests/">Digests</a></li>
+    <li><a href="/books/">Books</a></li>
+    <li><a href="/music/">Music</a></li>
+    <li><a href="/whats-new/">What&rsquo;s new on SaiLib</a></li>
+  </ul>
+  <p class="small">Built November 2026. Daily reflection quoted word for word from Rose Petals. Satsang words are Sri Babuji&rsquo;s own. Song times are the exact second each song begins.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var statusEl = document.getElementById("read-status");
+  var rateEl = document.getElementById("rate");
+  var rateValue = document.getElementById("rate-value");
+  var voiceEl = document.getElementById("voice");
+  var synth = window.speechSynthesis || null;
+
+  function setStatus(msg) { if (statusEl) statusEl.textContent = msg; }
+
+  function describeRate() {
+    var r = parseFloat(rateEl.value);
+    rateValue.textContent = r < 0.9 ? "Slower than normal" : r > 1.1 ? "Faster than normal" : "Normal speed";
+  }
+  rateEl.addEventListener("input", describeRate);
+  describeRate();
+
+  function loadVoices() {
+    if (!synth) return;
+    var voices = synth.getVoices();
+    var keep = voiceEl.value;
+    voiceEl.innerHTML = '<option value="">Device default voice</option>';
+    voices.forEach(function (v, i) {
+      var o = document.createElement("option");
+      o.value = String(i);
+      o.textContent = v.name + " (" + v.lang + ")";
+      voiceEl.appendChild(o);
+    });
+    if (keep) voiceEl.value = keep;
+  }
+  if (synth) { loadVoices(); if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices; }
+
+  function cleanText(el) {
+    var clone = el.cloneNode(true);
+    var btns = clone.querySelectorAll("button");
+    btns.forEach(function (b) { b.remove(); });
+    return clone.textContent.replace(/\s+/g, " ").trim();
+  }
+  function speak(text, label) {
+    if (!synth) { setStatus("Read aloud is not available on this device or browser. Your screen reader can still read the page."); return; }
+    synth.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    var r = parseFloat(rateEl.value); if (r) u.rate = r;
+    var voices = synth.getVoices();
+    if (voiceEl.value !== "" && voices[parseInt(voiceEl.value, 10)]) u.voice = voices[parseInt(voiceEl.value, 10)];
+    u.onend = function () { setStatus("Finished reading" + (label ? ": " + label : "") + "."); };
+    u.onerror = function () { setStatus("Reading stopped."); };
+    synth.speak(u);
+    setStatus("Reading aloud" + (label ? ": " + label : "") + ". Press Stop reading to stop.");
+  }
+  document.getElementById("read-page").addEventListener("click", function () {
+    var main = document.getElementById("main");
+    speak("SaiLib Listen. " + cleanText(document.querySelector("header")) + " " + cleanText(main), "this page");
+  });
+  document.getElementById("stop-read").addEventListener("click", function () {
+    if (synth) synth.cancel();
+    setStatus("Reading is stopped.");
+  });
+  document.getElementById("pause-read").addEventListener("click", function () {
+    if (synth) synth.pause();
+    setStatus("Reading is paused. Press Resume to continue.");
+  });
+  document.getElementById("resume-read").addEventListener("click", function () {
+    if (synth) synth.resume();
+    setStatus("Reading resumed.");
+  });
+  document.querySelectorAll(".read-section").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var el = document.getElementById(btn.getAttribute("data-target"));
+      if (!el) return;
+      var heading = el.querySelector("h2");
+      speak(cleanText(el), heading ? heading.textContent : "this section");
+    });
+  });
+
+  /* Keyboard shortcuts: 1-6 jump to sections, / focuses search. Never while typing. */
+  var sectionIds = ["reflection", "satsang", "digests", "books", "songs", "today"];
+  document.addEventListener("keydown", function (e) {
+    var t = e.target;
+    var typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable);
+    if (typing) return;
+    if (e.key >= "1" && e.key <= "6" && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      var el = document.getElementById(sectionIds[parseInt(e.key, 10) - 1]);
+      if (el) { e.preventDefault(); el.setAttribute("tabindex", "-1"); el.focus(); el.scrollIntoView(); }
+    } else if (e.key === "/" && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault();
+      document.getElementById("q").focus();
+    }
+  });
+
+  /* Search over the items listed on this page. */
+  var SEARCH_DATA = [
+    { k: "reflection quote love freedom mukti nirvana rose petals", t: "Today's reflection, November 10: You all yearn for love", d: "One short passage from Rose Petals, November 2011. Section 1 on this page.", u: "#reflection" },
+    { k: "satsang november 7 reins guru sitting still yoga helplessness nishta saburi dakshina", t: "Latest satsang, November 7, 2026, 2 hours 8 minutes", d: "Handing the reins to the Guru. Sitting still. Nishta and saburi. Section 2 on this page.", u: "#satsang" },
+    { k: "satsang november 5 dung cakes corpse burnt sadguru love", t: "November 5, 2026 satsang digest", d: "Corrected from the slides shown on screen. Digests page.", u: "/digests/#readalong-november-5-2026-saiseekers-satsang" },
+    { k: "nanavali fanatic lover baba window sadguru october 31", t: "October 31, 2026 satsang: Nanavali", d: "Nanavali, a fanatic lover of Baba. The Sadguru as a window. In English and Telugu.", u: "/digests/#readalong-october-31-2026-saiseekers-satsang-post-satsang-review" },
+    { k: "rigopoulos antonio conversation", t: "October 31, 2026: Conversation with Dr Antonio Rigopoulos", d: "One hour 25 minutes. No quiz. English first, then Telugu.", u: "/digests/#readalong-october-31-2026-conversation-with-dr-antonio-rigopoulos" },
+    { k: "caste sai religion shs october 24", t: "October 24, 2026: Satsang about Caste", d: "Our religion is Sai religion. Our caste is Sai caste.", u: "/digests/#readalong-october-24-2026-shs-satsang-about-caste-post-satsang-review" },
+    { k: "ramana maharshi who am i first class passenger", t: "Ramana Maharshi digest", d: "Who am I? Be a first-class passenger.", u: "/digests/#saint-ramana-maharshi" },
+    { k: "buddha spirituality world", t: "Buddha digest", d: "Spirituality is not for those who fail in the world.", u: "/digests/#saint-buddha" },
+    { k: "bharadwaja master guru", t: "Master Bharadwaja digest", d: "Sri Babuji's guru.", u: "/digests/#saint-master-bharadwaja" },
+    { k: "tatya kote patil closest devotee", t: "Tatya Kote Patil, Baba's closest devotee", d: "Baba's devotee, in Guruji's telling.", u: "/digests/#primer-tatya-kote-patil-baba-s-closest-devotee" },
+    { k: "satcharitra leelas stories", t: "Sai Satcharitra Leelas digest", d: "Stories from the Satcharitra, as Guruji told them.", u: "/digests/#sai-satcharitra-leelas" },
+    { k: "stories parables told babuji", t: "Stories and parables told by Sri Babuji", d: "Full narrations, in English and Telugu.", u: "/digests/#story-stories-parables-told-by-sri-babuji" },
+    { k: "satsang what is sitting together fencing harvest", t: "What is Satsang?", d: "Sitting together. The fencing that protects the harvest.", u: "/digests/#what-is-satsang" },
+    { k: "sai baba who is", t: "Who is Sai Baba?", d: "In his own words.", u: "/digests/#who-is-sai-baba" },
+    { k: "sri babuji who is", t: "Who is Sri Babuji?", d: "In his own words.", u: "/digests/#who-is-sri-babuji" },
+    { k: "satcharitra book shirdi 51 chapters telugu english", t: "Sri Sai Satcharitra", d: "English PDF, and Telugu, 330 passages, all 51 chapters, on SaiBooks. Section 4 on this page.", u: "#books" },
+    { k: "rose petals book daily monthly", t: "Rose Petals", d: "Monthly selections from satsangs with Sri Babuji. Section 4 on this page.", u: "#books" },
+    { k: "gurukrupa magazine archive", t: "Gurukrupa magazine archive, 1997 to 2026", d: "119 editions, searchable, on SaiBooks.", u: "#books" },
+    { k: "song ek nazar teri jhalak hindi guru purnima", t: "Song: Ek Nazar Dekha Tujhe, Hindi, 5 minutes 27 seconds", d: "Guru Purnima 2024, Day 2. Starts at 24 minutes 28 seconds on YouTube.", u: "https://www.youtube.com/watch?v=NppOocSE1TA&t=1468s" },
+    { k: "song sharadguruvai saibhanuni telugu festival grace", t: "Song: Sharadguruvai Nadichenu, Telugu, 4 minutes 57 seconds", d: "Festival of Grace 2025, Day 2. Starts at 23 minutes 48 seconds on YouTube.", u: "https://www.youtube.com/watch?v=KeeFHr4QgnA&t=1428s" },
+    { k: "song endukayya daya telugu vijayadasami", t: "Song: Endukayya Neekinta Daya, Telugu, 3 minutes 43 seconds", d: "Vijayadasami 2025, Day 2. Starts at 34 minutes 5 seconds on YouTube.", u: "https://www.youtube.com/watch?v=LCYveSIUSI4&t=2045s" },
+    { k: "song daya sindhuvu gurudeva telugu festival grace", t: "Song: Daya Sindhuvu, Telugu, 5 minutes 11 seconds", d: "Festival of Grace 2025, Day 3. Starts at 34 minutes 8 seconds on YouTube.", u: "https://www.youtube.com/watch?v=TLhHDchfE6Q&t=2048s" },
+    { k: "song enni janmala bandhamadi telugu births bond", t: "Song: Enni Janmala Bandhamadi, Telugu", d: "Two versions: Festival of Grace 2025, Day 4, and November 7, 2026 satsang. Section 5 on this page.", u: "#songs" },
+    { k: "today history november 13 mahasamadhi murnau saipatham", t: "Today in history: November 13, 2010, Mahasamadhi", d: "Sri Babuji takes Mahasamadhi in Murnau. Section 6 on this page.", u: "#today" },
+    { k: "aradhana festival grace november 10 17", t: "Festival of Grace, Aradhana, November 10 to 17", d: "At Saipatham and Shirdi, and on the Sri Babuji channel on YouTube.", u: "https://www.youtube.com/@SriSainathuniSarathBabuji" }
+  ];
+  var searchStatus = document.getElementById("search-status");
+  var searchResults = document.getElementById("search-results");
+  function doSearch(q) {
+    q = (q || "").trim().toLowerCase();
+    searchResults.innerHTML = "";
+    if (!q) { searchStatus.textContent = "Type a word and press Search."; return; }
+    var words = q.split(/\s+/);
+    var hits = SEARCH_DATA.filter(function (item) {
+      var hay = (item.k + " " + item.t + " " + item.d).toLowerCase();
+      return words.every(function (w) { return hay.indexOf(w) !== -1; });
+    });
+    if (!hits.length) {
+      searchStatus.textContent = "No results on this page for " + q + ". Try a shorter word, or use the full SaiLib search on the main home page.";
+      var p = document.createElement("p");
+      var a = document.createElement("a");
+      a.href = "/?q=" + encodeURIComponent(q);
+      a.textContent = "Search for " + q + " in the full SaiLib library, all 774 videos, on the main home page";
+      p.appendChild(a);
+      searchResults.appendChild(p);
+      return;
+    }
+    searchStatus.textContent = hits.length + (hits.length === 1 ? " result" : " results") + " for " + q + ".";
+    var ol = document.createElement("ol");
+    hits.slice(0, 10).forEach(function (item) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = item.u;
+      a.textContent = item.t;
+      li.appendChild(a);
+      var s = document.createElement("span");
+      s.className = "linkdesc";
+      s.textContent = item.d;
+      li.appendChild(s);
+      ol.appendChild(li);
+    });
+    searchResults.appendChild(ol);
+  }
+  document.getElementById("search-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    doSearch(document.getElementById("q").value);
+  });
+  document.getElementById("clear-search").addEventListener("click", function () {
+    document.getElementById("q").value = "";
+    searchResults.innerHTML = "";
+    searchStatus.textContent = "Search cleared. Type a word and press Search.";
+    document.getElementById("q").focus();
+  });
+
+  /* Settings, remembered on this device. */
+  function setPressed(id, on) { var b = document.getElementById(id); if (b) b.setAttribute("aria-pressed", on ? "true" : "false"); }
+  function applyText(size) {
+    document.documentElement.classList.remove("text-large", "text-xlarge");
+    if (size === "large") document.documentElement.classList.add("text-large");
+    if (size === "xlarge") document.documentElement.classList.add("text-xlarge");
+    try { localStorage.setItem("sailib-listen-text", size); } catch (e) {}
+    setPressed("text-normal", size === "normal");
+    setPressed("text-large", size === "large");
+    setPressed("text-xlarge", size === "xlarge");
+  }
+  document.getElementById("text-normal").addEventListener("click", function () { applyText("normal"); });
+  document.getElementById("text-large").addEventListener("click", function () { applyText("large"); });
+  document.getElementById("text-xlarge").addEventListener("click", function () { applyText("xlarge"); });
+  document.getElementById("contrast-toggle").addEventListener("click", function () {
+    var on = document.documentElement.classList.toggle("high-contrast");
+    setPressed("contrast-toggle", on);
+    try { localStorage.setItem("sailib-listen-contrast", on ? "high" : "normal"); } catch (e) {}
+  });
+  document.getElementById("motion-toggle").addEventListener("click", function () {
+    var on = document.documentElement.classList.toggle("reduce-motion");
+    setPressed("motion-toggle", on);
+    try { localStorage.setItem("sailib-listen-motion", on ? "reduce" : "normal"); } catch (e) {}
+  });
+  try {
+    var savedText = localStorage.getItem("sailib-listen-text");
+    if (savedText) applyText(savedText);
+    if (localStorage.getItem("sailib-listen-contrast") === "high") {
+      document.documentElement.classList.add("high-contrast");
+      setPressed("contrast-toggle", true);
+    }
+    if (localStorage.getItem("sailib-listen-motion") === "reduce") {
+      document.documentElement.classList.add("reduce-motion");
+      setPressed("motion-toggle", true);
+    }
+  } catch (e) {}
+
+  /* Today in history: load the site's own data file, show this date only. */
+  function renderToday() {
+    var box = document.getElementById("today-entries");
+    var now = new Date();
+    var mm = String(now.getMonth() + 1).padStart(2, "0");
+    var dd = String(now.getDate()).padStart(2, "0");
+    var key = mm + "-" + dd;
+    var dateEl = document.getElementById("today-date");
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    dateEl.textContent = "What happened on " + months[now.getMonth()] + " " + now.getDate() + ", in Baba's life and in Sri Babuji's life.";
+    var data = window.SAILIB_TODAY_HISTORY;
+    if (!data) { box.innerHTML = "<p>Today's entries could not be loaded on this copy of the page. The full timelines are linked below.</p>"; return; }
+    var out = "";
+    ["baba", "guruji"].forEach(function (who) {
+      var list = (data[who] && data[who][key]) || [];
+      list.forEach(function (e) {
+        out += "<h3>" + (who === "baba" ? "Baba" : "Sri Babuji") + ", " + e.year + ": " + e.title + "</h3><p>" + (e.summary || "") + "</p>";
+      });
+    });
+    if (!out) {
+      out = "<p>There is no entry for " + months[now.getMonth()] + " " + now.getDate() + " in the timelines. The nearest dates with entries are November 7, Sri Babuji's quiet journey to Kedarnath and Badrinath in 2007, and November 13, the Mahasamadhi in 2010, described below.</p>";
+    }
+    box.innerHTML = out;
+  }
+  var s = document.createElement("script");
+  s.src = "/assets/today-history-data.js?v202611020719";
+  s.onload = renderToday;
+  s.onerror = renderToday;
+  document.head.appendChild(s);
+})();
+</script>
+</body>
+</html>
