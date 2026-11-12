@@ -1,6 +1,12 @@
 /* What's New — running list of major feature updates, newest first */
 window.SAILIB_WHATS_NEW = [
   {
+    date: "2026-11-12",
+    title: "Rose Petals Vol. 2 quiz cheat-sheet",
+    desc: "Prepare for a quiz on the 2012 Rose Petals volume: 96 English and 68 Telugu questions with answers, key teachings, analogies and photo captions — every answer linked to its exact passage.",
+    link: "/quiz/rose-petals-volume-2/"
+  },
+  {
     date: "2026-11-09",
     title: "Sri Babuji's Aradhana — Festival of Grace, Nov 10–17",
     desc: "Join the celebrations at Saipatham, Shirdi or on the Sri Babuji channel on YouTube.",
