@@ -20,6 +20,7 @@
   --badge-en:#a26f47;
   --badge-te:#4f8881;
   --badge-mu:#8d716f;
+  --badge-pres:#5b7a99;
   --book:#4f8881;
   --book-bg:rgba(127,184,176,.16);
   --gold:#d4a070;
@@ -48,6 +49,7 @@
     --badge-en:#a26f47;
     --badge-te:#4f8881;
     --badge-mu:#8d716f;
+  --badge-pres:#5b7a99;
     --book:#4f8881;
     --book-bg:rgba(127,184,176,.16);
     --gold:#d4a070;
@@ -279,7 +281,7 @@ h1,h2,h3,h4{font-family:var(--heading-font);color:var(--ink)}
 .card h3 a:hover{color:var(--accent);text-decoration:underline}
 .meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:.88rem;margin-bottom:10px}
 .badge{border:1.5px solid currentColor;border-radius:999px;padding:1px 11px;font-size:.76rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
-.badge.en{color:var(--badge-en)} .badge.te{color:var(--badge-te)} .badge.mu{color:var(--badge-mu)}
+.badge.en{color:var(--badge-en)} .badge.te{color:var(--badge-te)} .badge.mu{color:var(--badge-mu)} .badge.pres{color:var(--badge-pres)}
 .chan{color:var(--muted);font-size:.8rem;font-weight:600;letter-spacing:.3px}
 .hit{
   background:var(--accent-soft);border-radius:10px;padding:11px 13px;margin:0 0 10px;

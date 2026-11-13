@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
-<script src="assets/sailib-search-index.js?v202611122258"></script>
+<script src="assets/sailib-search-index.js?v202611131259"></script>
 <script src="assets/sailib-digest-items.js?v202611122258"></script>
 <script src="assets/today-history-data.js?v202611020719"></script>
 <script src="assets/whats-new.js?v202611120551"></script>
@@ -40,6 +40,7 @@
   --badge-en:#a26f47;
   --badge-te:#4f8881;
   --badge-mu:#8d716f;
+  --badge-pres:#5b7a99;
   --book:#4f8881;
   --book-bg:rgba(127,184,176,.16);
   --gold:#d4a070;
@@ -68,6 +69,7 @@
     --badge-en:#a26f47;
     --badge-te:#4f8881;
     --badge-mu:#8d716f;
+  --badge-pres:#5b7a99;
     --book:#4f8881;
     --book-bg:rgba(127,184,176,.16);
     --gold:#d4a070;
@@ -333,7 +335,7 @@ h1,h2,h3,h4{font-family:var(--heading-font);color:var(--ink)}
 .card h3 a:hover{color:var(--accent);text-decoration:underline}
 .meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:.88rem;margin-bottom:10px}
 .badge{border:1.5px solid currentColor;border-radius:999px;padding:1px 11px;font-size:.76rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
-.badge.en{color:var(--badge-en)} .badge.te{color:var(--badge-te)} .badge.mu{color:var(--badge-mu)}
+.badge.en{color:var(--badge-en)} .badge.te{color:var(--badge-te)} .badge.mu{color:var(--badge-mu)} .badge.pres{color:var(--badge-pres)}
 .chan{color:var(--muted);font-size:.8rem;font-weight:600;letter-spacing:.3px}
 .hit{
   background:var(--accent-soft);border-radius:10px;padding:11px 13px;margin:0 0 10px;
@@ -2037,7 +2039,15 @@ function search(rawQuery){
                                     titleAny: titleAny, kwAny: kwAny, sumAny: sumAny,
                                     spokenMatch: spokenHit.best });
   }
-  out.sort(function(a, b){ return b.score - a.score; });
+  /* Presentations by others (v.kind === "presentation") rank below
+     satsang/discourse results, whatever their title match -- so a
+     presentation titled "Anger" never tops Guruji's own discourse
+     on anger. Within each group, best score first. */
+  out.sort(function(a, b){
+    var ap = a.v.kind === "presentation" ? 1 : 0,
+        bp = b.v.kind === "presentation" ? 1 : 0;
+    return (ap - bp) || (b.score - a.score);
+  });
   /* A title-level match across the significant query terms is the
      search's strong-match bar. Reference reading is offered only when
      a mapped topic's best video result falls below this same IDF-aware
@@ -2770,6 +2780,8 @@ function cardHTML(hit, tokens, phrases){
   var shareButton = '<button type="button" class="copy-link" data-copy-link="' + esc(shareUrl) +
     '" data-copy-kind="video">' + copySvg + '<span>Copy link</span></button>';
   var badge = '<span class="badge ' + langCls(v.lang) + '">' + langLabel(v.lang) + "</span>";
+  if(v.kind === "presentation")
+    badge += ' <span class="badge pres">Doctor\u2019s presentation</span>';
   var metaBits = [badge, '<span class="chan">' + esc(v.channel || "Sri Babuji") + "</span>"];
   if(v.duration && v.duration !== "Unknown") metaBits.push("<span>" + esc(v.duration) + "</span>");
   var d = fmtDate(v.date);

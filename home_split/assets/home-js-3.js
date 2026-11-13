@@ -263,7 +263,15 @@ function search(rawQuery){
                                     titleAny: titleAny, kwAny: kwAny, sumAny: sumAny,
                                     spokenMatch: spokenHit.best });
   }
-  out.sort(function(a, b){ return b.score - a.score; });
+  /* Presentations by others (v.kind === "presentation") rank below
+     satsang/discourse results, whatever their title match -- so a
+     presentation titled "Anger" never tops Guruji's own discourse
+     on anger. Within each group, best score first. */
+  out.sort(function(a, b){
+    var ap = a.v.kind === "presentation" ? 1 : 0,
+        bp = b.v.kind === "presentation" ? 1 : 0;
+    return (ap - bp) || (b.score - a.score);
+  });
   /* A title-level match across the significant query terms is the
      search's strong-match bar. Reference reading is offered only when
      a mapped topic's best video result falls below this same IDF-aware
@@ -892,6 +900,8 @@ function cardHTML(hit, tokens, phrases){
   var shareButton = '<button type="button" class="copy-link" data-copy-link="' + esc(shareUrl) +
     '" data-copy-kind="video">' + copySvg + '<span>Copy link</span></button>';
   var badge = '<span class="badge ' + langCls(v.lang) + '">' + langLabel(v.lang) + "</span>";
+  if(v.kind === "presentation")
+    badge += ' <span class="badge pres">Doctor\u2019s presentation</span>';
   var metaBits = [badge, '<span class="chan">' + esc(v.channel || "Sri Babuji") + "</span>"];
   if(v.duration && v.duration !== "Unknown") metaBits.push("<span>" + esc(v.duration) + "</span>");
   var d = fmtDate(v.date);
