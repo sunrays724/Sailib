@@ -1,6 +1,12 @@
 /* What's New — running list of major feature updates, newest first */
 window.SAILIB_WHATS_NEW = [
   {
+    date: "2026-11-15",
+    title: "Aradhana 2026 collection",
+    desc: "All of Sri Babuji's 16th Aradhana satsang digests in one place — morning and evening sessions from November 10–17, 2026.",
+    link: "/digests/#collection-aradhana-2026"
+  },
+  {
     date: "2026-11-12",
     title: "Rose Petals Vol. 2 quiz cheat-sheet",
     desc: "Prepare for a quiz on the 2012 Rose Petals volume: 96 English and 68 Telugu questions with answers, key teachings, analogies and photo captions — every answer linked to its exact passage.",
