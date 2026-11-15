@@ -10807,12 +10807,8 @@ function quizListHtml(quiz, typeLabel){
 
 function renderQuiz(quiz){
   var typeLabel = {mcq:"Multiple choice", tf:"True or false", fill:"Fill in the blank", reflect:"Reflection"};
-  var html = '<nav class="jump-nav" aria-label="In this digest">' +
-    '<a data-go="dquiz" tabindex="0">Quiz</a>' +
-    '<a data-go="dtranscript" tabindex="0">Transcript</a>' +
-    '<a data-go="dsummary" tabindex="0">Summary</a>' +
-    '<a data-go="dkeypoints" tabindex="0">Key Points</a></nav>';
-  html += '<section class="quiz" id="dquiz"><div class="deep-head"><h2>Quiz — think before you read</h2>' +
+  /* the quick-jump nav now lives at the top of renderReadalong, not here */
+  var html = '<section class="quiz" id="dquiz"><div class="deep-head"><h2>Quiz — think before you read</h2>' +
     '<p>Try these from memory first, then tap <em>Reveal answer</em> to check yourself.</p></div>';
   html += quizListHtml(quiz, typeLabel);
   html += '</section>';
@@ -10943,6 +10939,13 @@ function renderTeluguPane(d, canonical){
 
 function renderReadalong(d, canonical){
   var html = '<h1 class="dig-title">' + esc(d.name) + "</h1>";
+  /* quick-jump pills at the top of every digest — Quiz only when the digest
+     has one, Summary only when it renders one (primers already do this) */
+  html += '<nav class="jump-nav" aria-label="In this digest">' +
+    (d.quiz ? '<a data-go="dquiz" tabindex="0">Quiz</a>' : '') +
+    '<a data-go="dtranscript" tabindex="0">Transcript</a>' +
+    (d.quiz || d.summaryInView ? '<a data-go="dsummary" tabindex="0">Summary</a>' : '') +
+    '<a data-go="dkeypoints" tabindex="0">Key Points</a></nav>';
   html += '<div class="readalong-meta">' +
     '<div><span class="meta-label">Video</span><a href="' + esc(d.video) + '" target="_blank" rel="noopener"><strong>' + esc(d.watchLabel || 'Watch the full satsang') + '</strong></a></div>' +
     '<div><span class="meta-label">Duration</span><strong>' + esc(d.duration) + '</strong></div>' +
@@ -11003,7 +11006,7 @@ function renderReadalong(d, canonical){
     return html;
   }
   if (d.summaryInView) html += '<article class="point in-brief" id="dsummary"><h3>Summary</h3><p>' + esc(d.inBrief) + '</p></article>';
-  html += '<article class="point in-brief"><h3>Key points</h3>';
+  html += '<article class="point in-brief" id="dkeypoints"><h3>Key points</h3>';
   if (d.keyPointGroups) {
     d.keyPointGroups.forEach(function(group){
       html += '<section class="key-point-group"><h4>' + esc(group.title) + '</h4><ul class="key-points">';
@@ -11021,7 +11024,7 @@ function renderReadalong(d, canonical){
     html += '<li data-go="pt-' + (i + 1) + '"><time>' + esc(section.time) + '</time><a data-go="pt-' + (i + 1) + '" tabindex="0">' + esc(section.tocTitle || section.title) + '</a></li>';
   });
   html += '</ol></nav>';
-  html += '<div class="deep-head"><h2>' + esc(d.transcriptHeading || 'Post Satsang review transcript') + '</h2><p>' + esc(d.transcriptSub || 'Open a timestamp to hear the passage in the original satsang.') + '</p></div>';
+  html += '<div class="deep-head" id="dtranscript"><h2>' + esc(d.transcriptHeading || 'Post Satsang review transcript') + '</h2><p>' + esc(d.transcriptSub || 'Open a timestamp to hear the passage in the original satsang.') + '</p></div>';
   d.sections.forEach(function(section, i){
     var href = d.video + '&t=' + section.seconds + 's';
     html += '<article class="point transcript-entry" id="pt-' + (i + 1) + '"><div class="transcript-head"><h3>' + esc(section.title) + '</h3><span class="section-links">' +
