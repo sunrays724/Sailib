@@ -252,8 +252,12 @@ h1,h2,h3,h4{font-family:var(--heading-font);color:var(--ink)}
 .aradhana-eyebrow{color:var(--accent-deep);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
 .aradhana-title{display:block;font-family:var(--heading-font);font-size:1.3rem;line-height:1.25}
 .aradhana-blurb{display:block;margin:8px 0 12px;font-size:.95rem}
-.aradhana-cta{display:inline-flex;align-self:flex-start;background:var(--accent);color:#fffdf7;border-radius:9px;padding:8px 14px;font-weight:600}
+.aradhana-banner .aradhana-link>a{display:block}
+.aradhana-ctas{display:flex;flex-wrap:wrap;gap:10px}
+.aradhana-cta{display:inline-flex;align-self:flex-start;background:var(--accent);color:#fffdf7;border-radius:9px;padding:8px 14px;font-weight:600;text-decoration:none}
 .aradhana-banner .aradhana-link:hover .aradhana-cta{background:var(--accent-deep)}
+.aradhana-cta-secondary{display:inline-flex;align-self:flex-start;background:transparent;color:var(--accent-ink);border:1px solid var(--accent);border-radius:9px;padding:8px 14px;font-weight:600;text-decoration:none}
+.aradhana-cta-secondary:hover{background:var(--accent-soft)}
 @media (max-width:640px){.aradhana-banner .aradhana-link{grid-template-columns:1fr}}
 .reference-stack{display:flex;flex-direction:column;gap:14px;margin:0 0 14px}
 .reference-card{
@@ -874,15 +878,20 @@ body::after { content:''; position:fixed; inset:0; background-image:var(--theme-
   </div>
 
   <section class="aradhana-banner" id="aradhanaBanner" aria-label="Sri Babuji's Aradhana — Festival of Grace">
-    <a class="aradhana-link" href="https://www.youtube.com/@SriSainathuniSarathBabuji" target="_blank" rel="noopener">
-      <img src="assets/aradhana-2026.jpg?v20261109" alt="Sri Babuji's Aradhana, Festival of Grace, 10–17 November 2026 — join the celebrations at Saipatham, Shirdi or on the Sri Babuji channel on YouTube">
+    <div class="aradhana-link">
+      <a href="https://www.youtube.com/@SriSainathuniSarathBabuji" target="_blank" rel="noopener">
+        <img src="assets/aradhana-2026.jpg?v20261109" alt="Sri Babuji's Aradhana, Festival of Grace, 10–17 November 2026 — join the celebrations at Saipatham, Shirdi or on the Sri Babuji channel on YouTube">
+      </a>
       <span class="aradhana-copy">
         <span class="aradhana-eyebrow">10 – 17 November 2026</span>
         <span class="aradhana-title">Sri Babuji's Aradhana — Festival of Grace</span>
         <span class="aradhana-blurb">Join the celebrations at Saipatham, Shirdi — or watch on the Sri Babuji channel on YouTube.</span>
-        <span class="aradhana-cta">Watch on YouTube →</span>
+        <span class="aradhana-ctas">
+          <a class="aradhana-cta" href="https://www.youtube.com/@SriSainathuniSarathBabuji" target="_blank" rel="noopener">Watch on YouTube →</a>
+          <a class="aradhana-cta-secondary" href="/digests/#collection-aradhana-2026">Read the Aradhana digests →</a>
+        </span>
       </span>
-    </a>
+    </div>
   </section>
   <script>(function(){var b=document.getElementById('aradhanaBanner');if(b&&new Date()>new Date('2026-11-18T00:00:00')){b.remove();}})();</script>
 

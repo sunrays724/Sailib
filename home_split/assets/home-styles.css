@@ -737,6 +737,10 @@ body::after { content:''; position:fixed; inset:0; background-image:var(--theme-
 .aradhana-eyebrow{color:var(--accent-deep);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
 .aradhana-title{display:block;font-family:var(--heading-font);font-size:1.3rem;line-height:1.25}
 .aradhana-blurb{display:block;margin:8px 0 12px;font-size:.95rem}
-.aradhana-cta{display:inline-flex;align-self:flex-start;background:var(--accent);color:#fffdf7;border-radius:9px;padding:8px 14px;font-weight:600}
+.aradhana-banner .aradhana-link>a{display:block}
+.aradhana-ctas{display:flex;flex-wrap:wrap;gap:10px}
+.aradhana-cta{display:inline-flex;align-self:flex-start;background:var(--accent);color:#fffdf7;border-radius:9px;padding:8px 14px;font-weight:600;text-decoration:none}
 .aradhana-banner .aradhana-link:hover .aradhana-cta{background:var(--accent-deep)}
+.aradhana-cta-secondary{display:inline-flex;align-self:flex-start;background:transparent;color:var(--accent-ink);border:1px solid var(--accent);border-radius:9px;padding:8px 14px;font-weight:600;text-decoration:none}
+.aradhana-cta-secondary:hover{background:var(--accent-soft)}
 @media (max-width:640px){.aradhana-banner .aradhana-link{grid-template-columns:1fr}}
