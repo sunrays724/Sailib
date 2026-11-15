@@ -10479,6 +10479,16 @@ function renderCollection(col){
 
 function buildTable(){
   var t = document.getElementById("tindex"), th = "";
+  /* featured: the Aradhana 2026 collection, first while the week is on —
+     count and latest digest come from the collection itself, so the row
+     stays current as Days 6-evening/7 land */
+  var arCol = null;
+  COLLECTIONS.some(function(c){ if (c.slug === "aradhana-2026") { arCol = c; return true; } return false; });
+  if (arCol) {
+    var arN = collectionCount(arCol);
+    var arTeaser = collectionTeaser(arCol);
+    th += '<a class="featured-biography trow" data-name="Aradhana 2026 Sri Babuji 16th Festival of Grace satsang digests" href="#collection-aradhana-2026" target="_self"><span class="kind">Aradhana 2026</span><span><h2>Sri Babuji&rsquo;s 16th Aradhana &mdash; Festival of Grace</h2><p>Every satsang digest from the week, morning and evening sessions, November 10&ndash;17, 2026 &mdash; ' + arN + ' digest' + (arN === 1 ? '' : 's') + (arTeaser ? ' &middot; ' + esc(arTeaser) : '') + '</p></span><span class="arrow" aria-hidden="true">&rarr;</span></a>';
+  }
   th += '<a class="featured-biography trow" data-name="Sri Babuji In His Own Words biography satsangs books Rose Petals" href="/biography/" target="_blank" rel="noopener"><span class="kind">Featured biography</span><span><h2>Sri Babuji &mdash; In His Own Words</h2><p>A biography woven only from what he himself said &mdash; in satsangs, in his books, and in Rose Petals</p></span><span class="arrow" aria-hidden="true">&nearr;</span></a>';
   th += '<h2 class="group-title"><span class="dot"></span>Browse by collection</h2>';
   th += '<p class="group-sub">Seven collections &mdash; tap one to dive in.</p>';
