@@ -14,10 +14,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
-<script src="/assets/sailib-search-index.js?v202611150718"></script>
-<script src="/assets/sailib-digest-items.js?v202611150718"></script>
-<script src="/assets/today-history-data.js?v202611020719"></script>
-<script src="/assets/whats-new.js?v202611150117"></script>
 <style>
 :root{
   --bg:#f5f0e8;
@@ -1018,6 +1014,10 @@ body::after { content:''; position:fixed; inset:0; background-image:var(--theme-
      ============================================================ -->
 <script src="/assets/related-map.js?v202610110620"></script>
 <script src="/assets/known-words.js?v202610110620"></script>
+<script src="/assets/sailib-search-index.js?v202611180133"></script>
+<script src="/assets/sailib-digest-items.js?v202611161100"></script>
+<script src="/assets/today-history-data.js?v202611020719"></script>
+<script src="/assets/whats-new.js?v202611150117"></script>
 <script>
 var SEARCH_INDEX = window.SAILIB_SEARCH_INDEX || null;
 
@@ -3347,13 +3347,10 @@ sourceFilters.addEventListener("change", function(e){
   if(!e.target.matches('input[type="checkbox"]')) return;
   clearTimeout(deb);
   runSearch();
-  if(!q.value.trim() && e.target.checked && e.target === sourceBooks && !bookIndexPrepared){
-    setSourceLoadStatus(["books"], false);
-    ensureBookIndex().then(function(){ setSourceLoadStatus([], false); }, function(){ setSourceLoadStatus(["books"], true); });
-  } else if(!q.value.trim() && e.target.checked && e.target === sourcePhotos && !photoIndexPrepared){
-    setSourceLoadStatus(["photos"], false);
-    ensurePhotoIndex().then(function(){ setSourceLoadStatus([], false); }, function(){ setSourceLoadStatus(["photos"], true); });
-  }
+  /* No eager preload here: with an empty search box there is nothing to
+     show, so loading the 22 MB book index (5.2 MB compressed) on ticking
+     Books was pure waste. runSearch loads it on demand the moment a
+     real query is typed, and the same holds for the photo index. */
 });
 function wireTry(container){
   container.addEventListener("click", function(e){

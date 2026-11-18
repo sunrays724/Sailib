@@ -1402,13 +1402,10 @@ sourceFilters.addEventListener("change", function(e){
   if(!e.target.matches('input[type="checkbox"]')) return;
   clearTimeout(deb);
   runSearch();
-  if(!q.value.trim() && e.target.checked && e.target === sourceBooks && !bookIndexPrepared){
-    setSourceLoadStatus(["books"], false);
-    ensureBookIndex().then(function(){ setSourceLoadStatus([], false); }, function(){ setSourceLoadStatus(["books"], true); });
-  } else if(!q.value.trim() && e.target.checked && e.target === sourcePhotos && !photoIndexPrepared){
-    setSourceLoadStatus(["photos"], false);
-    ensurePhotoIndex().then(function(){ setSourceLoadStatus([], false); }, function(){ setSourceLoadStatus(["photos"], true); });
-  }
+  /* No eager preload here: with an empty search box there is nothing to
+     show, so loading the 22 MB book index (5.2 MB compressed) on ticking
+     Books was pure waste. runSearch loads it on demand the moment a
+     real query is typed, and the same holds for the photo index. */
 });
 function wireTry(container){
   container.addEventListener("click", function(e){
