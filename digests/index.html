@@ -475,8 +475,8 @@
       <a href="/music/">Music</a>
       <a href="/photos/">Photos</a>
     </nav>
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><a href="/digests/">Digests</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><span class="breadcrumb-current" id="digest-crumb" aria-current="page"></span></nav>
-    <a class="back" href="#/" target="_self">&larr; All digests</a>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><a href="/digests/">Digests</a><span class="breadcrumb-separator" aria-hidden="true"> › </span><span id="digest-crumb-parent"></span><span class="breadcrumb-current" id="digest-crumb" aria-current="page"></span></nav>
+    <a class="back" id="digest-back" href="#/" target="_self">&larr; All digests</a>
     <div id="digest"></div>
     <footer class="footer">Curated from the Sri Babuji and SaiSEEkers YouTube channel transcripts &middot; timestamps point into the original videos</footer>
     <p class="dedication">This is built by SaiSEEker for Saiseekers as a humble offering to SaiBabuji's holy feet. Event discourses are human-transcribed; results marked CC use AI-generated captions &mdash; pardon any mistakes &#x1F64F;</p>
@@ -19693,14 +19693,17 @@ function digestSearchText(value){
 }
 /* ---------- collections ---------- */
 var MAHASAMADHI_NAME = "Baba's Mahasamadhi \u2014 October 15, 1918";
+/* An Aradhana digest: flagged (d.aradhana) or titled "Aradhana Day N".
+   Mirrors the Aradhana 2026 collection's `only` filter — keep in sync.
+   Aradhana is Sri Babuji channel only (Nov 19): the Nov 13 + Nov 14
+   SaiSEEkers sessions carry no flag and stay out of the collection. */
+function isAradhana(d){ return !!d && (d.aradhana === true || /Aradhana Day/.test(d.name)); }
 var COLLECTIONS = [
   {slug:"aradhana-2026", name:"Aradhana 2026",
    desc:"Sri Babuji's 16th Aradhana — Festival of Grace, November 10–17, 2026: every satsang digest from the week, morning and evening sessions.",
    kinds:["readalong"], newestFirst:true,
    /* flagged entries (d.aradhana) plus any digest titled "Aradhana Day N" —
-      the flag is what catches the two SaiSEEkers Aradhana sessions, whose
-      names carry no "Aradhana" (Nov 13 + Nov 14); the title pattern is the
-      safety net if a future Day 6/7 run forgets the flag. */
+      the title pattern is the safety net if a future run forgets the flag. */
    only:function(d){ return d.aradhana === true || /Aradhana Day/.test(d.name); }},
   {slug:"satsang", name:"Satsang Reviews",
    desc:"Weekly post-satsang reviews \u2014 quiz, full transcript, summary and key points.",
@@ -20695,9 +20698,21 @@ function prevNextHtml(cur){
   var i = -1, k;
   for (k = 0; k < ORDER.length; k++) if (ORDER[k].s === cur) { i = k; break; }
   if (i < 0) return "";
-  var h = '<nav class="prevnext" aria-label="More digests">';
-  if (i > 0) h += '<a class="pn-prev" href="#' + ORDER[i - 1].s + '" target="_self">&larr; Previous digest: ' + esc(ORDER[i - 1].name) + "</a>";
-  if (i < ORDER.length - 1) h += '<a class="pn-next" href="#' + ORDER[i + 1].s + '" target="_self">Next digest: ' + esc(ORDER[i + 1].name) + " &rarr;</a>";
+  var list = ORDER, idx = i, label = "More digests";
+  var curEntry = registry[cur];
+  if (curEntry && curEntry.data && isAradhana(curEntry.data)) {
+    /* Aradhana digests step through only the Aradhana set, in chronological
+       order (Day 1 morning → Day 7 evening), so "Next" from Day 3 reaches
+       Day 4 — instead of wandering the whole digest list newest-first. */
+    list = ORDER.filter(function(o){ var e = registry[o.s]; return e && e.data && isAradhana(e.data); }).reverse();
+    idx = -1;
+    for (k = 0; k < list.length; k++) if (list[k].s === cur) { idx = k; break; }
+    if (idx < 0) return "";
+    label = "More Aradhana digests";
+  }
+  var h = '<nav class="prevnext" aria-label="' + label + '">';
+  if (idx > 0) h += '<a class="pn-prev" href="#' + list[idx - 1].s + '" target="_self">&larr; Previous digest: ' + esc(list[idx - 1].name) + "</a>";
+  if (idx < list.length - 1) h += '<a class="pn-next" href="#' + list[idx + 1].s + '" target="_self">Next digest: ' + esc(list[idx + 1].name) + " &rarr;</a>";
   return h + "</nav>";
 }
 function route(e, routeKey){
@@ -20756,6 +20771,18 @@ function route(e, routeKey){
     document.title = r.data.name + " · Sri Babuji Digests";
     var crumb = document.getElementById("digest-crumb");
     if(crumb) crumb.textContent = r.data.name;
+    /* Aradhana digests: the breadcrumb gains an "Aradhana 2026" link to the
+       collection landing page, and the back link points there too — so a
+       reader on Day 3 reaches the full Aradhana list (and Day 4) in one
+       tap. Other pages keep the plain Digests breadcrumb and back link. */
+    var isAr = isAradhana(r.data);
+    var crumbParent = document.getElementById("digest-crumb-parent");
+    if (crumbParent) crumbParent.innerHTML = isAr ? '<a href="#collection-aradhana-2026" target="_self">Aradhana 2026</a><span class="breadcrumb-separator" aria-hidden="true"> › </span>' : "";
+    var backLink = document.getElementById("digest-back");
+    if (backLink) {
+      if (isAr) { backLink.href = "#collection-aradhana-2026"; backLink.innerHTML = "&larr; All Aradhana digests"; }
+      else { backLink.href = "#/"; backLink.innerHTML = "&larr; All digests"; }
+    }
     if (sectionAnchor) {
       anchorLang = langOfAnchor(sectionAnchor);
       if (anchorLang) activateLangTab(anchorLang);
