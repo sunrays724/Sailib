@@ -20459,12 +20459,15 @@ function renderReadalong(d, canonical){
   html += langTabsHtml(d);
   var hasLangs = digestLangs(d).length > 1;
   /* quick-jump pills at the top of every digest — Quiz only when the digest
-     has one, Summary only when it renders one (primers already do this).
-     Aradhana digests read first and quiz last, so the Quiz pill goes last. */
+     has one, Summary only when it renders one (primers already do this),
+     Main topics only when the digest has a topics list. Aradhana digests
+     read first and quiz last, so the Quiz pill goes last. */
   var quizPill = d.quiz ? '<a data-go="dquiz" tabindex="0">Quiz</a>' : '';
+  var topicsPill = d.topicsNav ? '<a data-go="dtopics" tabindex="0">Main topics</a>' : '';
   html += '<nav class="jump-nav" aria-label="In this digest">' +
     (d.aradhana ? '' : quizPill) +
     '<a data-go="dtranscript" tabindex="0">Transcript</a>' +
+    topicsPill +
     (d.quiz || d.summaryInView ? '<a data-go="dsummary" tabindex="0">Summary</a>' : '') +
     '<a data-go="dkeypoints" tabindex="0">Key Points</a>' +
     (d.aradhana ? quizPill : '') + '</nav>';
@@ -20485,7 +20488,7 @@ function renderReadalong(d, canonical){
     html += '<div class="readalong-top-links"><a href="#' + canonical + '/dsummary-bn" target="_self">বাংলায় সারাংশ (Summary in Bengali)</a></div>';
   }
   if (d.topicsNav) {
-    html += '<nav class="toc" aria-label="Main topics"><span class="toc-h">Main topics</span><ol class="readalong-toc">';
+    html += '<nav class="toc" id="dtopics" aria-label="Main topics"><span class="toc-h">Main topics</span><ol class="readalong-toc">';
     d.sections.forEach(function(section, i){
       html += '<li><time>' + esc(section.time) + '</time><a href="#' + canonical + '/pt-' + (i + 1) + '" target="_self">' + esc(section.title) + '</a></li>';
     });
