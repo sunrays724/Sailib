@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Devotees of Sai Baba of Shirdi — search by name, place, who brought them, or what drew them to Baba.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Devotees of Sai Baba</title>
+<style>
+:root{color-scheme:light dark;--bg:#fbfaf7;--surface:#fff;--surface-soft:#f4f2ec;--text:#272622;--muted:#625f56;--line:#dedbd2;--accent:#a6532f;--accent-strong:#7c371d;--accent-soft:#f4e5dc;--mark:#fee6a8;--shadow:0 12px 34px rgba(57,46,31,.08)}
+@media(prefers-color-scheme:dark){:root{--bg:#151512;--surface:#20201c;--surface-soft:#292822;--text:#f2efe7;--muted:#c5c0b3;--line:#3c3a32;--accent:#e19a70;--accent-strong:#f0b38e;--accent-soft:#3c2a21;--mark:#614a21;--shadow:0 14px 38px rgba(0,0,0,.26)}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;font-size:17px;line-height:1.55}
+a{color:var(--accent-strong)}h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif;line-height:1.25}
+.sitenav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0;padding:12px 0}.sitenav a{border:1px solid var(--line);border-radius:999px;padding:6px 14px;text-decoration:none;color:var(--text);font-weight:600;font-size:.95rem}.sitenav a:hover{background:var(--accent-soft)}.sitenav a.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.breadcrumb{width:min(100% - 32px,980px);margin:0 auto;padding:6px 0 0;color:var(--muted);font-size:.92rem}.breadcrumb a{color:var(--muted)}
+main{width:min(100% - 32px,980px);margin:0 auto;padding:12px 0 40px}
+.hero{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin:14px 0 8px}.hero img.portrait{width:180px;height:auto;border-radius:12px;box-shadow:var(--shadow);background:var(--surface-soft)}
+.initials{width:180px;height:220px;border-radius:12px;background:var(--surface-soft);display:flex;align-items:center;justify-content:center;font-family:"Libre Baskerville",Georgia,serif;font-size:3rem;color:var(--muted)}
+.hero-text{flex:1;min-width:260px}.hero-text h1{margin:.1em 0 .2em;font-size:1.9rem}.dek{color:var(--muted);margin:.2em 0}
+.meta{width:100%;border-collapse:collapse;margin:18px 0}.meta th,.meta td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top}.meta th{width:170px;color:var(--muted);font-weight:600}
+.chip{display:inline-block;border:1px solid var(--line);background:var(--surface-soft);border-radius:999px;padding:2px 10px;margin:2px 4px 2px 0;font-size:.86rem;cursor:pointer}.chip[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.search-wrap{position:relative;max-width:720px;margin:14px auto}.search-wrap input{width:100%;height:52px;border:1px solid var(--line);border-radius:999px;padding:0 44px 0 46px;font-size:1rem;background:var(--surface);color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}.card img{width:100%;height:220px;object-fit:cover;display:block;background:var(--surface-soft)}.card .initials{width:100%;height:220px;border-radius:0}.card-body{padding:13px 15px}.card-body h3{margin:0 0 4px;font-size:1.08rem}.card-body h3 a{text-decoration:none;color:var(--text)}.card-meta{color:var(--muted);font-size:.9rem;margin:0 0 8px}.tag{display:inline-block;background:var(--accent-soft);color:var(--accent-strong);border-radius:999px;padding:1px 9px;margin:2px 3px 2px 0;font-size:.82rem}
+.story p{margin:.7em 0}.story blockquote{margin:0}.story h3{margin-top:1.4em}
+.src{font-size:.86rem;color:var(--muted)}
+.guruji{border-left:3px solid var(--accent);padding:2px 0 2px 14px;margin:14px 0}.guruji p{margin:.4em 0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin:28px 0 0;flex-wrap:wrap}.pager a{text-decoration:none;font-weight:600}
+footer{width:min(100% - 24px,980px);margin:0 auto;padding:18px 0 28px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;text-align:center}
+.note{background:var(--surface-soft);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.92rem;color:var(--muted)}
+@media(max-width:640px){.hero img.portrait,.initials{width:140px}.hero-text h1{font-size:1.55rem}.meta th{width:120px}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+<a href="/">Home</a>
+<a href="/digests/">Digests</a>
+<a href="/books/">Books</a>
+<a href="/music/">Music</a>
+<a href="/photos/">Photos</a>
+<a href="/devotees/" class="active" aria-current="page">Devotees</a>
+</nav><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> › <span aria-current="page">Devotees</span></nav>
+<main><section class="hero"><div class="hero-text"><h1>Devotees of Sai Baba</h1>
+<p class="dek">The men and women who came to Shirdi in Baba's lifetime — where they came from, when they came, who brought them, and what drew them to Him. Each story is quoted verbatim from the sources cited on that devotee's page.</p>
+<p class="dek"><a href="/devotees/relationships/">Who brought whom? — the relationship graph ›</a></p></div></section>
+<div class="search-wrap"><input id="search" type="search" autocomplete="off" spellcheck="false" placeholder="Search a devotee — name, place, who brought them, what drew them…" aria-label="Search devotees"></div>
+<div id="tag-filters" role="group" aria-label="Filter by what drew them to Baba"><button class="chip" type="button" data-tag="child" aria-pressed="false">Seeking a child</button><button class="chip" type="button" data-tag="curiosity" aria-pressed="false">Curiosity</button><button class="chip" type="button" data-tag="danger-protection" aria-pressed="false">Danger / protection</button><button class="chip" type="button" data-tag="dream-vision" aria-pressed="false">Dream / vision</button><button class="chip" type="button" data-tag="family" aria-pressed="false">Through family</button><button class="chip" type="button" data-tag="guru-seeking" aria-pressed="false">Seeking a guru</button><button class="chip" type="button" data-tag="health-family" aria-pressed="false">Health — family</button><button class="chip" type="button" data-tag="health-self" aria-pressed="false">Health — self</button><button class="chip" type="button" data-tag="job-career" aria-pressed="false">Work / career</button><button class="chip" type="button" data-tag="kirtan-hearing" aria-pressed="false">Heard in kirtan</button><button class="chip" type="button" data-tag="livelihood" aria-pressed="false">Livelihood</button><button class="chip" type="button" data-tag="service-devotion" aria-pressed="false">Service / devotion</button>
+<button class="chip" type="button" data-tag="__photo" aria-pressed="false">Has photo</button></div>
+<p class="src" id="count"></p>
+<div class="grid" id="grid"><article class="card" data-id="shama"><a href="/devotees/shama/"><img src="https://drive.google.com/thumbnail?id=1JygOLIx_mRj-SwoX5F9o87t77OQTlfLu&amp;sz=w400" alt="Portrait of Madhavrao Deshpande (Shama)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/shama/">Madhavrao Deshpande (Shama)</a></h3>
+<p class="card-meta">Shirdi</p><p><span class="tag">Curiosity</span></p></div></article>
+<article class="card" data-id="nanasaheb-chandorkar"><a href="/devotees/nanasaheb-chandorkar/"><img src="https://drive.google.com/thumbnail?id=12nMIRPtpn-JdN9LwNFH5BpwtkqcJB0Ei&amp;sz=w400" alt="Portrait of Narayan Govind Chandorkar (Nanasaheb Chandorkar)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/nanasaheb-chandorkar/">Narayan Govind Chandorkar (Nanasaheb Chandorkar)</a></h3>
+<p class="card-meta">Devotee of Sai Baba</p><p></p></div></article>
+<article class="card" data-id="kakasaheb-dixit"><a href="/devotees/kakasaheb-dixit/"><img src="https://drive.google.com/thumbnail?id=110drdwWpnYBoQPc8__sNoPjNQAQRZ3Gl&amp;sz=w400" alt="Portrait of Hari Sitaram Dixit (Kakasaheb Dixit)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/kakasaheb-dixit/">Hari Sitaram Dixit (Kakasaheb Dixit)</a></h3>
+<p class="card-meta">Khandwa (born 1864, Vadnagara Nagar Brahmin family); later Bombay solicitor (Little &amp; Co., then own firm) · came 1909 · brought by Nanasaheb Chandorkar; Shama</p><p><span class="tag">Health — self</span><span class="tag">Seeking a guru</span></p></div></article>
+<article class="card" data-id="das-ganu-maharaj"><a href="/devotees/das-ganu-maharaj/"><img src="https://drive.google.com/thumbnail?id=1tJ7vFehIEFYEpjx1195Lj0ngs8lSjJsP&amp;sz=w400" alt="Portrait of Ganpatrao Dattatreya Sahasrabuddhe (Das Ganu Maharaj)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/das-ganu-maharaj/">Ganpatrao Dattatreya Sahasrabuddhe (Das Ganu Maharaj)</a></h3>
+<p class="card-meta">Nanded; police constable, then kirtankar · brought by Nanasaheb Chandorkar</p><p><span class="tag">Seeking a guru</span><span class="tag">Work / career</span></p></div></article>
+<article class="card" data-id="megha"><a href="/devotees/megha/"><div class="initials" aria-label="No photo available">M</div></a>
+<div class="card-body"><h3><a href="/devotees/megha/">Megha</a></h3>
+<p class="card-meta">Viramgaon · brought by H. V. Sathe</p><p><span class="tag">Service / devotion</span></p></div></article>
+<article class="card" data-id="tatya-kote-patil"><a href="/devotees/tatya-kote-patil/"><img src="https://drive.google.com/thumbnail?id=1MLcqfOw7CK1AwApt8NQLuYYiv-lGeaky&amp;sz=w400" alt="Portrait of Tatya Kote Patil" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/tatya-kote-patil/">Tatya Kote Patil</a></h3>
+<p class="card-meta">Shirdi</p><p><span class="tag">Through family</span></p></div></article>
+<article class="card" data-id="mahalsapati"><a href="/devotees/mahalsapati/"><img src="https://drive.google.com/thumbnail?id=1RpQAE8gGHEDwAb8iXN_m3CV01YjaivNh&amp;sz=w400" alt="Portrait of Martand Mahalsapati (Bhagat Mhalsapati)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/mahalsapati/">Martand Mahalsapati (Bhagat Mhalsapati)</a></h3>
+<p class="card-meta">Shirdi; priest of the Khandoba temple</p><p><span class="tag">Service / devotion</span></p></div></article>
+<article class="card" data-id="hemadpant-dabholkar"><a href="/devotees/hemadpant-dabholkar/"><img src="https://drive.google.com/thumbnail?id=1rpwrrOYZ_UC4Q2COId8_YUUWuih6xdpC&amp;sz=w400" alt="Portrait of Govind Raghunath Dabholkar (Annasaheb Dabholkar / Hemadpant)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/hemadpant-dabholkar/">Govind Raghunath Dabholkar (Annasaheb Dabholkar / Hemadpant)</a></h3>
+<p class="card-meta">Bombay (presumed — not verified in sources checked)</p><p></p></div></article>
+<article class="card" data-id="bapusaheb-jog"><a href="/devotees/bapusaheb-jog/"><img src="https://drive.google.com/thumbnail?id=17lN2O3tnkrz1mN19p-09hPGeHIIkITkN&amp;sz=w400" alt="Portrait of Bapusaheb Jog" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/bapusaheb-jog/">Bapusaheb Jog</a></h3>
+<p class="card-meta">Devotee of Sai Baba</p><p></p></div></article>
+<article class="card" data-id="dadasaheb-khaparde"><a href="/devotees/dadasaheb-khaparde/"><img src="https://drive.google.com/thumbnail?id=119odoHBpDzZYHemArqYH5Vel57-5Vcg7&amp;sz=w400" alt="Portrait of Dadasaheb Khaparde (G. S. Khaparde)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/dadasaheb-khaparde/">Dadasaheb Khaparde (G. S. Khaparde)</a></h3>
+<p class="card-meta">Amravati (not verified in sources checked — confirm in build phase)</p><p></p></div></article>
+<article class="card" data-id="gopal-rao-buti"><a href="/devotees/gopal-rao-buti/"><img src="https://drive.google.com/thumbnail?id=16sJtjUPZ4OXqqs_W5c3OGdLrJRyDkCbM&amp;sz=w400" alt="Portrait of Gopal Rao Buti (Bapusaheb Buti)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/gopal-rao-buti/">Gopal Rao Buti (Bapusaheb Buti)</a></h3>
+<p class="card-meta">brought by Bhausaheb Dhumal</p><p></p></div></article>
+<article class="card" data-id="hv-sathe"><a href="/devotees/hv-sathe/"><img src="https://drive.google.com/thumbnail?id=1QZ1vzxLKBH5uGMLLKNjxdVrxC4NzjkF2&amp;sz=w400" alt="Portrait of Harivinayak Sathe (H. V. Sathe)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/hv-sathe/">Harivinayak Sathe (H. V. Sathe)</a></h3>
+<p class="card-meta">Poona; retired District Collector; born 1855 · came 1904 · brought by Barve</p><p><span class="tag">Seeking a child</span></p></div></article>
+<article class="card" data-id="bv-dev"><a href="/devotees/bv-dev/"><img src="https://drive.google.com/thumbnail?id=1DkDN6Q29sWSPuvrR8IWxassJ4kAjO3eV&amp;sz=w400" alt="Portrait of B. V. Dev" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/bv-dev/">B. V. Dev</a></h3>
+<p class="card-meta">Thana; retired Mamlatdar · came 1911</p><p><span class="tag">Seeking a guru</span></p></div></article>
+<article class="card" data-id="gg-narke"><a href="/devotees/gg-narke/"><img src="/devotees/assets/photos/gg-narke.jpg" alt="Portrait of G. G. Narke" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/gg-narke/">G. G. Narke</a></h3>
+<p class="card-meta">Poona; Professor of Geology and Chemistry, College of Engineering, Poona · came 1913 · brought by Shama; family — wife, mother and father-in-law Buti were devotees first</p><p><span class="tag">Through family</span></p></div></article>
+<article class="card" data-id="mb-rege"><a href="/devotees/mb-rege/"><img src="https://drive.google.com/thumbnail?id=16fcB77P6iOi7jB_RWjUZFh-ejqPCZlez&amp;sz=w400" alt="Portrait of M. B. Rege (Meghasyam B. Rege)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/mb-rege/">M. B. Rege (Meghasyam B. Rege)</a></h3>
+<p class="card-meta">Goa Saraswat family (family deity Santa Durga of Goa) · brought by Dream/vision — Vishnu told him &#x27;This Sai Baba of Shirdi is your man&#x27;</p><p><span class="tag">Dream / vision</span><span class="tag">Seeking a guru</span></p></div></article>
+<article class="card" data-id="abdul-baba"><a href="/devotees/abdul-baba/"><img src="https://drive.google.com/thumbnail?id=1g-a7lbNaVR9X1HFfJCvkbaw8qZ2EMfO7&amp;sz=w400" alt="Portrait of Abdul Baba (Abdul)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/abdul-baba/">Abdul Baba (Abdul)</a></h3>
+<p class="card-meta">Nanded; son of Sattar; Muslim · came 1889 · brought by Fakir Amiruddin</p><p><span class="tag">Seeking a guru</span><span class="tag">Service / devotion</span></p></div></article>
+<article class="card" data-id="upasani-maharaj"><a href="/devotees/upasani-maharaj/"><img src="https://drive.google.com/thumbnail?id=1TKqrFz618jTGB5lt1R07qYVagY1gY_00&amp;sz=w400" alt="Portrait of Balakrishna Govind Upasani Shastri (Upasani Maharaj)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/upasani-maharaj/">Balakrishna Govind Upasani Shastri (Upasani Maharaj)</a></h3>
+<p class="card-meta">Poona; retired Sanskrit teacher</p><p><span class="tag">Health — self</span></p></div></article>
+<article class="card" data-id="lakshmibai-shinde"><a href="/devotees/lakshmibai-shinde/"><img src="https://drive.google.com/thumbnail?id=1su0spoOzL6P3h3Z4a6tq5lPUqf3JO03N&amp;sz=w400" alt="Portrait of Lakshmibai Shinde" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/lakshmibai-shinde/">Lakshmibai Shinde</a></h3>
+<p class="card-meta">Shirdi</p><p><span class="tag">Service / devotion</span></p></div></article>
+<article class="card" data-id="bhagoji-shinde"><a href="/devotees/bhagoji-shinde/"><img src="https://drive.google.com/thumbnail?id=1IVM8IV7RsibRKnD70Y3H6m382uMj38KZ&amp;sz=w400" alt="Portrait of Bhagoji Shinde" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/bhagoji-shinde/">Bhagoji Shinde</a></h3>
+<p class="card-meta">Shirdi</p><p><span class="tag">Health — self</span><span class="tag">Service / devotion</span></p></div></article>
+<article class="card" data-id="bayyaji-apaji-patil"><a href="/devotees/bayyaji-apaji-patil/"><img src="/devotees/assets/photos/bayyaji-apaji-patil.jpg" alt="Portrait of Bayyaji Apaji Patil" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/bayyaji-apaji-patil/">Bayyaji Apaji Patil</a></h3>
+<p class="card-meta">Kopargaon area (verify in build phase)</p><p></p></div></article>
+<article class="card" data-id="sagun-meru-naik"><a href="/devotees/sagun-meru-naik/"><img src="https://drive.google.com/thumbnail?id=1EaAOdoI0_2oy1ORAYZPdFlkYltZF0eJN&amp;sz=w400" alt="Portrait of Sagun Meru Naik" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/sagun-meru-naik/">Sagun Meru Naik</a></h3>
+<p class="card-meta">Shirdi; Maratha tea-vendor · came 1911</p><p><span class="tag">Livelihood</span></p></div></article>
+<article class="card" data-id="kushabhav"><a href="/devotees/kushabhav/"><img src="https://drive.google.com/thumbnail?id=1ZOQk2mdG1jnu26XaO4HNAD4D58vbZkLh&amp;sz=w400" alt="Portrait of Krishnaji Kashinath Joshi (Kusha Bhav / Kushabhav)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/kushabhav/">Krishnaji Kashinath Joshi (Kusha Bhav / Kushabhav)</a></h3>
+<p class="card-meta">Mirazgaon (Mirajgaon), near Ahmednagar; astrologer (Joshi) · came 1908 · brought by Datta Maharaj</p><p><span class="tag">Seeking a guru</span></p></div></article>
+<article class="card" data-id="chandrabai-borkar"><a href="/devotees/chandrabai-borkar/"><img src="https://drive.google.com/thumbnail?id=1H1yfAaJ0bHqw9nJTC18qH_CMX0hIWZrz&amp;sz=w400" alt="Portrait of Chandrabai Borkar (Mrs. Chandrabai Borkar)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/chandrabai-borkar/">Chandrabai Borkar (Mrs. Chandrabai Borkar)</a></h3>
+<p class="card-meta">Wife of K. Ramachandra Borkar; Panchgani / Bombay circle (verify) · came 1898</p><p><span class="tag">Service / devotion</span><span class="tag">Health — family</span></p></div></article>
+<article class="card" data-id="chotubai-pradhan"><a href="/devotees/chotubai-pradhan/"><img src="https://drive.google.com/thumbnail?id=1PjNfc5FCb5ZX23vc_TRSGdnvBO8cq4Wl&amp;sz=w400" alt="Portrait of Chotubai Pradhan (Mrs. Chotu Bai Pradhan)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/chotubai-pradhan/">Chotubai Pradhan (Mrs. Chotu Bai Pradhan)</a></h3>
+<p class="card-meta">Santa Cruz (Shantacruz), Bombay</p><p><span class="tag">Seeking a child</span><span class="tag">Health — family</span><span class="tag">Dream / vision</span></p></div></article>
+<article class="card" data-id="moreshwar-pradhan"><a href="/devotees/moreshwar-pradhan/"><img src="https://drive.google.com/thumbnail?id=1WAj7rtqx66ch5hIPU4kAeBFdcXfPrCGY&amp;sz=w400" alt="Portrait of Moreshwar V. Pradhan (Rao Bahadur M. W. Pradhan)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/moreshwar-pradhan/">Moreshwar V. Pradhan (Rao Bahadur M. W. Pradhan)</a></h3>
+<p class="card-meta">Bombay; High Court pleader (B.A., LL.B.), age 56 at statement · came 1910 · brought by Nanasaheb Chandorkar</p><p><span class="tag">Through family</span><span class="tag">Curiosity</span></p></div></article>
+<article class="card" data-id="narayan-ashram"><a href="/devotees/narayan-ashram/"><img src="https://drive.google.com/thumbnail?id=1Rn638lt4WhDtJ_jvMaFsEdy81codrv0i&amp;sz=w400" alt="Portrait of Narayan Ashram" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/narayan-ashram/">Narayan Ashram</a></h3>
+<p class="card-meta">Customs Department (retired 1926 after 31 years); later sanyasi, Narmada Pradakshina 1927-30 · came 1910 · brought by Das Ganu Maharaj</p><p><span class="tag">Heard in kirtan</span><span class="tag">Seeking a guru</span></p></div></article>
+<article class="card" data-id="damodar-rasane"><a href="/devotees/damodar-rasane/"><img src="https://drive.google.com/thumbnail?id=1e6AdNgBS63VvWU5Bg-OBbiH0L2YoJI3F&amp;sz=w400" alt="Portrait of Dattatreya Damodar Rasane (Nana Sahib Rasane)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/damodar-rasane/">Dattatreya Damodar Rasane (Nana Sahib Rasane)</a></h3>
+<p class="card-meta">Poona; age 40 at statement · brought by Family — his father</p><p><span class="tag">Seeking a child</span><span class="tag">Through family</span></p></div></article>
+<article class="card" data-id="savalram-rasane"><a href="/devotees/savalram-rasane/"><img src="https://drive.google.com/thumbnail?id=1L68o9AKRYqo6smKVGStrkL6e-0Jcn7qI&amp;sz=w400" alt="Portrait of Damodar Savalram Rasane (Anna Rasane)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/savalram-rasane/">Damodar Savalram Rasane (Anna Rasane)</a></h3>
+<p class="card-meta">Poona · came 1895</p><p><span class="tag">Seeking a child</span></p></div></article>
+<article class="card" data-id="sb-nachne"><a href="/devotees/sb-nachne/"><img src="https://drive.google.com/thumbnail?id=1wc3rY650pDSiSr0LKq0jZlsa-DWjRtkO&amp;sz=w400" alt="Portrait of Santaram Balwant Nachne (S. B. Nachne Dahanukar)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/sb-nachne/">Santaram Balwant Nachne (S. B. Nachne Dahanukar)</a></h3>
+<p class="card-meta">Nasik · came 1912 · brought by Das Ganu Maharaj</p><p><span class="tag">Heard in kirtan</span><span class="tag">Curiosity</span></p></div></article>
+<article class="card" data-id="bhausaheb-dhumal"><a href="/devotees/bhausaheb-dhumal/"><img src="/devotees/assets/photos/bhausaheb-dhumal.jpg" alt="Portrait of S. B. Dhumal (Rao Bahadur S. B. Dhumal)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/bhausaheb-dhumal/">S. B. Dhumal (Rao Bahadur S. B. Dhumal)</a></h3>
+<p class="card-meta">Devotee of Sai Baba</p><p></p></div></article>
+<article class="card" data-id="rb-purandhare"><a href="/devotees/rb-purandhare/"><img src="https://drive.google.com/thumbnail?id=1LVD9gFyzMpknrMA_g0RkaHQ6zLC_xss1&amp;sz=w400" alt="Portrait of Raghuvir Bhaskar Purandhare (R. B. Purandhare)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/rb-purandhare/">Raghuvir Bhaskar Purandhare (R. B. Purandhare)</a></h3>
+<p class="card-meta">Dadar, Bombay; poor and orphaned · came 1909 · brought by Dream/vision</p><p><span class="tag">Dream / vision</span></p></div></article>
+<article class="card" data-id="abdulla-jan"><a href="/devotees/abdulla-jan/"><img src="/devotees/assets/photos/abdulla-jan.jpg" alt="Portrait of Abdulla Jan" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/abdulla-jan/">Abdulla Jan</a></h3>
+<p class="card-meta">Tarbella; travelled south to Manmad wanting to go to Mecca · came 1913</p><p><span class="tag">Livelihood</span><span class="tag">Dream / vision</span></p></div></article>
+<article class="card" data-id="nandaram-marwadi"><a href="/devotees/nandaram-marwadi/"><img src="/devotees/assets/photos/nandaram-marwadi.jpg" alt="Portrait of Nandaram Sivaram Marwadi" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/nandaram-marwadi/">Nandaram Sivaram Marwadi</a></h3>
+<p class="card-meta">Shroff / merchant</p><p><span class="tag">Danger / protection</span></p></div></article>
+<article class="card" data-id="kasibai-hansraj"><a href="/devotees/kasibai-hansraj/"><div class="initials" aria-label="No photo available">KH</div></a>
+<div class="card-body"><h3><a href="/devotees/kasibai-hansraj/">Kasibai Hansraj</a></h3>
+<p class="card-meta">Sakori; Vani caste; widow of Hansraj, age ~45 at statement · came 1916</p><p><span class="tag">Health — family</span></p></div></article>
+<article class="card" data-id="somanath-deshpande"><a href="/devotees/somanath-deshpande/"><div class="initials" aria-label="No photo available">SS</div></a>
+<div class="card-body"><h3><a href="/devotees/somanath-deshpande/">Somanath Shankar Deshpande</a></h3>
+<p class="card-meta">brought by Balvantrao — took his father, not him directly</p><p><span class="tag">Through family</span></p></div></article>
+<article class="card" data-id="sn-kharkar"><a href="/devotees/sn-kharkar/"><img src="/devotees/assets/photos/sn-kharkar.jpg" alt="Portrait of Shridhar Narayan Kharkar (S. N. Kharkar)" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/sn-kharkar/">Shridhar Narayan Kharkar (S. N. Kharkar)</a></h3>
+<p class="card-meta">Kayastha Prabhu, accountant; age 57 at statement · brought by Appa Kulkarni; Dabholkar</p><p><span class="tag">Curiosity</span></p></div></article>
+<article class="card" data-id="shama-rao-jayker"><a href="/devotees/shama-rao-jayker/"><img src="/devotees/assets/photos/shama-rao-jayker.jpg" alt="Portrait of Shama Rao Jayker" loading="lazy"></a>
+<div class="card-body"><h3><a href="/devotees/shama-rao-jayker/">Shama Rao Jayker</a></h3>
+<p class="card-meta">Ville Parle, Bombay; painter; age 70 at statement · brought by M. W. Pradhan; Shama</p><p><span class="tag">Work / career</span></p></div></article></div></main>
+<script src="assets/sailib-devotees.js"></script>
+<script>
+var DATA = window.SAILIB_DEVOTEES || [];
+var activeTags = {}, onlyPhoto = false;
+function norm(s){ return (s||"").toLowerCase(); }
+function hay(d){ return norm([d.name].concat(d.variants||[]).join(" ") + " " + (d.from||"") + " " + (d.introduced_by||"") + " " + (d.pull_tags||[]).join(" ") + " " + (d.role||"") + " " + (d.first_came||"")); }
+function render(){
+  var q = norm(document.getElementById("search").value.trim());
+  var words = q.split(/\s+/).filter(Boolean);
+  var shown = 0;
+  document.querySelectorAll("#grid .card").forEach(function(card){
+    var d = null;
+    for(var i=0;i<DATA.length;i++) if(DATA[i].id===card.dataset.id){ d=DATA[i]; break; }
+    var ok = true;
+    if(words.length){ var h = hay(d); for(var w=0;w<words.length;w++) if(h.indexOf(words[w])===-1){ ok=false; break; } }
+    if(ok){ for(var t in activeTags){ if(activeTags[t] && (d.pull_tags||[]).indexOf(t)===-1){ ok=false; break; } } }
+    if(ok && onlyPhoto && !d.photo) ok=false;
+    card.style.display = ok ? "" : "none";
+    if(ok) shown++;
+  });
+  document.getElementById("count").textContent = shown + " of " + DATA.length + " devotees";
+}
+document.getElementById("search").addEventListener("input", render);
+document.querySelectorAll("#tag-filters .chip").forEach(function(chip){
+  chip.addEventListener("click", function(){
+    var tag = chip.dataset.tag;
+    if(tag==="__photo"){ onlyPhoto=!onlyPhoto; chip.setAttribute("aria-pressed", String(onlyPhoto)); }
+    else { activeTags[tag]=!activeTags[tag]; chip.setAttribute("aria-pressed", String(!!activeTags[tag])); }
+    render();
+  });
+});
+render();
+</script>
+<footer><a href="/">Home</a> · <a href="/digests/">Digests</a> · <a href="/books/">Books</a> · <a href="/music/">Music</a> · <a href="/photos/">Photos</a> · <a href="/devotees/">Devotees</a> · <a href="/whats-new/">What&rsquo;s New</a><br>Devotee stories are quoted verbatim from the sources cited on each page.</footer>
+</body>
+</html>
