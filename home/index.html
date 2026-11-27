@@ -816,6 +816,7 @@ body::after { content:''; position:fixed; inset:0; background-image:var(--theme-
     <a href="/books/">Books</a>
     <a href="/music/">Music</a>
     <a href="/photos/">Photos</a>
+    <a href="/devotees/">Devotees</a>
   </nav>
 
   <header class="masthead">
@@ -850,6 +851,7 @@ body::after { content:''; position:fixed; inset:0; background-image:var(--theme-
       <label class="source-option"><input id="sourceBooks" type="checkbox" aria-label="Books" checked> <a class="source-link" href="/books/" target="_blank" rel="noopener">Books</a></label>
       <label class="source-option"><input id="sourcePhotos" type="checkbox" aria-label="Photos" checked> <a class="source-link" href="/photos/" target="_blank" rel="noopener">Photos</a></label>
       <label class="source-option"><input id="sourceMusic" type="checkbox" aria-label="Music" checked> <a class="source-link" href="/music/" target="_blank" rel="noopener">Music</a></label>
+      <label class="source-option"><input id="sourceDevotees" type="checkbox" aria-label="Devotees" checked> <a class="source-link" href="/devotees/" target="_blank" rel="noopener">Devotees</a></label>
     </fieldset>
     <p class="source-load-status hidden" id="sourceLoadStatus" role="status" aria-live="polite"></p>
     <div class="search-actions">
@@ -1016,6 +1018,7 @@ body::after { content:''; position:fixed; inset:0; background-image:var(--theme-
 <script src="/assets/known-words.js?v202610110620"></script>
 <script src="/assets/sailib-search-index.js?v202611262300"></script>
 <script src="/assets/sailib-digest-items.js?v202611270644"></script>
+<script src="/assets/sailib-devotee-items.js?v202611262258"></script>
 <script src="/assets/today-history-data.js?v202611020719"></script>
 <script src="/assets/whats-new.js?v202611150117"></script>
 <script>
@@ -1498,6 +1501,7 @@ var q = document.getElementById("q"),
     sourceBooks = document.getElementById("sourceBooks"),
     sourcePhotos = document.getElementById("sourcePhotos"),
     sourceMusic = document.getElementById("sourceMusic"),
+    sourceDevotees = document.getElementById("sourceDevotees"),
     sourceLoadStatus = document.getElementById("sourceLoadStatus"),
     copySearch = document.getElementById("copySearch"),
     copyStatus = document.getElementById("copyStatus"),
@@ -2456,6 +2460,49 @@ function digestItemCardHTML(item){
     '" target="_blank" rel="noopener">' + esc(item.t) + '</a></h3>' +
     '<p class="digest-parent">' + esc(item.d) + '</p></article>';
 }
+/* ---------- devotee items: same shape as SAILIB_DIGEST_ITEMS ----------
+   window.SAILIB_DEVOTEE_ITEMS = [{t: name, d: "Devotee of Sai Baba",
+   h: slug, a: "variants place pull-tags introducer"}]. Alias words (item.a)
+   match like title words but never change the displayed name. */
+var DEVOTEE_BASE = "/devotees/";
+function devoteeItemsFor(rawQuery){
+  if(/^\s*event\s*:/i.test(rawQuery)) return [];
+  var pq = parseQuery(rawQuery);
+  var tokens = sigTokensOf(pq.rest);
+  var phrases = pq.phrases;
+  if(!tokens.length && !phrases.length) return [];
+  var items = window.SAILIB_DEVOTEE_ITEMS || [], phraseHits = [], wordHits = [];
+  for(var i = 0; i < items.length; i++){
+    var item = items[i];
+    if(!item || !item.t) continue;
+    var words = wordSplit(item.t), titleWords = {}, wi, pi, qi;
+    for(wi = 0; wi < words.length; wi++) titleWords[words[wi]] = 1;
+    var titlePadded = " " + words.join(" ") + " ";
+    var aliasPadded = "";
+    if(item.a){ var aw = wordSplit(item.a); for(wi = 0; wi < aw.length; wi++) titleWords[aw[wi]] = 1; aliasPadded = " " + aw.join(" ") + " "; }
+    var hasPhrase = false, score = 0;
+    for(pi = 0; pi < phrases.length; pi++){
+      if(phrases[pi].str && (titlePadded.indexOf(phrases[pi].str) !== -1 || (aliasPadded && aliasPadded.indexOf(phrases[pi].str) !== -1))){ hasPhrase = true; score += 100; }
+    }
+    for(qi = 0; qi < tokens.length; qi++){
+      if(titleWords[tokens[qi]]) score++;
+    }
+    if(score > 0){
+      var entry = { t: item.t, d: item.d, h: item.h, score: score };
+      (hasPhrase ? phraseHits : wordHits).push(entry);
+    }
+  }
+  var byScore = function(a, b){ return b.score - a.score || String(a.t).localeCompare(String(b.t)); };
+  phraseHits.sort(byScore);
+  wordHits.sort(byScore);
+  return phraseHits.concat(wordHits).slice(0, 12);
+}
+function devoteeItemCardHTML(item){
+  var url = DEVOTEE_BASE + item.h + "/";
+  return '<article class="card digest-item-card"><h3><a href="' + esc(url) +
+    '" target="_blank" rel="noopener">' + esc(item.t) + '</a></h3>' +
+    '<p class="digest-parent">' + esc(item.d) + '</p></article>';
+}
 /* ---------- collapsible "show more" sections ----------
    Renders the first PREVIEW items visibly; the rest go into a hidden div
    toggled by a "+ Show N more" / "- Show less" button. */
@@ -2875,6 +2922,7 @@ function selectedSourceNames(){
   if(sourceBooks.checked) out.push("books");
   if(sourcePhotos.checked) out.push("photos");
   if(sourceMusic.checked) out.push("music");
+  if(sourceDevotees.checked) out.push("devotees");
   return out;
 }
 function queryForSearch(){
@@ -2948,6 +2996,7 @@ function applySearchParams(){
     sourceBooks.checked = chosen.indexOf("books") !== -1;
     sourcePhotos.checked = chosen.indexOf("photos") !== -1;
     sourceMusic.checked = chosen.indexOf("music") !== -1;
+    sourceDevotees.checked = chosen.indexOf("devotees") !== -1;
   }
   runSearch();
   return true;
@@ -2962,6 +3011,7 @@ function relatedTermHasResults(term){
   if(sourceDigests.checked && langFilter !== "telugu" && mappedDigestsFor(term).length) return true;
   if(sourceBooks.checked && searchBooks(term).groups.length) return true;
   if(sourcePhotos.checked && searchPhotos(term).length) return true;
+  if(sourceDevotees.checked && devoteeItemsFor(term).length) return true;
   return false;
 }
 function renderRelatedSearches(raw){
@@ -3052,9 +3102,10 @@ function runSearch(){
     var eb = searchBooks(exactQ);
     var ep = searchPhotos(exactQ);
     var ed = sourceDigests.checked ? digestItemsFor(exactQ) : [];
+    var edev = sourceDevotees.checked ? devoteeItemsFor(exactQ) : [];
     var et = (sourceVideos.checked || sourceDigests.checked) ? mappedDigestsFor(exactQ) : [];
     var total = (evh || []).length + (eb.groups || []).length +
-      (ep || []).length + (ed || []).length + (et || []).length;
+      (ep || []).length + (ed || []).length + (edev || []).length + (et || []).length;
     if(total > 0){
       searchRaw = exactQ;
     } else {
@@ -3092,6 +3143,7 @@ function runSearch(){
   var books = searchBooks(searchRaw);
   var photos = searchPhotos(searchRaw);
   var digestItems = sourceDigests.checked ? digestItemsFor(searchRaw) : [];
+  var devoteeItems = sourceDevotees.checked ? devoteeItemsFor(searchRaw) : [];
   writeQuery();
   document.title = "Results for '" + raw.trim() + "' \u00b7 SaiLib";
   var isEventQ = /^\s*event\s*:/i.test(raw);
@@ -3145,6 +3197,8 @@ function runSearch(){
   if(topicRefs.length) parts.push(topicRefs.length + (topicRefs.length === 1 ? " digest" : " digests"));
   if(digestItems.length)
     parts.push(digestItems.length + (digestItems.length === 1 ? " digest article" : " digest articles"));
+  if(devoteeItems.length)
+    parts.push(devoteeItems.length + (devoteeItems.length === 1 ? " devotee" : " devotees"));
   if((sourceVideos.checked || sourceMusic.checked) && videoHits.length)
     parts.push(videoHits.length + (videoHits.length === 1 ? " video" : " videos"));
   if(sourceBooks.checked && books.passages)
@@ -3159,6 +3213,12 @@ function runSearch(){
     var shownDigests = digestItems.slice(0, RESULT_LIMIT).map(digestItemCardHTML).join("");
     var restDigests = digestItems.slice(RESULT_LIMIT).map(digestItemCardHTML).join("");
     rendered.push(moreSectionHTML(shownDigests, restDigests, digestItems.length - RESULT_LIMIT, digestItems.length));
+  }
+  if(devoteeItems.length){
+    rendered.push('<h2 class="result-source">Devotees</h2>');
+    var shownDevotees = devoteeItems.slice(0, RESULT_LIMIT).map(devoteeItemCardHTML).join("");
+    var restDevotees = devoteeItems.slice(RESULT_LIMIT).map(devoteeItemCardHTML).join("");
+    rendered.push(moreSectionHTML(shownDevotees, restDevotees, devoteeItems.length - RESULT_LIMIT, devoteeItems.length));
   }
   if((sourceVideos.checked || sourceMusic.checked) && videoHits.length){
     rendered.push('<h2 class="result-source">Video results</h2>');
@@ -3191,7 +3251,7 @@ function runSearch(){
   }
   resultsEl.innerHTML = rendered.join("");
 
-  var anyResult = topicRefs.length || digestItems.length || ((sourceVideos.checked || sourceMusic.checked) && videoHits.length) ||
+  var anyResult = topicRefs.length || digestItems.length || devoteeItems.length || ((sourceVideos.checked || sourceMusic.checked) && videoHits.length) ||
     (sourceBooks.checked && books.groups.length) || (sourcePhotos.checked && photos.length);
   if(anyResult){
     countEl.textContent = parts.join(" · ") +
@@ -3208,11 +3268,11 @@ function runSearch(){
   /* Keep the language escape hatch available even when the active language
      has no matches, so readers can switch back without starting over. */
   langChips.classList.remove("hidden");
-  if(!sourceVideos.checked && !sourceDigests.checked && !sourceBooks.checked && !sourcePhotos.checked && !sourceMusic.checked){
+  if(!sourceVideos.checked && !sourceDigests.checked && !sourceBooks.checked && !sourcePhotos.checked && !sourceMusic.checked && !sourceDevotees.checked){
     emptyText.textContent = "Choose at least one source above to search.";
-  } else if(!sourceBooks.checked && !sourcePhotos.checked && !sourceMusic.checked){
+  } else if(!sourceBooks.checked && !sourcePhotos.checked && !sourceMusic.checked && !sourceDevotees.checked){
     emptyText.textContent = "No video or digest matches for \u201c" + raw.trim() +
-      "\u201d. Check Books, Photos, or Music above to search those collections too.";
+      "\u201d. Check Books, Photos, Music, or Devotees above to search those collections too.";
   } else {
     emptyText.textContent = "No matches found for \u201c" + raw.trim() +
       "\u201d in the selected sources. Try a different word or phrase.";
@@ -3230,6 +3290,7 @@ function resetHome(){
   sourceBooks.checked = true;
   sourcePhotos.checked = true;
   sourceMusic.checked = true;
+  sourceDevotees.checked = true;
   setLangFilter("all");
   setTips(false);
   quizPanel.classList.add("hidden");
