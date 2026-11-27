@@ -1,7 +1,7 @@
 window.SAILIB_SEARCH_INDEX = {
  "meta": {
-  "generated_at": "2026-11-27 07:07 UTC",
-  "video_count": 804,
+  "generated_at": "2026-11-27 16:20 UTC",
+  "video_count": 805,
   "channel": "Sri Babuji",
   "channel_url": "https://www.youtube.com/@SriSainathuniSarathBabuji"
  },
@@ -73445,6 +73445,33 @@ window.SAILIB_SEARCH_INDEX = {
     "devotional instrumental music",
     "darshan",
     "devotional music"
+   ],
+   "anchors": {},
+   "spoken": {},
+   "phon": {}
+  },
+  {
+   "id": "1cUVal_kBQQ",
+   "title": "Day 3:Sai Bhajana || SRI BABUJI'S 16TH Aradhana — FESTIVAL OF GRACE (10 -17 NOV 2026)",
+   "lang": "english",
+   "channel": "Sri Babuji",
+   "date": "2026-11-12",
+   "duration": "1:26:08",
+   "summary": "Sai Bhajana — devotional bhajan singing on Day 3 of Sri Babuji's 16th Aradhana, Festival of Grace. Captions not yet transcribed.",
+   "topics": [
+    {
+     "ts": "00:00",
+     "sec": 0,
+     "text": "[Captions unavailable]"
+    }
+   ],
+   "keywords": [
+    "Sai Bhajana",
+    "Bhajan",
+    "devotional singing",
+    "Festival of Grace 2026",
+    "16th Aradhana",
+    "Day 3"
    ],
    "anchors": {},
    "spoken": {},
