@@ -1,6 +1,6 @@
 window.SAILIB_SEARCH_INDEX = {
  "meta": {
-  "generated_at": "2026-11-27 06:00 UTC",
+  "generated_at": "2026-11-27 07:07 UTC",
   "video_count": 804,
   "channel": "Sri Babuji",
   "channel_url": "https://www.youtube.com/@SriSainathuniSarathBabuji"
@@ -61283,6 +61283,16 @@ window.SAILIB_SEARCH_INDEX = {
      "text": "(In Telugu) What makes a Sadguru — even a broomstick, a mere broom, could be taken as a guru; Dadakelkar and the pillar"
     },
     {
+     "ts": "00:28:52",
+     "sec": 1732,
+     "text": "(In Telugu) The Guru-moon grows full — from amavasya, like the Padyami moon; Baba needs no successor"
+    },
+    {
+     "ts": "00:30:07",
+     "sec": 1807,
+     "text": "(In Telugu) Prarabdha: the law, the catch, the umbrella — a thrown tape recorder must fall, but Baba catches it; refuge ends horoscope and karma"
+    },
+    {
      "ts": "00:32:02",
      "sec": 1922,
      "text": "(In Telugu) After taking refuge in the Sadguru, horoscope and karma no longer bind; hold on to prayer"
@@ -61325,6 +61335,10 @@ window.SAILIB_SEARCH_INDEX = {
     "Sadguru as window",
     "broom",
     "broomstick as guru",
+    "umbrella",
+    "tape recorder",
+    "moon",
+    "prarabdha",
     "Sarvam Khalvidam Brahma",
     "one Paramatma in all beings",
     "I never perform miracles",
