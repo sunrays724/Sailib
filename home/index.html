@@ -1173,7 +1173,7 @@ function prepareBookIndex(){
     });
     var page = Number.isInteger(BOOK_PAGES[index]) && BOOK_PAGES[index] > 0 ? BOOK_PAGES[index] : null;
     return {
-      index: index, book: book, ref: ref, text: text, page: page,
+      index: index, book: book, ref: ref, text: text, page: page, url: row.u || null,
       titleWords: titleWords, textWords: textWords,
       titleSearch: " " + titleWords.join(" ") + " ",
       textSearch: " " + textWords.join(" ") + " "
@@ -1184,7 +1184,7 @@ function prepareBookIndex(){
 function ensureBookIndex(){
   if(bookIndexPrepared) return Promise.resolve(BOOK_INDEX);
   return Promise.all([
-    loadAssetScript("/assets/sailib-book-index.js?v202610251826"),
+    loadAssetScript("/assets/sailib-book-index.js?v202611262316"),
     loadAssetScript("/assets/book-pages.js")
   ]).then(function(){
     BOOK_INDEX = window.SAILIB_BOOK_INDEX || null;
@@ -2242,6 +2242,10 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
   var excerpt = bookExcerpt(passage.text, tokens, phrases);
   var deepLink = saiBooksPassageUrl(passage, rawQuery);
   var pageSuffix = pageSuffixHTML(passage.page);
+  /* Per-passage source link (e.g. Shirdi Guide p. 74 on literature.saibaba.com),
+     when the index carries one for this passage; null otherwise. */
+  var sourcePage = passage.url ? (function(){ var m = /\/p(\d+)\.html/.exec(passage.url); return m ? " (p. " + m[1] + ")" : ""; })() : "";
+  var sourceLink = passage.url ? '<a class="startlink" href="' + esc(passage.url) + '" target="_blank" rel="noopener">Read this passage' + sourcePage + '</a>' : "";
   var lang = book.lang === "te" ? "Telugu" : "English";
   // Gurukrupa PDF link: gurukrupa/<year>/<year> <MON>.pdf
   var pdfLink = "";
@@ -2272,7 +2276,8 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
       moreHtml += '<div class="book-more-passage"><p class="book-context">' +
         (hex.before ? '<span class="ellipsis">…</span>' : '') +
         highlight(hex.text, tokens, phrases) + (hex.after ? '<span class="ellipsis">…</span>' : '') + '</p>' +
-        (hp.ref && book.kind !== "satcharitra" ? '<p class="book-ref">' + esc(hp.ref) + '</p>' : '') + '</div>';
+        (hp.ref && book.kind !== "satcharitra" ? '<p class="book-ref">' + esc(hp.ref) + '</p>' : '') +
+        (hp.url ? '<p class="book-ref"><a class="startlink" href="' + esc(hp.url) + '" target="_blank" rel="noopener">Read this passage</a></p>' : '') + '</div>';
     }
     var remaining = group.hits.length - 1;
     var shown = Math.min(5, remaining);
@@ -2283,6 +2288,7 @@ function bookCardHTML(group, tokens, phrases, rawQuery){
   }
   html += '<div class="book-actions"><a class="book-open" href="' + esc(deepLink) +
     '" target="_blank" rel="noopener">' + bookSvg + '<span>See all context in SaiBooks' + pageSuffix + '</span></a>' +
+    sourceLink +
     pdfLink +
     '<button type="button" class="book-search-within" data-book-id="' + esc(book.id) + '" data-book-title="' + esc(book.title) + '">🔍 Search within this book</button>';
   if(book.read_url){
