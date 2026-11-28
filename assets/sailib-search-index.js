@@ -1,6 +1,6 @@
 window.SAILIB_SEARCH_INDEX = {
  "meta": {
-  "generated_at": "2026-11-27 16:20 UTC",
+  "generated_at": "2026-11-28 05:01 UTC",
   "video_count": 805,
   "channel": "Sri Babuji",
   "channel_url": "https://www.youtube.com/@SriSainathuniSarathBabuji"
@@ -23349,6 +23349,7 @@ window.SAILIB_SEARCH_INDEX = {
     "Aradhana",
     "Day 3 evening satsang",
     "16th Aradhana",
+    "Aradhana 2026",
     "Festival of Grace",
     "kaupin",
     "Prakashanada Swami",
@@ -23678,7 +23679,7 @@ window.SAILIB_SEARCH_INDEX = {
     {
      "ts": "00:21:45",
      "sec": 1305,
-     "text": "Devotional song on Sai as nirgun and sagun"
+     "text": "♪ Song: \"Sammohana\" — devotional song on Sai as nirgun and sagun"
     },
     {
      "ts": "00:34:32",
@@ -23722,7 +23723,9 @@ window.SAILIB_SEARCH_INDEX = {
     "pothi reading",
     "Sai namam",
     "arati",
-    "Sai Annaprasadam"
+    "Sai Annaprasadam",
+    "Sammohana",
+    "nirgun sagun"
    ],
    "anchors": {
     "grace": [
@@ -66585,6 +66588,7 @@ window.SAILIB_SEARCH_INDEX = {
    "keywords": [
     "Day 6 evening satsang",
     "16th Aradhana",
+    "Aradhana 2026",
     "Festival of Grace 2026",
     "Sri Babuji's satsang extracts",
     "forgiveness",
@@ -73471,6 +73475,7 @@ window.SAILIB_SEARCH_INDEX = {
     "devotional singing",
     "Festival of Grace 2026",
     "16th Aradhana",
+    "Aradhana 2026",
     "Day 3"
    ],
    "anchors": {},
